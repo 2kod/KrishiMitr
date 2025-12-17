@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - कृषिMitr</title>
+
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* Your CSS styles remain unchanged */
+    .login-section {
+      padding-top: 150px; padding-bottom: 100px;
+      background-color: var(--cultured); min-height: 100vh;
+    }
+    .login-card {
+      max-width: 500px; margin: 0 auto; background-color: var(--white);
+      border-radius: var(--radius-10); box-shadow: var(--shadow-1); padding: 40px;
+    }
+    .login-card .h2 {
+      text-align: center; font-family: var(--ff-playfair); font-size: var(--fs-2);
+      color: var(--black-chocolate); margin-bottom: 10px;
+    }
+    .login-card .form-subtitle {
+      text-align: center; font-size: var(--fs-5);
+      color: var(--davys-gray); margin-bottom: 30px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-weight: var(--fw-600); font-size: var(--fs-6);
+      color: var(--black-chocolate); margin-bottom: 8px;
+    }
+    .form-group input {
+      width: 100%; padding: 12px 15px; font-size: var(--fs-5);
+      border: 1px solid var(--light-gray); border-radius: var(--radius-10);
+      transition: var(--transition-1);
+    }
+    .form-group input:focus {
+      border-color: var(--blue-green-color-wheel);
+      box-shadow: 0 0 0 3px var(--blue-green-color-wheel_10);
+    }
+    .forgot-link {
+      display: block; text-align: right; font-size: var(--fs-6);
+      color: var(--blue-green-color-wheel); font-weight: var(--fw-500);
+      margin-top: -10px; margin-bottom: 25px;
+    }
+    .forgot-link:hover { text-decoration: underline; }
+    .signup-link { text-align: center; margin-top: 30px; font-size: var(--fs-5); }
+    .signup-link a {
+      display: inline; color: var(--blue-green-color-wheel);
+      font-weight: var(--fw-600);
+    }
+    .signup-link a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body id="top">
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        कृषिMitr<span class="span">.</span>
+      </a>
+      <nav class="navbar" data-navbar>
+        <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="index.html" class="navbar-link" data-nav-link>Home</a></li>
+          <li class="navbar-item"><a href="news.html" class="navbar-link" data-nav-link>News</a></li>
+          <li class="navbar-item"><a href="fertilizer-store.html" class="navbar-link" data-nav-link>Marketplace</a></li>
+          <li class="navbar-item"><a href="crop-guide.html" class="navbar-link" data-nav-link>Crop Guide</a></li>
+          <li class="navbar-item"><a href="weather.html" class="navbar-link" data-nav-link>Weather</a></li>
+          <li class="navbar-item"><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
+        </ul>
+      </nav>
+      <a href="signup.html" class="btn btn-primary" id="auth-button">Sign Up</a> 
+      <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler>
+        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+      </button>
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <main>
+    <article>
+      <section class="section login-section" aria-label="login form" data-section>
+        <div class="container">
+          <div class="login-card">
+            <h2 class="h2">Farmer Login</h2>
+            <p class="form-subtitle">Welcome back! Sign in to your dashboard.</p>
+            
+            <form action="#" class="login-form" id="login-form">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+              </div>
+              <a href="#" class="forgot-link">Forgot Password?</a>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+              <p class="signup-link">
+                Don't have an account? <a href="signup.html">Sign up here</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+ <footer class="footer" id="footer">
+    <div class="footer-bottom"><div class="container"><p class="copyright">&copy; 2025 Krishimitr. All Rights Reserved.</p></div></div>
+  </footer>
+    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up" aria-hidden="true"></ion-icon></a>
+
+  
+
+  <script src="./assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script type="module">
+    // 1. Import all necessary Firebase functions
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+    // 2. Your Firebase Config (ONLY ONE TIME, and use your REAL API Key)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4",// <-- THIS IS YOUR ACTUAL KEY
+      authDomain: "krishimitra-in.firebaseapp.com",
+      projectId: "krishimitra-in",
+      storageBucket: "krishimitra-in.firebasestorage.app",
+      messagingSenderId: "358772049936",
+      appId: "1:358772049936:web:c9e0d15e907216519fa295",
+      measurementId: "G-X0ZCQFY7E6"
+    };
+
+    // 3. Initialize Firebase ONCE
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // 4. Login Form Logic
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) { // Ensure the form exists
+        loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            console.log('Login successful:', userCredential.user.uid);
+            window.location.href = 'dashboard.html'; // Redirect to dashboard on success
+        } catch (error) {
+            console.error('Login Error:', error.code, error.message);
+            if (error.code === 'auth/invalid-credential') {
+            alert('Login Failed: Incorrect email or password.');
+            } else {
+            alert('Login Failed: ' + error.message);
+            }
+        }
+        });
+    }
+
+
+    // 5. Header Auth Button Logic (for public pages)
+    const authButton = document.getElementById('auth-button');
+    if (authButton) { // Ensure the button exists
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is logged in. Change button to "Logout".
+                authButton.textContent = 'Logout';
+                authButton.href = '#'; // Make it a non-navigating link for logout
+                authButton.classList.remove('btn-primary');
+                authButton.classList.add('btn-secondary');
+                
+                authButton.onclick = (e) => {
+                    e.preventDefault();
+                    signOut(auth).then(() => {
+                        console.log('User signed out.');
+                        window.location.href = 'index.html'; // Go to homepage after logout
+                    }).catch((error) => {
+                        console.error('Sign out error:', error);
+                        alert('Error signing out: ' + error.message);
+                    });
+                };
+            } else {
+                // User is logged out. Button should link to Signup.
+                authButton.textContent = 'Sign Up';
+                authButton.href = 'signup.html';
+                authButton.classList.remove('btn-secondary');
+                authButton.classList.add('btn-primary');
+                authButton.onclick = null; // Remove any logout listener
+            }
+        });
+    }
+  </script>
+
+</body>
+</html>

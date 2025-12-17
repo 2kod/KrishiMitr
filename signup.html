@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - कृषिMitr</title>
+
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- HEADER LAYOUT FIXES (Matches Homepage) --- */
+    .header .container {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      padding-block: 15px;
+    }
+    .header-right-group {
+      display: flex !important;
+      align-items: center !important;
+      gap: 20px;
+      margin-left: auto;
+    }
+    .lang-box {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 50px;
+      padding: 0 15px;
+      min-width: 110px;
+      height: 45px;
+      overflow: hidden;
+    }
+    .lang-box ion-icon { font-size: 1.5rem; color: #333; margin-right: 8px; }
+    #language-select { border: none; outline: none; background: transparent; font-family: 'Montserrat'; font-weight: 600; color: #333; font-size: 1rem; cursor: pointer; width: 100%; }
+    
+    .header .btn {
+      margin-inline-start: 0 !important; 
+      padding: 0 40px !important;
+      height: 45px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 1rem !important;
+      font-weight: 700 !important;
+      min-width: 140px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    /* Google Translate Cleanup */
+    .goog-te-banner-frame.skiptranslate { display: none !important; } body { top: 0px !important; } .goog-te-gadget { font-size: 0 !important; }
+
+    /* --- SIGNUP PAGE STYLES --- */
+    .login-section { padding-top: 150px; padding-bottom: 100px; background-color: var(--cultured); min-height: 100vh; }
+    .login-card { max-width: 500px; margin: 0 auto; background-color: var(--white); border-radius: var(--radius-10); box-shadow: var(--shadow-1); padding: 40px; }
+    .login-card .h2 { text-align: center; font-family: var(--ff-playfair); font-size: var(--fs-2); color: var(--black-chocolate); margin-bottom: 10px; }
+    .login-card .form-subtitle { text-align: center; font-size: var(--fs-5); color: var(--davys-gray); margin-bottom: 30px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-weight: var(--fw-600); font-size: var(--fs-6); color: var(--black-chocolate); margin-bottom: 8px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 15px; font-size: var(--fs-5); border: 1px solid var(--light-gray); border-radius: var(--radius-10); transition: var(--transition-1); color: var(--davys-gray); font-family: var(--ff-montserrat); }
+    .form-group input:focus, .form-group select:focus { border-color: var(--blue-green-color-wheel); box-shadow: 0 0 0 3px var(--blue-green-color-wheel_10); }
+    .form-group select { appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20128c3.6%203.6%207.8%205.4%2013%205.4s9.4-1.8%2013-5.4l128-128c3.6-3.6%205.4-7.8%205.4-13%200-4.8-1.8-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px; }
+    .form-divider { margin-top: 30px; margin-bottom: 25px; border: 0; border-top: 1px solid var(--light-gray); }
+    .login-link { text-align: center; margin-top: 30px; font-size: var(--fs-5); }
+    .login-link a { display: inline; color: var(--blue-green-color-wheel); font-weight: var(--fw-600); }
+    .login-link a:hover { text-decoration: underline; }
+
+    @media (max-width: 992px) {
+      .navbar { display: none; } 
+      .header-right-group { margin-right: 60px; gap: 10px; }
+      .lang-box { padding: 0 8px; min-width: auto; }
+      .header .btn { padding: 0 15px !important; font-size: 0.9rem !important; }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="index.html" class="logo">कृषिMitr<span class="span">.</span></a>
+      <nav class="navbar" data-navbar>
+        <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline"></ion-icon></button>
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="index.html" class="navbar-link" data-nav-link>Home</a></li>
+          <li class="navbar-item"><a href="news.html" class="navbar-link" data-nav-link>News</a></li>
+          <li class="navbar-item"><a href="fertilizer-store.html" class="navbar-link" data-nav-link>Marketplace</a></li>
+          <li class="navbar-item"><a href="crop-guide.html" class="navbar-link" data-nav-link>Crop Guide</a></li>
+          <li class="navbar-item"><a href="weather.html" class="navbar-link" data-nav-link>Weather</a></li>
+          <li class="navbar-item"><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
+        </ul>
+      </nav>
+      
+      <div class="header-right-group">
+        <a href="login.html" class="btn btn-primary" id="auth-button" data-i18n="btn_login">Login</a>
+        <div class="lang-box">
+          <ion-icon name="language-outline"></ion-icon>
+          <select id="language-select" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिंदी</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler><ion-icon name="menu-outline"></ion-icon></button>
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <main>
+    <article>
+      <section class="section login-section" aria-label="signup form" data-section>
+        <div class="container">
+          <div class="login-card">
+            <h2 class="h2">Farmer Registration</h2>
+            <p class="form-subtitle">Create your free Krishimitr account.</p>
+
+            <form action="#" class="signup-form" id="signup-form">
+              <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" name="fullname" id="fullname" placeholder="Enter your full name" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email address" required>
+              </div>
+
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" name="phone" id="phone" placeholder="Enter your 10-digit mobile number" required>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Create Password</label>
+                <input type="password" name="password" id="password" placeholder="Create a strong password (min. 6 char)" required>
+              </div>
+
+              <hr class="form-divider">
+
+              <div class="form-group">
+                <label for="state">State</label>
+                <select name="state" id="state" required>
+                  <option value="" disabled selected>Select State</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="district">District / City</label>
+                <select name="district" id="district" required>
+                  <option value="" disabled selected>Select State First</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" name="pincode" id="pincode" placeholder="e.g., 302022" maxlength="6" pattern="[0-9]{6}" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="farmsize">Farm Size (in Acres)</label>
+                <input type="number" name="farmsize" id="farmsize" placeholder="e.g., 5" required>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create Account</button>
+
+              <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="footer-bottom"><div class="container"><p class="copyright">&copy; 2025 Krishimitr. All Rights Reserved.</p></div></div>
+  </footer>
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up" aria-hidden="true"></ion-icon></a>
+
+  <script src="./assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    const locationData = {
+      "Rajasthan": ["Jaipur", "Jodhpur", "Kota", "Bikaner", "Ajmer", "Udaipur"],
+      "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala"],
+      "Haryana": ["Gurugram", "Faridabad", "Panipat", "Ambala"],
+      "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi"],
+      "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior"]
+    };
+
+    const stateSelect = document.getElementById('state');
+    const districtSelect = document.getElementById('district');
+
+    window.onload = function() {
+      for (let state in locationData) {
+        let option = document.createElement('option');
+        option.value = state;
+        option.text = state;
+        stateSelect.appendChild(option);
+      }
+    };
+
+    stateSelect.addEventListener('change', function() {
+      districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+      const selectedState = this.value;
+      const districts = locationData[selectedState];
+      if (districts) {
+        districts.forEach(function(district) {
+          let option = document.createElement('option');
+          option.value = district;
+          option.text = district;
+          districtSelect.appendChild(option);
+        });
+      }
+    });
+
+    // Translation
+    const translations = {
+      en: { nav_home: "Home", nav_news: "News", nav_store: "Store", nav_guide: "Crop Guide", nav_weather: "Weather", nav_contact: "Contact", btn_signup: "Sign Up", btn_logout: "Logout", btn_login: "Login" },
+      hi: { nav_home: "होम", nav_news: "समाचार", nav_store: "दुकान", nav_guide: "फसल गाइड", nav_weather: "मौसम", nav_contact: "संपर्क", btn_signup: "साइन अप", btn_logout: "लॉग आउट", btn_login: "लॉग इन" }
+    };
+    function changeLanguage(lang) {
+      const elements = document.querySelectorAll('[data-i18n]');
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
+      });
+    }
+  </script>
+
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // -----------------------------------------------------------------
+    // 1. REPLACE WITH YOUR REAL KEY (DO NOT USE 'kkk')
+    // -----------------------------------------------------------------
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4", // <-- YOUR REAL KEY HERE
+      authDomain: "krishimitra-in.firebaseapp.com",
+      projectId: "krishimitra-in",
+      storageBucket: "krishimitra-in.firebasestorage.app",
+      messagingSenderId: "358772049936",
+      appId: "1:358772049936:web:c9e0d15e907216519fa295",
+      measurementId: "G-X0ZCQFY7E6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Handle Signup
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+      signupForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        const farmData = {
+          fullName: document.getElementById('fullname').value,
+          phone: document.getElementById('phone').value,
+          state: document.getElementById('state').value,
+          district: document.getElementById('district').value,
+          pincode: document.getElementById('pincode').value,
+          farmSize: document.getElementById('farmsize').value
+        };
+
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          await setDoc(doc(db, "farmers", user.uid), farmData);
+
+          alert('Account created successfully! Redirecting to Dashboard...');
+          window.location.href = 'dashboard.html'; // REDIRECT TO DASHBOARD
+
+        } catch (error) {
+          console.error('Signup Error:', error.code, error.message);
+          let errorMessage = "Error: " + error.message;
+          if (error.code === 'auth/email-already-in-use') errorMessage = 'Email already exists.';
+          alert(errorMessage);
+        }
+      });
+    }
+
+    // Header Logic
+    const authButton = document.getElementById('auth-button');
+    if (authButton) {
+      onAuthStateChanged(auth, (user) => {
+        const currentLang = document.getElementById('language-select').value;
+        const dict = translations[currentLang];
+        if (user) {
+          authButton.textContent = dict.btn_logout;
+          authButton.href = '#';
+          authButton.classList.replace('btn-primary', 'btn-secondary');
+          authButton.onclick = (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => window.location.reload());
+          };
+        } else {
+          authButton.textContent = dict.btn_login;
+          authButton.href = 'login.html';
+          authButton.classList.replace('btn-secondary', 'btn-primary');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

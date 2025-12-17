@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dashboard - कृषिMitr</title>
+
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Dashboard Specific CSS */
+    .dashboard-header { padding-top: 150px; padding-bottom: 40px; background-color: var(--cultured); }
+    .dashboard-header .h1 { font-family: var(--ff-playfair); font-size: var(--fs-1); }
+    .dashboard-header .p { font-size: var(--fs-4); color: var(--davys-gray); }
+
+    .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+    .dashboard-main { display: flex; flex-direction: column; gap: 30px; }
+    .dashboard-sidebar { display: flex; flex-direction: column; gap: 30px; }
+
+    /* Weather Card (Reused) */
+    .current-weather-card { background: var(--blue-green-color-wheel); color: var(--white); border-radius: var(--radius-10); padding: 30px; position: relative; overflow: hidden; }
+    .current-weather-card::before { content: '\f499'; font-family: "Ionicons"; position: absolute; top: 10px; right: 10px; font-size: 15rem; opacity: 0.1; line-height: 1; }
+    .current-weather-card .location { font-size: var(--fs-3); font-weight: var(--fw-600); }
+    .current-weather-card .current-temp { font-size: 6rem; font-weight: var(--fw-700); font-family: var(--ff-playfair); }
+
+    /* Mandi Table Styles */
+    .mandi-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    .mandi-table th, .mandi-table td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; font-size: var(--fs-6); }
+    .mandi-table th { color: var(--blue-green-color-wheel); font-weight: var(--fw-700); }
+    .mandi-table td { color: var(--davys-gray); }
+    .price-up { color: #28a745; font-weight: bold; } /* Green for up */
+    .price-down { color: #dc3545; font-weight: bold; } /* Red for down */
+
+    /* Vitals Card */
+    .vitals-card { background-color: var(--cultured); border-radius: var(--radius-10); padding: 25px; }
+    .vitals-card .h3 { font-size: var(--fs-4); margin-bottom: 15px; text-align: center; }
+    .vitals-list li { display: flex; justify-content: space-between; padding-block: 12px; border-bottom: 1px solid #ddd; font-size: var(--fs-6); }
+    
+    /* Crop List */
+    .crop-suggestion-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    
+    @media (max-width: 992px) { .dashboard-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+
+<body id="top">
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="index.html" class="logo">कृषिMitr<span class="span">.</span></a>
+      <nav class="navbar" data-navbar>
+        <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline"></ion-icon></button>
+        <ul class="navbar-list">
+          <li class="navbar-item"><a href="index.html" class="navbar-link">Home</a></li>
+          <li class="navbar-item"><a href="news.html" class="navbar-link">News</a></li>
+          <li class="navbar-item"><a href="fertilizer-store.html" class="navbar-link">Marketplace</a></li>
+          <li class="navbar-item"><a href="crop-guide.html" class="navbar-link">Crop Guide</a></li>
+          <li class="navbar-item"><a href="weather.html" class="navbar-link">Weather</a></li>
+          <li class="navbar-item"><a href="contact.html" class="navbar-link">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="btn btn-secondary" id="logout-button">Logout</a>
+      <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler><ion-icon name="menu-outline"></ion-icon></button>
+      <div class="overlay" data-nav-toggler data-overlay></div>
+    </div>
+  </header>
+
+  <main>
+    <article>
+      <section class="section dashboard-header">
+        <div class="container">
+          <h1 class="h1" id="user-welcome">Welcome Back!</h1>
+          <p class="p" id="user-location-sub">Loading your farm data...</p>
+        </div>
+      </section>
+
+      <section class="section dashboard-widgets">
+        <div class="container">
+          <div class="dashboard-grid">
+            
+            <div class="dashboard-main">
+
+              <div class="dashboard-widget">
+                <h2 class="h2 section-title" style="text-align: left; margin-bottom: 20px;">Live Weather</h2>
+                <div class="current-weather-card">
+                  <h2 class="location" id="weather-city">Loading...</h2>
+                  <p class="date" id="weather-date">...</p>
+                  <div class="temp-details">
+                    <p class="current-temp" id="weather-temp">--°</p>
+                    <div style="margin-left: 20px;">
+                      <p style="font-size: 2rem; text-transform: capitalize;" id="weather-desc">--</p>
+                      <p id="weather-hilo">H: --° / L: --°</p>
+                    </div>
+                  </div>
+                  <div style="margin-top: 10px; font-size: 1.4rem;">
+                    <span>💧 Humidity: <span id="weather-humidity">--%</span></span> &nbsp;|&nbsp; 
+                    <span>💨 Wind: <span id="weather-wind">-- km/h</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dashboard-widget">
+                <h2 class="h2 section-title" style="text-align: left; margin-bottom: 20px;">Recommended Crops for <span id="crop-state-name">Your State</span></h2>
+                <ul class="crop-suggestion-list" id="crop-container">
+                    </ul>
+              </div>
+
+            </div>
+
+            <div class="dashboard-sidebar">
+              
+              <div class="vitals-card">
+                <h3 class="h3">Mandi Prices (<span id="mandi-location">...</span>)</h3>
+                <p style="font-size: 1.2rem; color: gray; text-align: center; margin-bottom: 10px;">Live market rates (₹/Quintal)</p>
+                
+                <table class="mandi-table">
+                  <thead>
+                    <tr>
+                      <th>Crop</th>
+                      <th>Price</th>
+                      <th>Trend</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mandi-table-body">
+                    </tbody>
+                </table>
+                <a href="#" class="btn btn-secondary" style="width: 100%; margin-top: 20px; text-align: center;">View All Markets</a>
+              </div>
+              
+              <div class="vitals-card">
+                <h3 class="h3">My Farm Profile</h3>
+                <ul class="vitals-list">
+                  <li><span>Owner</span><span style="font-weight: bold;" id="profile-name">--</span></li>
+                  <li><span>District</span><span id="profile-district">--</span></li>
+                  <li><span>State</span><span id="profile-state">--</span></li>
+                  <li><span>Size</span><span id="profile-size">-- Acres</span></li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer" id="footer">
+      <div class="footer-bottom"><div class="container"><p class="copyright">&copy; 2025 Krishimitr.</p></div></div>
+  </footer>
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up"></ion-icon></a>
+
+  <script src="./assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // 1. REPLACE WITH YOUR REAL FIREBASE API KEY
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4", // <-- YOUR KEY
+      authDomain: "krishimitra-in.firebaseapp.com",
+      projectId: "krishimitra-in",
+      storageBucket: "krishimitra-in.firebasestorage.app",
+      messagingSenderId: "358772049936",
+      appId: "1:358772049936:web:c9e0d15e907216519fa295",
+      measurementId: "G-X0ZCQFY7E6"
+    };
+
+    // 2. REPLACE WITH YOUR OPENWEATHERMAP API KEY
+    const WEATHER_API_KEY = "71ca48bb8af57498e0efdabac5f86f4d"; // <-- YOUR WEATHER KEY
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // --- DATA SOURCES (Simulated Database) ---
+    const cropDatabase = {
+        "Rajasthan": [
+            { name: "Bajra", type: "Kharif", desc: "Drought tolerant, key crop." },
+            { name: "Mustard", type: "Rabi", desc: "High oil content, winter crop." }
+        ],
+        "Punjab": [
+            { name: "Wheat", type: "Rabi", desc: "Staple food, high yield." },
+            { name: "Rice", type: "Kharif", desc: "Requires good irrigation." }
+        ],
+        "Maharashtra": [
+             { name: "Cotton", type: "Kharif", desc: "Black soil cash crop." },
+             { name: "Sugarcane", type: "Annual", desc: "High water requirement." }
+        ],
+        // Default fallback
+        "Other": [
+             { name: "Tomato", type: "Zaid", desc: "Short duration vegetable." },
+             { name: "Wheat", type: "Rabi", desc: "Standard winter crop." }
+        ]
+    };
+
+    // --- MAIN LOGIC ---
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        console.log("User logged in:", user.uid);
+
+        // A. Fetch User Profile from Firestore
+        const docRef = doc(db, "farmers", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const userData = docSnap.data();
+            updateUI(userData);
+        } else {
+            console.log("No profile found");
+        }
+
+        // Setup Logout
+        document.getElementById('logout-button').addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => window.location.href = 'index.html');
+        });
+
+      } else {
+        // If not logged in, kick them out
+        window.location.href = 'login.html';
+      }
+    });
+
+    // --- FUNCTIONS TO UPDATE DASHBOARD ---
+
+    function updateUI(data) {
+        // 1. Personal Greeting
+        document.getElementById('user-welcome').textContent = `Namaste, ${data.fullName}!`;
+        document.getElementById('user-location-sub').textContent = `Farm Dashboard for ${data.district}, ${data.state}`;
+
+        // 2. Fill Profile Card
+        document.getElementById('profile-name').textContent = data.fullName;
+        document.getElementById('profile-district').textContent = data.district;
+        document.getElementById('profile-state').textContent = data.state;
+        document.getElementById('profile-size').textContent = data.farmSize + " Acres";
+        document.getElementById('mandi-location').textContent = data.district;
+        document.getElementById('crop-state-name').textContent = data.state;
+
+        // 3. Trigger Widgets
+        fetchRealWeather(data.district);
+        generateCropSuggestions(data.state);
+        generateMandiPrices(data.state);
+    }
+
+    async function fetchRealWeather(city) {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${WEATHER_API_KEY}&units=metric`;
+        try {
+            const res = await fetch(url);
+            const weather = await res.json();
+            
+            if(weather.cod === 200) {
+                document.getElementById('weather-city').textContent = weather.name;
+                document.getElementById('weather-temp').textContent = Math.round(weather.main.temp) + "°C";
+                document.getElementById('weather-desc').textContent = weather.weather[0].description;
+                document.getElementById('weather-hilo').textContent = `H: ${Math.round(weather.main.temp_max)}° / L: ${Math.round(weather.main.temp_min)}°`;
+                document.getElementById('weather-humidity').textContent = weather.main.humidity + "%";
+                document.getElementById('weather-wind').textContent = weather.wind.speed + " m/s";
+                
+                const now = new Date();
+                document.getElementById('weather-date').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+            }
+        } catch (e) {
+            console.error("Weather Error", e);
+            document.getElementById('weather-city').textContent = "Weather Unavailable";
+        }
+    }
+
+    function generateCropSuggestions(state) {
+        const container = document.getElementById('crop-container');
+        // Get crops for state, or fallback to "Other"
+        const crops = cropDatabase[state] || cropDatabase["Other"];
+        
+        container.innerHTML = ""; // Clear loading
+        
+        crops.forEach(crop => {
+            const html = `
+              <div class="course-card" style="padding: 20px; border: 1px solid #eee;">
+                  <h3 class="h3" style="color: var(--black-chocolate);">${crop.name}</h3>
+                  <span style="background: #e6f4ea; color: #1e7e34; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">${crop.type}</span>
+                  <p style="margin-top: 10px; font-size: 0.9rem; color: #555;">${crop.desc}</p>
+                  <a href="crop-guide.html" class="btn btn-secondary" style="margin-top: 15px; padding: 5px 15px; font-size: 0.8rem;">View Guide</a>
+              </div>
+            `;
+            container.innerHTML += html;
+        });
+    }
+
+    function generateMandiPrices(state) {
+        const tbody = document.getElementById('mandi-table-body');
+        // Simulated Data based on state (Randomized slightly to look "Live")
+        const basePrices = [
+            { name: "Wheat", price: 2125 },
+            { name: "Mustard", price: 5450 },
+            { name: "Rice", price: 2040 },
+            { name: "Cotton", price: 6380 }
+        ];
+
+        tbody.innerHTML = "";
+
+        basePrices.forEach(crop => {
+            // Randomize price slightly to simulate live fluctuation
+            const livePrice = crop.price + Math.floor(Math.random() * 50) - 25;
+            const trend = Math.random() > 0.5 ? "up" : "down";
+            const arrow = trend === "up" ? "▲" : "▼";
+            const colorClass = trend === "up" ? "price-up" : "price-down";
+
+            const row = `
+                <tr>
+                    <td>${crop.name}</td>
+                    <td>₹${livePrice}</td>
+                    <td class="${colorClass}">${arrow}</td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+  </script>
+
+</body>
+</html>
