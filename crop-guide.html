@@ -244,17 +244,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { firebaseConfig } from "./assets/js/config.js"; 
 
-    // 1. CONFIG
-    const firebaseConfig = {
-      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4", // <-- PASTE YOUR REAL KEY
-      authDomain: "krishimitra-in.firebaseapp.com",
-      projectId: "krishimitra-in",
-      storageBucket: "krishimitra-in.firebasestorage.app",
-      messagingSenderId: "358772049936",
-      appId: "1:358772049936:web:c9e0d15e907216519fa295",
-      measurementId: "G-X0ZCQFY7E6"
-    };
     const WEATHER_API_KEY = "71ca48bb8af57498e0efdabac5f86f4d";
 
     const app = initializeApp(firebaseConfig);

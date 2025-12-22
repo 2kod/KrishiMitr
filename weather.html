@@ -328,7 +328,8 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    const firebaseConfig = { apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4", authDomain: "krishimitra-in.firebaseapp.com", projectId: "krishimitra-in", storageBucket: "krishimitra-in.firebasestorage.app", messagingSenderId: "358772049936", appId: "1:358772049936:web:c9e0d15e907216519fa295", measurementId: "G-X0ZCQFY7E6" };
+    import { firebaseConfig } from "./assets/js/config.js"; 
+    
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const authContainer = document.getElementById('auth-container');

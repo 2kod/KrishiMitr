@@ -243,20 +243,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    // -----------------------------------------------------------------
-    // 1. REPLACE WITH YOUR REAL KEY (DO NOT USE 'kkk')
-    // -----------------------------------------------------------------
-    const firebaseConfig = {
-      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4", // <-- YOUR REAL KEY HERE
-      authDomain: "krishimitra-in.firebaseapp.com",
-      projectId: "krishimitra-in",
-      storageBucket: "krishimitra-in.firebasestorage.app",
-      messagingSenderId: "358772049936",
-      appId: "1:358772049936:web:c9e0d15e907216519fa295",
-      measurementId: "G-X0ZCQFY7E6"
-    };
-
+    import { firebaseConfig } from "./assets/js/config.js"; 
+    
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);

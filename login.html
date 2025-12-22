@@ -135,18 +135,7 @@
     // 1. Import all necessary Firebase functions
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-    // 2. Your Firebase Config (ONLY ONE TIME, and use your REAL API Key)
-    const firebaseConfig = {
-      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4",// <-- THIS IS YOUR ACTUAL KEY
-      authDomain: "krishimitra-in.firebaseapp.com",
-      projectId: "krishimitra-in",
-      storageBucket: "krishimitra-in.firebasestorage.app",
-      messagingSenderId: "358772049936",
-      appId: "1:358772049936:web:c9e0d15e907216519fa295",
-      measurementId: "G-X0ZCQFY7E6"
-    };
-
+    import { firebaseConfig } from "./assets/js/config.js"; 
     // 3. Initialize Firebase ONCE
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
