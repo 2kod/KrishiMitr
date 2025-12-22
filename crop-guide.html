@@ -12,95 +12,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    /* --- 1. FIXED HEADER LAYOUT (Global Standard) --- */
-    .header .container {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding-block: 15px;
-    }
+    /* --- 1. MASTER HEADER STYLES (Identical to Homepage) --- */
+    .header .container { display: flex !important; align-items: center !important; justify-content: space-between !important; padding-block: 15px; }
+    .navbar-list { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; }
+    .navbar-link { font-weight: 600; color: var(--davys-gray); padding: 10px 0; }
+    .header-right-group { display: flex !important; align-items: center !important; gap: 20px; margin-left: auto; }
 
-    .navbar-list {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      margin: 0;
-      padding: 0;
-    }
-
-    .navbar-link {
-      font-weight: 600;
-      color: var(--davys-gray);
-      padding: 10px 0;
-    }
-
-    /* Right Grouping */
-    .header-right-group {
-      display: flex !important;
-      align-items: center !important;
-      gap: 20px; /* Space between items */
-      margin-left: auto;
-    }
-
-    /* --- COMPONENTS --- */
-    
-    /* Cart Icon */
+    /* Components */
     .nav-cart-box { position: relative; font-size: 1.8rem; color: #333; cursor: pointer; display: flex; align-items: center; margin-right: 5px; }
     .cart-badge { position: absolute; top: -8px; right: -10px; background-color: #ff4757; color: white; font-size: 0.75rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-
-    /* Language Box */
-    .lang-box {
-      display: flex;
-      align-items: center;
-      background-color: #ffffff;
-      border: 1px solid #e0e0e0;
-      border-radius: 50px;
-      padding: 0 15px;
-      min-width: 110px;
-      height: 45px;
-      overflow: hidden;
-    }
+    .lang-box { display: flex; align-items: center; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 50px; padding: 0 15px; min-width: 110px; height: 45px; overflow: hidden; }
     .lang-box ion-icon { font-size: 1.5rem; color: #333; margin-right: 8px; }
     #language-select { border: none; outline: none; background: transparent; font-family: 'Montserrat'; font-weight: 600; color: #333; font-size: 1rem; cursor: pointer; width: 100%; }
-
-    /* Sign Up Button */
-    .header .btn {
-      margin-inline-start: 0 !important; 
-      padding: 0 40px !important;
-      height: 45px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      font-size: 1.1rem !important;
-      font-weight: 700 !important;
-      min-width: 140px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    /* Profile Icon */
+    .header .btn { margin-inline-start: 0 !important; padding: 0 40px !important; height: 45px !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 1.1rem !important; font-weight: 700 !important; min-width: 140px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .nav-profile-btn { width: 45px; height: 45px; background-color: #1e7e34; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; transition: 0.3s; }
     .nav-profile-btn:hover { background-color: #155724; }
-
-    /* Google Translate Cleanup */
-    .goog-te-banner-frame.skiptranslate { display: none !important; } 
-    body { top: 0px !important; } 
-    .goog-te-gadget { font-size: 0 !important; }
-
+    .goog-te-banner-frame.skiptranslate { display: none !important; } body { top: 0px !important; } .goog-te-gadget { font-size: 0 !important; }
 
     /* --- 2. CROP GUIDE SPECIFIC STYLES --- */
     .page-banner { padding-top: 150px; padding-bottom: 80px; background-color: var(--cultured); text-align: center; }
     .page-banner .h1 { color: var(--black-chocolate); }
     .page-banner .p { font-size: var(--fs-5); max-width: 600px; margin: 15px auto 0; color: var(--davys-gray); }
 
-    /* Controls: Search & Filter */
+    /* Controls */
     .controls-section { padding-block: 40px; background-color: var(--white); border-bottom: 1px solid #eee; }
     .controls-container { display: flex; flex-direction: column; align-items: center; gap: 25px; }
-    
     .search-box { position: relative; width: 100%; max-width: 600px; }
     .search-box input { width: 100%; padding: 15px 20px 15px 50px; border: 1px solid #ddd; border-radius: 50px; font-size: 1rem; outline: none; transition: 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
     .search-box input:focus { border-color: var(--blue-green-color-wheel); }
     .search-box ion-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #777; font-size: 1.4rem; }
-
     .filter-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
     .filter-btn { padding: 10px 25px; border: 1px solid #ddd; border-radius: 50px; background: white; color: #555; cursor: pointer; font-weight: 600; transition: 0.3s; }
     .filter-btn.active, .filter-btn:hover { background: var(--blue-green-color-wheel); color: white; border-color: var(--blue-green-color-wheel); }
@@ -108,13 +48,13 @@
     /* Cards */
     .course-card { border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: 0.3s; height: 100%; display: flex; flex-direction: column; background: white; }
     .course-card:hover { transform: translateY(-5px); }
+    .card-banner { height: 220px; overflow: hidden; }
+    .img-cover { width: 100%; height: 100%; object-fit: cover; }
     .card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
-    
     .season-badge { display: inline-block; padding: 5px 15px; border-radius: 5px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
     .badge-rabi { background: #e3f2fd; color: #1565c0; } 
     .badge-kharif { background: #e8f5e9; color: #2e7d32; } 
     .badge-zaid { background: #fff3e0; color: #ef6c00; } 
-
     .card-title { font-size: 1.8rem; margin-bottom: 10px; color: var(--black-chocolate); }
     .card-hindi { font-size: 1.2rem; color: #777; font-weight: normal; }
     .card-desc { color: #555; font-size: 1rem; line-height: 1.6; margin-bottom: 25px; flex-grow: 1; }
@@ -210,7 +150,10 @@
       <section class="section course" style="background: #fafafa;">
         <div class="container">
           <ul class="grid-list" id="crop-grid">
-             </ul>
+             <p style="text-align: center; width: 100%; font-size: 1.2rem; color: #666;">
+                <ion-icon name="sync-outline" class="spin"></ion-icon> Loading smart crop data...
+             </p>
+          </ul>
         </div>
       </section>
 
@@ -245,9 +188,10 @@
         </div>
       </div>
       <div class="info-box" style="margin-top: 20px;">
-        <span class="info-label"><ion-icon name="leaf-outline"></ion-icon> Farming Tips</span>
+        <span class="info-label"><ion-icon name="leaf-outline"></ion-icon> Tips & Disease Control</span>
         <span class="info-value" id="m-tips">--</span>
       </div>
+      <div id="m-video-container"></div>
     </div>
   </div>
 
@@ -266,7 +210,7 @@
           <li><p class="footer-list-title">Quick Links</p></li>
           <li><a href="index.html" class="footer-link">Home</a></li>
           <li><a href="news.html" class="footer-link">News</a></li>
-          <li><a href="fertilizer-store.html" class="footer-link">Fertilizer Store</a></li>
+          <li><a href="fertilizer-store.html" class="footer-link">Marketplace</a></li>
           <li><a href="crop-guide.html" class="footer-link">Crop Guide</a></li>
           <li><a href="weather.html" class="footer-link">Weather</a></li>
           <li><a href="contact.html" class="footer-link">Contact</a></li>
@@ -296,96 +240,275 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-  <script>
-    // THE CROP DATABASE
-    const cropData = [
-      { name: "Wheat", hindi: "Gehoon", season: "Rabi", desc: "Ideally grown in winter. Requires cool growing season and bright sunshine at ripening.", temp: "10°C - 25°C", water: "450-650mm", soil: "Loam / Clay Loam", sowing: "Oct - Dec", tips: "Apply Nitrogen at crown root initiation." },
-      { name: "Rice", hindi: "Dhaan", season: "Kharif", desc: "The most important food crop. Needs flooded fields and high humidity.", temp: "20°C - 35°C", water: "1200mm+ (High)", soil: "Clayey Loam", sowing: "June - July", tips: "Maintain standing water. Use Azolla." },
-      { name: "Mustard", hindi: "Sarson", season: "Rabi", desc: "Major oilseed crop. Grows well in dry, cool climates.", temp: "10°C - 25°C", water: "Moderate", soil: "Light Loam", sowing: "Sep - Oct", tips: "Sulphur is key for oil content." },
-      { name: "Cotton", hindi: "Kapas", season: "Kharif", desc: "Fiber crop known as 'White Gold'. Needs frost-free days.", temp: "21°C - 30°C", water: "700mm", soil: "Black Cotton Soil", sowing: "April - June", tips: "Monitor for Bollworm." },
-      { name: "Watermelon", hindi: "Tarbuj", season: "Zaid", desc: "Summer crop. Needs hot dry climate for sweetness.", temp: "25°C - 40°C", water: "Frequent", soil: "Sandy Loam", sowing: "Feb - March", tips: "Mulching helps retain moisture." },
-      { name: "Cucumber", hindi: "Kheera", season: "Zaid", desc: "Short duration vine crop. Grows fast in summer.", temp: "20°C - 30°C", water: "Regular", soil: "Well-drained Loam", sowing: "Feb - March", tips: "Provide trellis support." },
-      { name: "Maize", hindi: "Makka", season: "Kharif", desc: "Queen of Cereals. Very sensitive to water stagnation.", temp: "21°C - 27°C", water: "500-800mm", soil: "Old Alluvial", sowing: "June - July", tips: "Ensure good drainage." },
-      { name: "Sugarcane", hindi: "Ganna", season: "Kharif", desc: "Long duration cash crop. Needs hot humid climate.", temp: "20°C - 35°C", water: "Very High", soil: "Deep rich Loamy", sowing: "Feb - April", tips: "Trash mulching conserves moisture." }
-    ];
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const gridContainer = document.getElementById('crop-grid');
+    // 1. CONFIG
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4", // <-- PASTE YOUR REAL KEY
+      authDomain: "krishimitra-in.firebaseapp.com",
+      projectId: "krishimitra-in",
+      storageBucket: "krishimitra-in.firebasestorage.app",
+      messagingSenderId: "358772049936",
+      appId: "1:358772049936:web:c9e0d15e907216519fa295",
+      measurementId: "G-X0ZCQFY7E6"
+    };
+    const WEATHER_API_KEY = "71ca48bb8af57498e0efdabac5f86f4d";
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    let db;
+    try { db = getFirestore(app, "crops"); } catch(e) { db = getFirestore(app); }
+
+    // 2. IMAGE DICTIONARY (Backup for missing database images)
+    const CROP_IMAGES = {
+        "Wheat": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80",
+        "Rice": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80",
+        "Cotton": "https://images.unsplash.com/photo-1594220309564-9464e0302b41?w=500&q=80",
+        "Sugarcane": "https://images.unsplash.com/photo-1629814596185-3b94a504112e?w=500&q=80",
+        "Mustard": "https://images.unsplash.com/photo-1509653087866-91f6c2ab59f2?w=500&q=80",
+        "Potato": "https://images.unsplash.com/photo-1518977676601-b53f82a6b69d?w=500&q=80",
+        "Onion": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&q=80",
+        "Tomato": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&q=80",
+        "Corn": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&q=80",
+        "Maize": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&q=80",
+        "Soybean": "https://images.unsplash.com/photo-1615485925694-a039779d71de?w=500&q=80",
+        "Groundnut": "https://images.unsplash.com/photo-1567609026462-7933fa7604d7?w=500&q=80",
+        "Chickpea": "https://images.unsplash.com/photo-1515543904379-3d757afe72e3?w=500&q=80",
+        "Turmeric": "https://images.unsplash.com/photo-1615485500704-8e99099928b3?w=500&q=80",
+        "Chili": "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=500&q=80",
+        "Bajra": "https://plus.unsplash.com/premium_photo-1661962447230-22c653926674?w=500&q=80",
+        "Jowar": "https://images.unsplash.com/photo-1530272638864-7729dc779607?w=500&q=80",
+        "Pearl Millet": "https://plus.unsplash.com/premium_photo-1661962447230-22c653926674?w=500&q=80",
+        "Sorghum": "https://images.unsplash.com/photo-1530272638864-7729dc779607?w=500&q=80",
+        "Pigeon Pea": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Pigeon_peas.jpg/640px-Pigeon_peas.jpg"
+    };
+    const GENERIC_FARM_IMG = "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80";
+
+    // 3. STATE
+    let cropData = []; 
+
+    // 4. FETCH CROPS
+    async function loadCrops() {
+        const grid = document.getElementById('crop-grid');
+        try {
+            const querySnapshot = await getDocs(collection(db, "crops"));
+            cropData = [];
+            
+            if(querySnapshot.empty) {
+                grid.innerHTML = '<p style="text-align:center;">Database is empty.</p>';
+                return;
+            }
+
+            querySnapshot.forEach((doc) => {
+                cropData.push(doc.data());
+            });
+            
+            renderCrops(cropData);
+
+        } catch (error) {
+            console.error("Error:", error);
+            // Fallback: If "crops" database failed, try default
+            if(error.code === 'not-found') {
+               grid.innerHTML = '<p style="text-align:center; color:red;">Database not found. Check Console.</p>';
+            }
+        }
+    }
+
+    // 5. RENDER FUNCTION (With Smart Image Logic)
+    window.renderCrops = function(data) {
+        const grid = document.getElementById('crop-grid');
+        grid.innerHTML = '';
+
+        if (data.length === 0) {
+            grid.innerHTML = '<p style="text-align:center; width:100%; font-size:1.5rem; color:#777;">No crops found.</p>';
+            return;
+        }
+
+        data.forEach(crop => {
+            let badgeClass = 'badge-rabi';
+            if(crop.season === 'Kharif') badgeClass = 'badge-kharif';
+            if(crop.season === 'Zaid') badgeClass = 'badge-zaid';
+
+            // --- SMART IMAGE LOGIC ---
+            // 1. Try DB image. 2. Try Dictionary. 3. Use Generic.
+            let imageUrl = crop.image;
+            if (!imageUrl || imageUrl.includes('placeholder')) {
+                imageUrl = CROP_IMAGES[crop.name] || GENERIC_FARM_IMG;
+            }
+
+            const html = `
+              <li>
+                <div class="course-card">
+                  <figure class="card-banner img-holder" style="--width: 370; --height: 220;">
+                    <img src="${imageUrl}" width="370" height="220" loading="lazy" alt="${crop.name}" class="img-cover" onerror="this.onerror=null;this.src='${GENERIC_FARM_IMG}';">
+                  </figure>
+                  <div class="card-content">
+                    <span class="season-badge ${badgeClass}">${crop.season}</span>
+                    <h3 class="h3 card-title">${crop.name} <span class="card-hindi">(${crop.hindi || ''})</span></h3>
+                    <p class="card-desc" style="margin-bottom:15px;">${crop.desc}</p>
+                    <div style="display:flex; gap:15px; margin-bottom:20px; font-size:0.9rem; color:#555;">
+                        <span><ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon> ${crop.duration}</span>
+                        <span><ion-icon name="water-outline" style="vertical-align:middle;"></ion-icon> ${crop.soil ? crop.soil.split(' ')[0] : 'Loam'}</span>
+                    </div>
+                    <button class="btn btn-secondary" onclick="window.openModal('${crop.name}')" style="width:100%;">View Full Guide</button>
+                  </div>
+                </div>
+              </li>
+            `;
+            grid.innerHTML += html;
+        });
+    }
+
+    // 6. SMART LOCATION LOGIC
+    const controlsContainer = document.querySelector('.controls-container');
+    const locationBtn = document.createElement('button');
+    locationBtn.innerHTML = '<ion-icon name="location-outline"></ion-icon> Suggest Crops for My Location';
+    locationBtn.className = 'btn btn-primary';
+    locationBtn.style.marginBottom = '20px';
+    locationBtn.onclick = getUserLocation;
+    controlsContainer.insertBefore(locationBtn, controlsContainer.firstChild);
+
+    function getUserLocation() {
+        if (navigator.geolocation) {
+            locationBtn.innerHTML = "Detecting...";
+            navigator.geolocation.getCurrentPosition(fetchLocalWeather, () => alert("Location access denied."));
+        } else {
+            alert("Geolocation not supported.");
+        }
+    }
+
+    async function fetchLocalWeather(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            recommendCrops(data);
+        } catch (error) {
+            console.error("Weather API Error:", error);
+            locationBtn.innerHTML = 'Try Again';
+        }
+    }
+
+    function recommendCrops(weatherData) {
+        const temp = weatherData.main.temp;
+        const month = new Date().getMonth(); 
+        let currentSeason = "";
+
+        if (month >= 5 && month <= 8) currentSeason = "Kharif";
+        else if (month >= 9 && month <= 1) currentSeason = "Rabi";
+        else currentSeason = "Zaid";
+
+        locationBtn.innerHTML = `📍 Location: ${weatherData.name} (${currentSeason})`;
+        locationBtn.classList.replace('btn-primary', 'btn-secondary');
+
+        const recommended = cropData.filter(crop => crop.season === currentSeason);
+        
+        const grid = document.getElementById('crop-grid');
+        grid.innerHTML = `<h3 style="width:100%; text-align:center; margin-bottom:20px; color:#1e7e34;">Recommended for ${weatherData.name} (${Math.round(temp)}°C)</h3>`;
+        
+        renderCrops(recommended);
+        
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector(`button[data-filter="${currentSeason}"]`);
+        if(activeBtn) activeBtn.classList.add('active');
+    }
+
+    // 7. SEARCH & FILTER
     const searchInput = document.getElementById('search-input');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
-    function renderCrops(filter = 'all', searchText = '') {
-      gridContainer.innerHTML = '';
-      const filteredData = cropData.filter(crop => {
-        const matchesFilter = filter === 'all' || crop.season === filter;
-        const matchesSearch = crop.name.toLowerCase().includes(searchText.toLowerCase()) || crop.hindi.toLowerCase().includes(searchText.toLowerCase());
-        return matchesFilter && matchesSearch;
-      });
-
-      if (filteredData.length === 0) {
-        gridContainer.innerHTML = '<p style="text-align:center; width:100%; font-size:1.5rem; color:#777;">No crops found.</p>';
-        return;
-      }
-
-      filteredData.forEach(crop => {
-        let badgeClass = 'badge-rabi';
-        if(crop.season === 'Kharif') badgeClass = 'badge-kharif';
-        if(crop.season === 'Zaid') badgeClass = 'badge-zaid';
-
-        const html = `
-          <li>
-            <div class="course-card">
-              <div class="card-content">
-                <span class="season-badge ${badgeClass}">${crop.season}</span>
-                <h3 class="h3 card-title">${crop.name} <span class="card-hindi">(${crop.hindi})</span></h3>
-                <p class="card-desc">${crop.desc}</p>
-                <button class="btn btn-secondary" onclick="openModal('${crop.name}')" style="width:100%;">Read Full Guide</button>
-              </div>
-            </div>
-          </li>
-        `;
-        gridContainer.innerHTML += html;
-      });
-    }
-    renderCrops();
-
     searchInput.addEventListener('input', (e) => {
       const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
-      renderCrops(activeFilter, e.target.value);
+      filterAndRender(activeFilter, e.target.value);
     });
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        renderCrops(btn.dataset.filter, searchInput.value);
+        filterAndRender(btn.dataset.filter, searchInput.value);
       });
     });
 
-    // Modal
+    function filterAndRender(filter, searchText) {
+        searchText = searchText.toLowerCase();
+        const filtered = cropData.filter(crop => {
+            const matchSeason = filter === 'all' || crop.season === filter;
+            const matchText = crop.name.toLowerCase().includes(searchText) || (crop.hindi && crop.hindi.toLowerCase().includes(searchText));
+            return matchSeason && matchText;
+        });
+        renderCrops(filtered);
+    }
+
+    // 8. MODAL LOGIC
     const modal = document.getElementById('crop-modal');
     window.openModal = function(cropName) {
       const crop = cropData.find(c => c.name === cropName);
       if(!crop) return;
+
       document.getElementById('m-name').textContent = crop.name;
-      document.getElementById('m-hindi').textContent = crop.hindi;
+      document.getElementById('m-hindi').textContent = crop.hindi || '';
       document.getElementById('m-season').textContent = crop.season;
-      document.getElementById('m-season').className = `season-badge badge-${crop.season.toLowerCase()}`;
+      const seasonLower = crop.season.toLowerCase();
+      document.getElementById('m-season').className = `season-badge badge-${seasonLower}`; 
       document.getElementById('m-desc').textContent = crop.desc;
       document.getElementById('m-temp').textContent = crop.temp;
       document.getElementById('m-water').textContent = crop.water;
       document.getElementById('m-soil').textContent = crop.soil;
       document.getElementById('m-sowing').textContent = crop.sowing;
-      document.getElementById('m-tips').textContent = crop.tips;
+      
+      document.getElementById('m-tips').innerHTML = `
+        <strong>Duration:</strong> ${crop.duration}<br>
+        <strong style="color:#d32f2f;">Common Disease:</strong> ${crop.disease}<br>
+        <strong style="color:#1e7e34;">Recommended Cure:</strong> ${crop.cure}
+      `;
+
+      let videoContainer = document.getElementById('m-video-container');
+      if (!videoContainer) {
+          videoContainer = document.createElement('div');
+          videoContainer.id = 'm-video-container';
+          document.querySelector('.modal-box').appendChild(videoContainer);
+      }
+      
+      const vId = crop.videoId || 'Q4sL-s3gP4w'; 
+      videoContainer.innerHTML = `
+        <div style="margin-top:20px; border-radius:10px; overflow:hidden;">
+            <h3 class="h3" style="margin-bottom:10px; font-size:1.4rem;">Video Tutorial</h3>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/${vId}" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+        </div>
+      `;
+
       modal.style.display = 'flex';
     }
-    window.closeModal = function() { modal.style.display = 'none'; }
+
+    window.closeModal = function() {
+      modal.style.display = 'none';
+      const videoContainer = document.getElementById('m-video-container');
+      if(videoContainer) videoContainer.innerHTML = '';
+    }
     window.onclick = function(event) { if (event.target == modal) closeModal(); }
 
-    // Translation & Cart
-    function updateCartDisplay() {
-        const count = localStorage.getItem('krishiCartCount') || 0;
-        document.getElementById('global-cart-count').textContent = count;
+    // 9. AUTH & CART
+    const authContainer = document.getElementById('auth-container');
+    if (authContainer) {
+      onAuthStateChanged(auth, (user) => {
+        const currentLang = document.getElementById('language-select').value;
+        const dict = translations[currentLang];
+        if (user) {
+          authContainer.innerHTML = `<a href="dashboard.html" class="nav-profile-btn"><ion-icon name="person-circle-outline"></ion-icon></a>`;
+        } else {
+          authContainer.innerHTML = `<a href="signup.html" class="btn btn-primary" id="auth-button">${dict.btn_signup}</a>`;
+        }
+      });
     }
+    
+    // 10. LANGUAGE
     const translations = {
       en: { nav_home: "Home", nav_news: "News", nav_store: "Store", nav_guide: "Crop Guide", nav_weather: "Weather", nav_contact: "Contact", btn_signup: "Sign Up", btn_logout: "Logout", nav_dashboard: "Dashboard" },
       hi: { nav_home: "होम", nav_news: "समाचार", nav_store: "दुकान", nav_guide: "फसल गाइड", nav_weather: "मौसम", nav_contact: "संपर्क", btn_signup: "साइन अप", btn_logout: "लॉग आउट", nav_dashboard: "डैशबोर्ड" }
@@ -397,39 +520,16 @@
         if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
       });
     }
-    document.addEventListener('DOMContentLoaded', updateCartDisplay);
-  </script>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    // PASTE YOUR KEY
-    const firebaseConfig = {
-      apiKey: "AIzaSyCgG8jweCEeWalGDdZ8j1sE2BYJQCpfWK4", 
-      authDomain: "krishimitra-in.firebaseapp.com",
-      projectId: "krishimitra-in",
-      storageBucket: "krishimitra-in.firebasestorage.app",
-      messagingSenderId: "358772049936",
-      appId: "1:358772049936:web:c9e0d15e907216519fa295",
-      measurementId: "G-X0ZCQFY7E6"
-    };
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const authContainer = document.getElementById('auth-container');
-
-    if (authContainer) {
-      onAuthStateChanged(auth, (user) => {
-        const currentLang = document.getElementById('language-select').value;
-        const dict = translations[currentLang];
-        if (user) {
-          // User Logged In: Show Profile Icon
-          authContainer.innerHTML = `<a href="dashboard.html" class="nav-profile-btn"><ion-icon name="person-circle-outline"></ion-icon></a>`;
-        } else {
-          // User Logged Out: Show Sign Up Button
-          authContainer.innerHTML = `<a href="signup.html" class="btn btn-primary" id="auth-button">${dict.btn_signup}</a>`;
-        }
-      });
+    function updateCartDisplay() {
+        const count = localStorage.getItem('krishiCartCount') || 0;
+        document.getElementById('global-cart-count').textContent = count;
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCrops();
+        updateCartDisplay();
+    });
   </script>
 
 </body>
