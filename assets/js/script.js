@@ -1,18 +1,27 @@
 'use strict';
 
+/**
+ * add event on element
+ */
 const addEventOnElem = function (elem, type, callback) {
-    // Check if elem is an iterable collection (like NodeList or HTMLCollection)
-    // and if it has a 'length' property and is not a string or a simple object.
-    if (elem && typeof elem.length === 'number' && typeof elem !== 'string' && !(elem instanceof Element)) {
-        for (let i = 0; i < elem.length; i++) {
-            elem[i].addEventListener(type, callback);
+  if (elem) {
+    if (elem.length && typeof elem.length !== 'undefined') { // Check if it's an array-like object
+      for (let i = 0; i < elem.length; i++) {
+        if (elem[i] && typeof elem[i].addEventListener === 'function') { // Ensure element exists and has addEventListener
+          elem[i].addEventListener(type, callback);
+        } else {
+          console.warn("Attempted to add event listener to a non-element in a collection:", elem[i]);
         }
-    } else if (elem) { // If it's a single element and not null/undefined
-        elem.addEventListener(type, callback);
+      }
+    } else if (typeof elem.addEventListener === 'function') { // If it's a single element with addEventListener
+      elem.addEventListener(type, callback);
     } else {
-        console.warn('Attempted to add event listener to a null or undefined element.', elem);
+      console.warn("Attempted to add event listener to an invalid element:", elem);
     }
+  }
 }
+
+// ... rest of your code
 
 /**
  * navbar toggle
