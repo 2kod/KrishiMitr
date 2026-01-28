@@ -1,25 +1,22 @@
 'use strict';
 
-
-
-/**
- * add event on element - SAFE VERSION
- */
 const addEventOnElem = function (elem, type, callback) {
-  if (!elem) return; // If element doesn't exist, do nothing (Prevents Error)
-
-  if (elem.length > 1) {
-    for (let i = 0; i < elem.length; i++) {
-      elem[i].addEventListener(type, callback);
+    // Check if elem is an iterable collection (like NodeList or HTMLCollection)
+    // and if it has a 'length' property and is not a string or a simple object.
+    if (elem && typeof elem.length === 'number' && typeof elem !== 'string' && !(elem instanceof Element)) {
+        for (let i = 0; i < elem.length; i++) {
+            elem[i].addEventListener(type, callback);
+        }
+    } else if (elem) { // If it's a single element and not null/undefined
+        elem.addEventListener(type, callback);
+    } else {
+        console.warn('Attempted to add event listener to a null or undefined element.', elem);
     }
-  } else {
-    elem.addEventListener(type, callback);
-  }
 }
+
 /**
  * navbar toggle
  */
-
 const navbar = document.querySelector("[data-navbar]");
 const navTogglers = document.querySelectorAll("[data-nav-toggler]");
 const navLinks = document.querySelectorAll("[data-nav-link]");
@@ -39,40 +36,35 @@ const closeNavbar = function () {
 
 addEventOnElem(navLinks, "click", closeNavbar);
 
-
-
 /**
  * header active
  */
-
 const header = document.querySelector("[data-header]");
 const backTopBtn = document.querySelector("[data-back-top-btn]");
 
 window.addEventListener("scroll", function () {
   if (window.scrollY >= 100) {
     header.classList.add("active");
-    backTopBtn.classList.add("active");
+    if(backTopBtn) backTopBtn.classList.add("active"); // Safety check
   } else {
     header.classList.remove("active");
-    backTopBtn.classList.remove("active");
+    if(backTopBtn) backTopBtn.classList.remove("active"); // Safety check
   }
 });
-
-
 
 /**
  * scroll reveal effect
  */
-
 const sections = document.querySelectorAll("[data-section]");
 
 const reveal = function () {
   for (let i = 0; i < sections.length; i++) {
-
-    if (sections[i].getBoundingClientRect().top < window.innerHeight / 2) {
-      sections[i].classList.add("active");
+    // Safety check: ensure section exists before measuring
+    if (sections[i]) {
+        if (sections[i].getBoundingClientRect().top < window.innerHeight / 2) {
+          sections[i].classList.add("active");
+        }
     }
-
   }
 }
 
