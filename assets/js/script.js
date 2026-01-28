@@ -3,10 +3,11 @@
 
 
 /**
- * add event on element
+ * add event on element - SAFE VERSION
  */
-
 const addEventOnElem = function (elem, type, callback) {
+  if (!elem) return; // If element doesn't exist, do nothing (Prevents Error)
+
   if (elem.length > 1) {
     for (let i = 0; i < elem.length; i++) {
       elem[i].addEventListener(type, callback);
@@ -15,9 +16,6 @@ const addEventOnElem = function (elem, type, callback) {
     elem.addEventListener(type, callback);
   }
 }
-
-
-
 /**
  * navbar toggle
  */
