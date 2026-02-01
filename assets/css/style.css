@@ -1444,3 +1444,50 @@ body {
   .footer-top .container { column-gap: 100px; }
 
 }
+/* =========================================
+   GLOBAL MOBILE RESPONSIVENESS (Apply to All Pages)
+   Paste this at the bottom of assets/css/style.css
+   ========================================= */
+
+@media (max-width: 992px) {
+
+  /* 1. Fix the Header & Navbar */
+  .navbar { display: none; } /* Hide desktop menu */
+  .header-right-group { margin-right: 50px; gap: 8px; } /* Make space for hamburger */
+  
+  .header .btn { padding: 0 15px; height: 36px; font-size: 0.85rem; }
+  .lang-box { padding: 0 5px; height: 36px; }
+  .nav-cart-box { font-size: 1.4rem; }
+
+  /* 2. Fix All Grids (Contact, Shop, News) */
+  .contact-wrapper, 
+  .grid-list, 
+  .product-grid,
+  .features-list { 
+      grid-template-columns: 1fr !important; /* Force single column */
+      gap: 30px !important;
+  }
+
+  /* 3. Fix Container Padding */
+  .container { 
+      padding-left: 20px !important; 
+      padding-right: 20px !important; 
+      width: 100% !important;
+  }
+
+  /* 4. Fix Big Headings */
+  .h1 { font-size: 2rem !important; line-height: 1.2; }
+  .h2 { font-size: 1.6rem !important; }
+  
+  /* 5. Fix Page Banners */
+  .page-banner { padding-top: 120px; padding-bottom: 40px; }
+
+  /* 6. Make All Inputs Finger-Friendly */
+  input, select, textarea, button {
+      min-height: 44px; /* Minimum touch target size */
+      font-size: 16px !important; /* Prevents zooming on iPhone */
+  }
+
+  /* 7. Fix Tables (if any) to scroll */
+  table { display: block; overflow-x: auto; white-space: nowrap; }
+}
