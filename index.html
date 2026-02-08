@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    /* --- 1. HEADER LAYOUT (UNCHANGED) --- */
+    /* --- 1. HEADER LAYOUT --- */
     .header .container {
       display: flex !important;
       align-items: center !important;
@@ -35,9 +35,70 @@
       font-weight: 600;
       color: var(--davys-gray);
       padding: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    /* Right Grouping */
+    /* --- DROPDOWN MENU STYLES --- */
+    .dropdown-wrapper { position: relative; }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: white;
+      min-width: 220px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      padding: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 1100;
+      border: 1px solid #f0f0f0;
+    }
+    
+    .dropdown-wrapper:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-top: 1px solid #f0f0f0;
+      border-left: 1px solid #f0f0f0;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: #444;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+    
+    .dropdown-item:hover {
+      background: #e8f5e9;
+      color: #1e7e34;
+    }
+
+    /* --- END DROPDOWN --- */
+
     .header-right-group {
       display: flex !important;
       align-items: center !important;
@@ -45,7 +106,6 @@
       margin-left: auto;
     }
 
-    /* Language Box */
     .lang-box {
       display: flex;
       align-items: center;
@@ -60,7 +120,6 @@
     .lang-box ion-icon { font-size: 1.5rem; color: #333; margin-right: 8px; }
     #language-select { border: none; outline: none; background: transparent; font-family: 'Montserrat'; font-weight: 600; color: #333; font-size: 1rem; cursor: pointer; width: 100%; }
 
-    /* Sign Up Button */
     .header .btn {
       margin-inline-start: 0 !important; 
       padding: 0 40px !important;
@@ -74,33 +133,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
-    /* Cart Icon */
-    .nav-cart-box {
-      position: relative;
-      font-size: 1.8rem;
-      color: #333;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      margin-right: 5px;
-    }
-    .cart-badge {
-      position: absolute;
-      top: -8px;
-      right: -10px;
-      background-color: #ff4757;
-      color: white;
-      font-size: 0.75rem;
-      font-weight: bold;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Profile Icon */
     .nav-profile-btn {
       width: 45px; height: 45px; background-color: #1e7e34; color: white;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -108,7 +140,6 @@
     }
     .nav-profile-btn:hover { background-color: #155724; }
 
-    /* Google Translate Cleanup */
     .goog-te-banner-frame.skiptranslate { display: none !important; } 
     body { top: 0px !important; } 
     .goog-te-gadget { font-size: 0 !important; }
@@ -130,6 +161,20 @@
       .header-right-group { margin-right: 60px; gap: 10px; }
       .lang-box { padding: 0 8px; min-width: auto; height: 40px !important; }
       .header .btn { padding: 0 15px !important; height: 40px !important; font-size: 0.9rem !important; min-width: auto; }
+      
+      /* Mobile Dropdown Logic */
+      .dropdown-menu { 
+          position: static; 
+          transform: none; 
+          box-shadow: none; 
+          border: none; 
+          padding-left: 20px; 
+          background: #f9f9f9; 
+          display: none; 
+          opacity: 1; 
+          visibility: visible;
+      }
+      .dropdown-wrapper:hover .dropdown-menu { display: block; }
     }
   </style>
 </head>
@@ -151,7 +196,25 @@
         <ul class="navbar-list">
           <li class="navbar-item"><a href="index.html" class="navbar-link active" data-nav-link data-i18n="nav_home">Home</a></li>
           <li class="navbar-item"><a href="news.html" class="navbar-link" data-nav-link data-i18n="nav_news">News</a></li>
-          <li class="navbar-item"><a href="fertilizer-store.html" class="navbar-link" data-nav-link data-i18n="nav_store">Marketplace</a></li>
+          
+          <li class="navbar-item dropdown-wrapper">
+            <a href="#" class="navbar-link" data-i18n="nav_store">
+               Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1rem;"></ion-icon>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="fertilizer-store.html" class="dropdown-item">
+                        <ion-icon name="storefront-outline"></ion-icon> Find Stores
+                    </a>
+                </li>
+                <li>
+                    <a href="mandi-prices.html" class="dropdown-item">
+                        <ion-icon name="bar-chart-outline"></ion-icon> Mandi Prices
+                    </a>
+                </li>
+            </ul>
+          </li>
+
           <li class="navbar-item"><a href="crop-guide.html" class="navbar-link" data-nav-link data-i18n="nav_guide">Crop Guide</a></li>
           <li class="navbar-item"><a href="weather.html" class="navbar-link" data-nav-link data-i18n="nav_weather">Weather</a></li>
           <li class="navbar-item"><a href="contact.html" class="navbar-link" data-nav-link data-i18n="nav_contact">Contact</a></li>
@@ -160,11 +223,6 @@
 
       <div class="header-right-group">
         
-        <a href="fertilizer-store.html" class="nav-cart-box" title="Your Cart">
-            <ion-icon name="cart-outline"></ion-icon>
-            <span class="cart-badge" id="global-cart-count">0</span>
-        </a>
-
         <div class="lang-box">
           <ion-icon name="language-outline"></ion-icon>
           <select id="language-select" onchange="changeLanguage(this.value)">
@@ -197,7 +255,7 @@
           <p class="hero-subtitle" data-i18n="hero_sub">Smart Farming, Simplified.</p>
           <h1 class="h1 hero-title" style="color: white;" data-i18n="hero_title">कृषिMitra: Your Farm's Best Friend.</h1>
           <p class="hero-text" data-i18n="hero_text">
-          Get seasonal crop advice, buy quality fertilisers, and stay updated with the latest agri-news—all in one place.
+          Get seasonal crop advice, check live mandi prices, and stay updated with the latest agri-news—all in one place.
           </p>
           <a href="#about" class="btn btn-secondary" data-i18n="btn_learn">Learn More</a>
           
@@ -226,9 +284,9 @@
             <li>
               <div class="service-card active">
                 <div class="card-icon"><img src="./assets/images/service-2.svg" width="60" height="60" loading="lazy" alt="Basic Course"></div>
-                <h3 class="h3"><a href="fertilizer-store.html" class="card-title" data-i18n="feat_store">Fertilizer Store</a></h3>
-                <p class="card-text" data-i18n="feat_store_desc">Quality fertilizers for healthier crops and better yields. All products tested and certified.</p>
-                <a href="fertilizer-store.html" class="btn btn-secondary"><ion-icon name="arrow-forward"></ion-icon></a>
+                <h3 class="h3"><a href="mandi-prices.html" class="card-title" data-i18n="feat_store">Mandi Prices</a></h3>
+                <p class="card-text" data-i18n="feat_store_desc">Check real-time market rates and find authorized fertilizer stores near you.</p>
+                <a href="mandi-prices.html" class="btn btn-secondary"><ion-icon name="arrow-forward"></ion-icon></a>
               </div>
             </li>
             <li>
@@ -327,7 +385,7 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
   <script>
-    // 1. API KEY
+    // 1. API KEY (Using the key from your script)
     const API_KEY = "pub_aa53d72288e74dcf9b2d3e7183148e1b"; 
     
     // 2. BACKUP DATA
@@ -415,19 +473,14 @@
   </script>
 
   <script>
-    function updateCartDisplay() {
-        const count = localStorage.getItem('krishiCartCount') || 0;
-        const badge = document.getElementById('global-cart-count');
-        if(badge) badge.textContent = count;
-    }
     const translations = {
       en: {
-        nav_home: "Home", nav_news: "News", nav_store: "Store", nav_guide: "Crop Guide", nav_weather: "Weather", nav_contact: "Contact",
+        nav_home: "Home", nav_news: "News", nav_store: "Marketplace", nav_guide: "Crop Guide", nav_weather: "Weather", nav_contact: "Contact",
         btn_signup: "Sign Up", btn_login: "Login", btn_logout: "Logout",
-        hero_sub: "Smart Farming, Simplified.", hero_title: "कृषिMitra: Your Farm's Best Friend.", hero_text: "Get seasonal crop advice, buy quality fertilisers, and stay updated with the latest agri-news—all in one place.",
+        hero_sub: "Smart Farming, Simplified.", hero_title: "कृषिMitra: Your Farm's Best Friend.", hero_text: "Get seasonal crop advice, check live mandi prices, and stay updated with the latest agri-news—all in one place.",
         btn_learn: "Learn More", connect_us: "Connect with us:",
         feat_news: "News", feat_news_desc: "Stay updated with the latest developments, research, and trends in modern agriculture",
-        feat_store: "Fertilizer Store", feat_store_desc: "Quality fertilizers for healthier crops and better yields. All products tested and certified.",
+        feat_store: "Mandi Prices", feat_store_desc: "Check real-time market rates and find authorized fertilizer stores near you.",
         feat_crop: "Crop Guide", feat_crop_desc: "Data-driven recommendations for optimal crop selection based on season, climate, and market conditions",
         btn_about: "About Us", about_sub: "About Krishimitr: Your Partner in Growth", about_title: "Empowering farmers with the knowledge and tools.", about_text: "At Krishimitr, our name is our mission: to be the farmer's best friend (Krishi + Mitr). We are a dedicated agri-tech platform built to bring the power of technology right to your fingertips.",
         news_sub: "Latest News", news_title: "Agricultural News & Insights", btn_view_news: "View All News",
@@ -435,12 +488,12 @@
         footer_links: "Quick Links", footer_help: "Help Links", footer_loc: "Location"
       },
       hi: {
-        nav_home: "होम", nav_news: "समाचार", nav_store: "दुकान", nav_guide: "फसल गाइड", nav_weather: "मौसम", nav_contact: "संपर्क",
+        nav_home: "होम", nav_news: "समाचार", nav_store: "बाजार", nav_guide: "फसल गाइड", nav_weather: "मौसम", nav_contact: "संपर्क",
         btn_signup: "साइन अप", btn_login: "लॉग इन", btn_logout: "लॉग आउट",
-        hero_sub: "स्मार्ट खेती, सरल बनाई गई।", hero_title: "कृषिMitra: आपके खेत का सबसे अच्छा दोस्त।", hero_text: "मौसमी फसल सलाह प्राप्त करें, गुणवत्ता वाले उर्वरक खरीदें और नवीनतम कृषि समाचारों से अपडेट रहें - सब एक ही स्थान पर।",
+        hero_sub: "स्मार्ट खेती, सरल बनाई गई।", hero_title: "कृषिMitra: आपके खेत का सबसे अच्छा दोस्त।", hero_text: "मौसमी फसल सलाह प्राप्त करें, मंडी के भाव देखें और नवीनतम कृषि समाचारों से अपडेट रहें - सब एक ही स्थान पर।",
         btn_learn: "और जानें", connect_us: "हमसे जुड़ें:",
         feat_news: "समाचार", feat_news_desc: "आधुनिक कृषि में नवीनतम विकास, अनुसंधान और रुझानों के साथ अपडेट रहें।",
-        feat_store: "उर्वरक स्टोर", feat_store_desc: "स्वस्थ फसलों और बेहतर उपज के लिए गुणवत्ता वाले उर्वरक। सभी उत्पाद परीक्षण और प्रमाणित।",
+        feat_store: "मंडी भाव", feat_store_desc: "वास्तविक समय के बाजार भाव देखें और अपने निकटतम अधिकृत उर्वरक स्टोर खोजें।",
         feat_crop: "फसल गाइड", feat_crop_desc: "मौसम, जलवायु और बाजार की स्थितियों के आधार पर इष्टतम फसल चयन के लिए सिफारिशें।",
         btn_about: "हमारे बारे में", about_sub: "कृषि मित्र के बारे में: विकास में आपका भागीदार", about_title: "किसानों को ज्ञान और उपकरणों के साथ सशक्त बनाना।", about_text: "कृषि मित्र में, हमारा नाम ही हमारा मिशन है: किसान का सबसे अच्छा दोस्त बनना। हम एक समर्पित एग्री-टेक प्लेटफॉर्म हैं जो तकनीक की शक्ति को आपकी उंगलियों तक लाने के लिए बनाया गया है।",
         news_sub: "ताज़ा खबर", news_title: "कृषि समाचार और अंतर्दृष्टि", btn_view_news: "सभी समाचार देखें",
@@ -458,8 +511,6 @@
         }
       });
     }
-    
-    document.addEventListener('DOMContentLoaded', updateCartDisplay);
   </script>
 
   <script type="module">

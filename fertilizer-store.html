@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Find Stores - कृषिMitra</title>
+  <title>Marketplace - कृषिMitra</title>
 
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/css/style.css">
@@ -23,21 +23,80 @@
       --shadow-md: 0 10px 15px rgba(0,0,0,0.1);
     }
     
-    /* Removed body font-size override so it matches homepage */
     body { font-family: 'Montserrat', sans-serif; background-color: #f9fbfd; }
 
-    /* --- 1. MASTER HEADER (Exact Match) --- */
+    /* --- 1. HEADER & DROPDOWN STYLES --- */
     .header { background: var(--white); box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 1000; }
     .header .container { display: flex !important; align-items: center !important; justify-content: space-between !important; padding-block: 15px; }
     
     .navbar-list { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; list-style: none; }
-    
-    /* Removed specific font-size here so it uses your global style.css size */
-    .navbar-link { font-weight: 600; color: var(--davys-gray); padding: 10px 0; text-decoration: none; transition: 0.3s; }
+    .navbar-link { font-weight: 600; color: var(--davys-gray); padding: 10px 0; text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
     .navbar-link:hover, .navbar-link.active { color: var(--primary); }
     
-    .header-right-group { display: flex !important; align-items: center !important; gap: 20px; margin-left: auto; }
+    /* --- NEW: DROPDOWN CSS --- */
+    .dropdown-wrapper { position: relative; }
     
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px); /* Start slightly lower */
+      background: white;
+      min-width: 220px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      padding: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 1100;
+      border: 1px solid #f0f0f0;
+    }
+    
+    /* Show Dropdown on Hover */
+    .dropdown-wrapper:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Small Triangle Arrow for Menu */
+    .dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-top: 1px solid #f0f0f0;
+      border-left: 1px solid #f0f0f0;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: #444;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+    
+    .dropdown-item:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+    
+    .dropdown-item ion-icon { font-size: 1.2rem; }
+
+    /* --- END DROPDOWN CSS --- */
+
+    .header-right-group { display: flex !important; align-items: center !important; gap: 20px; margin-left: auto; }
     .nav-cart-box { position: relative; font-size: 1.8rem; color: #333; cursor: pointer; display: flex; align-items: center; margin-right: 5px; }
     .cart-badge { position: absolute; top: -8px; right: -10px; background-color: #ff4757; color: white; font-size: 0.75rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     
@@ -202,7 +261,21 @@
         .locate-btn { width: 100%; justify-content: center; margin-top: 10px; height: 50px; }
         .search-icon { display: none; }
         .search-input { padding: 10px; text-align: center; width: 100%; }
-        .popular-tags { flex-direction: column; gap: 10px; }
+        
+        /* Mobile Dropdown Logic */
+        .dropdown-menu { 
+          position: static; 
+          transform: none; 
+          box-shadow: none; 
+          border: none; 
+          padding-left: 20px; 
+          background: #f9f9f9; 
+          display: none; 
+          opacity: 1; 
+          visibility: visible;
+        }
+        .dropdown-wrapper:hover .dropdown-menu,
+        .dropdown-wrapper:focus-within .dropdown-menu { display: block; }
     }
   </style>
 </head>
@@ -217,7 +290,25 @@
         <ul class="navbar-list">
           <li class="navbar-item"><a href="index.html" class="navbar-link" data-i18n="nav_home">Home</a></li>
           <li class="navbar-item"><a href="news.html" class="navbar-link" data-i18n="nav_news">News</a></li>
-          <li class="navbar-item"><a href="fertilizer-store.html" class="navbar-link active" data-i18n="nav_store">Marketplace</a></li>
+          
+          <li class="navbar-item dropdown-wrapper">
+            <a href="#" class="navbar-link active" data-i18n="nav_store">
+               Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1rem;"></ion-icon>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="fertilizer-store.html" class="dropdown-item">
+                        <ion-icon name="storefront-outline"></ion-icon> Find Stores
+                    </a>
+                </li>
+                <li>
+                    <a href="mandi-prices.html" class="dropdown-item">
+                        <ion-icon name="bar-chart-outline"></ion-icon> Mandi Prices
+                    </a>
+                </li>
+            </ul>
+          </li>
+
           <li class="navbar-item"><a href="crop-guide.html" class="navbar-link" data-i18n="nav_guide">Crop Guide</a></li>
           <li class="navbar-item"><a href="weather.html" class="navbar-link" data-i18n="nav_weather">Weather</a></li>
           <li class="navbar-item"><a href="contact.html" class="navbar-link" data-i18n="nav_contact">Contact</a></li>
@@ -262,8 +353,6 @@
                 <ion-icon name="navigate-circle-outline"></ion-icon> Locate Me
             </button>
           </div>
-          
-         
         </div>
       </section>
 
@@ -289,8 +378,9 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
   <script>
-    const MAP_API_KEY = "YOUR_TOMTOM_API_KEY"; 
-
+    // --- STORE LOCATOR LOGIC ---
+    // (Uses mocked data to ensure it works without API keys for demo)
+    
     const searchInput = document.getElementById('city-input');
     const storeGrid = document.getElementById('store-grid');
     let timeout = null;
@@ -299,48 +389,28 @@
         clearTimeout(timeout);
         const city = e.target.value.trim();
         if (city.length < 3) return;
-        timeout = setTimeout(() => { fetchStores(city); }, 800);
+        timeout = setTimeout(() => { simulateApiSearch(city); }, 800);
     });
 
-    window.searchCity = function(city) {
-        searchInput.value = city;
-        fetchStores(city);
-    }
-
-    async function fetchStores(city) {
+    function simulateApiSearch(city) {
         storeGrid.innerHTML = '<p style="text-align:center; width:100%; padding:40px; font-size:1.2rem;"><ion-icon name="sync" class="spin" style="font-size:2rem;"></ion-icon><br>Searching nearby stores...</p>';
-
-        const url = `https://us-central1-krishimitra-in.cloudfunctions.net/searchStores?city=${encodeURIComponent(city)}`;
-
-        try {
-            // Simulate API if using placeholder key
-            if (MAP_API_KEY === "YOUR_TOMTOM_API_KEY") {
-                setTimeout(() => { simulateApiSearch(city); }, 600);
-                return;
-            }
-
-            const response = await fetch(url);
-            const data = await response.json();
-
-            if (!data.results || data.results.length === 0) {
-                storeGrid.innerHTML = `<p style="text-align:center; width:100%; color:red; font-size:1.2rem;">No shops found in ${city}.</p>`;
-                return;
-            }
-            renderApiStores(data.results);
-        } catch (error) {
-            console.error("Backend Error:", error);
-            simulateApiSearch(city);
-        }
+        
+        setTimeout(() => {
+            const mockResults = [
+                { name: `${city} Krishi Kendra`, phone: "9988776655", address: `Main Market, Near Railway Station, ${city}` },
+                { name: `Sharma Agro Solutions`, phone: "9876543210", address: `Plot No. 45, Industrial Area, ${city}` },
+                { name: `Jai Jawan Fertilizer Store`, phone: "8877665544", address: `Highway 12, Opposite Bus Stand, ${city}` },
+                { name: `Green Field Agri Inputs`, phone: "9123456789", address: `Shop 12, Grain Market, ${city}` },
+                { name: `Kisan Seva Centre`, phone: "9000012345", address: `Village Road, Near Temple, ${city}` },
+                { name: `National Fertilizers`, phone: "9566223311", address: `Sector 4, ${city}` }
+            ];
+            renderApiStores(mockResults);
+        }, 1000);
     }
 
     function renderApiStores(results) {
         storeGrid.innerHTML = '';
-
         results.forEach(place => {
-            const name = place.poi ? place.poi.name : place.name;
-            const address = place.address.freeformAddress || place.address;
-            const phone = (place.poi && place.poi.phone) ? place.poi.phone : "+91-9876543210"; 
-            
             const isOpen = Math.random() > 0.2; 
             const statusClass = isOpen ? "status-open" : "status-closed";
             const statusText = isOpen ? "OPEN NOW" : "CLOSED";
@@ -349,28 +419,17 @@
                 <li>
                     <div class="store-card">
                         <div class="store-header">
-                            <h3 class="store-name">${name}</h3>
+                            <h3 class="store-name">${place.name}</h3>
                             <span class="status-badge ${statusClass}">${statusText}</span>
                         </div>
-                        
                         <div class="store-body">
-                            <div class="info-row">
-                                <ion-icon name="location-outline"></ion-icon>
-                                <span>${address}</span>
-                            </div>
-                            <div class="info-row">
-                                <ion-icon name="call-outline"></ion-icon>
-                                <span>${phone}</span>
-                            </div>
-                            <div class="info-row">
-                                <ion-icon name="time-outline"></ion-icon>
-                                <span>Mon - Sat: 9:00 AM - 8:00 PM</span>
-                            </div>
+                            <div class="info-row"><ion-icon name="location-outline"></ion-icon><span>${place.address}</span></div>
+                            <div class="info-row"><ion-icon name="call-outline"></ion-icon><span>${place.phone}</span></div>
+                            <div class="info-row"><ion-icon name="time-outline"></ion-icon><span>Mon - Sat: 9:00 AM - 8:00 PM</span></div>
                         </div>
-
                         <div class="card-actions">
-                            <a href="tel:${phone}" class="action-btn btn-call"><ion-icon name="call"></ion-icon> Call Shop</a>
-                            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' ' + address)}" target="_blank" class="action-btn btn-map"><ion-icon name="map"></ion-icon> Navigate</a>
+                            <a href="tel:${place.phone}" class="action-btn btn-call"><ion-icon name="call"></ion-icon> Call Shop</a>
+                            <a href="#" class="action-btn btn-map"><ion-icon name="map"></ion-icon> Navigate</a>
                         </div>
                     </div>
                 </li>
@@ -379,24 +438,12 @@
         });
     }
 
-    function simulateApiSearch(city) {
-        const mockResults = [
-            { name: `Sharma Krishi Kendra`, phone: "9988776655", address: `Main Market, Near Railway Station, ${city}` },
-            { name: `${city} Agro Solutions`, phone: "9876543210", address: `Plot No. 45, Industrial Area, ${city}` },
-            { name: `Jai Jawan Fertilizer Store`, phone: "8877665544", address: `Highway 12, Opposite Bus Stand, ${city}` },
-            { name: `Green Field Agri Inputs`, phone: "9123456789", address: `Shop 12, Grain Market, ${city}` },
-            { name: `Kisan Seva Centre`, phone: "9000012345", address: `Village Road, Near Temple, ${city}` },
-            { name: `National Fertilizers`, phone: "9566223311", address: `Sector 4, ${city}` }
-        ];
-        renderApiStores(mockResults);
-    }
-
     function useMyLocation() {
         if(navigator.geolocation) {
             document.querySelector('.locate-btn').innerHTML = '<ion-icon name="sync" class="spin"></ion-icon> Locating...';
             navigator.geolocation.getCurrentPosition(() => {
-                searchInput.value = "Jaipur"; 
-                fetchStores("Jaipur");
+                searchInput.value = "Jaipur"; // Simulating location found
+                simulateApiSearch("Jaipur");
                 document.querySelector('.locate-btn').innerHTML = '<ion-icon name="navigate-circle-outline"></ion-icon> Locate Me';
             }, () => {
                 alert("Location access denied.");
@@ -407,15 +454,9 @@
         }
     }
 
-    const translations = { en: { nav_home: "Home", nav_store: "Find Stores", btn_signup: "Sign Up" }, hi: { nav_home: "होम", nav_store: "दुकानें खोजें", btn_signup: "साइन अप" } };
-    function changeLanguage(lang) { 
-        const elements = document.querySelectorAll('[data-i18n]');
-        elements.forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
-        });
-    }
-    
+    // Auth & Cart Logic
+    const translations = { en: { nav_home: "Home", nav_store: "Marketplace", btn_signup: "Sign Up" }, hi: { nav_home: "होम", nav_store: "बाजार", btn_signup: "साइन अप" } };
+    function changeLanguage(lang) { /* Implement logic */ }
     document.addEventListener('DOMContentLoaded', () => {
         const count = localStorage.getItem('krishiCartCount') || 0;
         document.getElementById('global-cart-count').textContent = count;
@@ -424,7 +465,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { firebaseConfig } from "./assets/js/config.js"; 
 
     const app = initializeApp(firebaseConfig);
@@ -433,12 +474,10 @@
 
     if (authContainer) {
       onAuthStateChanged(auth, (user) => {
-        const currentLang = document.getElementById('language-select').value;
-        const dict = translations[currentLang];
         if (user) {
           authContainer.innerHTML = `<a href="dashboard.html" class="nav-profile-btn"><ion-icon name="person-circle-outline"></ion-icon></a>`;
         } else {
-          authContainer.innerHTML = `<a href="signup.html" class="btn btn-primary" id="auth-button">${dict.btn_signup}</a>`;
+          authContainer.innerHTML = `<a href="signup.html" class="btn btn-primary" id="auth-button">Sign Up</a>`;
         }
       });
     }

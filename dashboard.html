@@ -4,14 +4,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>My Dashboard - कृषिMitr</title>
+  <title>My Dashboard - कृषिMitra</title>
 
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    /* Dashboard Specific CSS */
+    /* --- HEADER STYLES --- */
+    .header .container { display: flex !important; align-items: center !important; justify-content: space-between !important; padding-block: 15px; }
+    .navbar-list { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; list-style: none; }
+    .navbar-link { font-weight: 600; color: var(--davys-gray); padding: 10px 0; text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
+    
+    /* DROPDOWN MENU */
+    .dropdown-wrapper { position: relative; }
+    .dropdown-menu {
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: white; min-width: 220px; border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15); padding: 10px;
+      opacity: 0; visibility: hidden; transition: all 0.3s ease;
+      z-index: 1100; border: 1px solid #f0f0f0;
+    }
+    .dropdown-wrapper:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown-menu::before {
+      content: ''; position: absolute; top: -6px; left: 50%;
+      transform: translateX(-50%) rotate(45deg); width: 12px; height: 12px;
+      background: white; border-top: 1px solid #f0f0f0; border-left: 1px solid #f0f0f0;
+    }
+    .dropdown-item {
+      display: flex; align-items: center; gap: 12px; padding: 12px 15px;
+      color: #444; font-weight: 600; text-decoration: none;
+      border-radius: 8px; transition: 0.2s; font-size: 0.95rem;
+    }
+    .dropdown-item:hover { background: #e8f5e9; color: #1e7e34; }
+
+    /* DASHBOARD STYLES */
     .dashboard-header { padding-top: 150px; padding-bottom: 40px; background-color: var(--cultured); }
     .dashboard-header .h1 { font-family: var(--ff-playfair); font-size: var(--fs-1); }
     .dashboard-header .p { font-size: var(--fs-4); color: var(--davys-gray); }
@@ -20,29 +47,31 @@
     .dashboard-main { display: flex; flex-direction: column; gap: 30px; }
     .dashboard-sidebar { display: flex; flex-direction: column; gap: 30px; }
 
-    /* Weather Card (Reused) */
     .current-weather-card { background: var(--blue-green-color-wheel); color: var(--white); border-radius: var(--radius-10); padding: 30px; position: relative; overflow: hidden; }
     .current-weather-card::before { content: '\f499'; font-family: "Ionicons"; position: absolute; top: 10px; right: 10px; font-size: 15rem; opacity: 0.1; line-height: 1; }
     .current-weather-card .location { font-size: var(--fs-3); font-weight: var(--fw-600); }
     .current-weather-card .current-temp { font-size: 6rem; font-weight: var(--fw-700); font-family: var(--ff-playfair); }
 
-    /* Mandi Table Styles */
     .mandi-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
     .mandi-table th, .mandi-table td { text-align: left; padding: 12px; border-bottom: 1px solid #eee; font-size: var(--fs-6); }
     .mandi-table th { color: var(--blue-green-color-wheel); font-weight: var(--fw-700); }
     .mandi-table td { color: var(--davys-gray); }
-    .price-up { color: #28a745; font-weight: bold; } /* Green for up */
-    .price-down { color: #dc3545; font-weight: bold; } /* Red for down */
+    .price-up { color: #28a745; font-weight: bold; }
+    .price-down { color: #dc3545; font-weight: bold; }
 
-    /* Vitals Card */
     .vitals-card { background-color: var(--cultured); border-radius: var(--radius-10); padding: 25px; }
     .vitals-card .h3 { font-size: var(--fs-4); margin-bottom: 15px; text-align: center; }
     .vitals-list li { display: flex; justify-content: space-between; padding-block: 12px; border-bottom: 1px solid #ddd; font-size: var(--fs-6); }
     
-    /* Crop List */
     .crop-suggestion-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
     
-    @media (max-width: 992px) { .dashboard-grid { grid-template-columns: 1fr; } }
+    /* Mobile Fix */
+    @media (max-width: 992px) { 
+        .dashboard-grid { grid-template-columns: 1fr; } 
+        .navbar { display: none; } 
+        .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; padding-left: 20px; background: #f9f9f9; display: none; opacity: 1; visibility: visible; }
+        .dropdown-wrapper:hover .dropdown-menu { display: block; }
+    }
   </style>
 </head>
 
@@ -56,13 +85,25 @@
         <ul class="navbar-list">
           <li class="navbar-item"><a href="index.html" class="navbar-link">Home</a></li>
           <li class="navbar-item"><a href="news.html" class="navbar-link">News</a></li>
-          <li class="navbar-item"><a href="fertilizer-store.html" class="navbar-link">Marketplace</a></li>
+          
+          <li class="navbar-item dropdown-wrapper">
+            <a href="#" class="navbar-link">
+               Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1rem;"></ion-icon>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="fertilizer-store.html" class="dropdown-item"><ion-icon name="storefront-outline"></ion-icon> Find Stores</a></li>
+                <li><a href="mandi-prices.html" class="dropdown-item"><ion-icon name="bar-chart-outline"></ion-icon> Mandi Prices</a></li>
+            </ul>
+          </li>
+
           <li class="navbar-item"><a href="crop-guide.html" class="navbar-link">Crop Guide</a></li>
           <li class="navbar-item"><a href="weather.html" class="navbar-link">Weather</a></li>
           <li class="navbar-item"><a href="contact.html" class="navbar-link">Contact</a></li>
         </ul>
       </nav>
+      
       <a href="#" class="btn btn-secondary" id="logout-button">Logout</a>
+      
       <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler><ion-icon name="menu-outline"></ion-icon></button>
       <div class="overlay" data-nav-toggler data-overlay></div>
     </div>
@@ -127,7 +168,7 @@
                   <tbody id="mandi-table-body">
                     </tbody>
                 </table>
-                <a href="#" class="btn btn-secondary" style="width: 100%; margin-top: 20px; text-align: center;">View All Markets</a>
+                <a href="mandi-prices.html" class="btn btn-secondary" style="width: 100%; margin-top: 20px; text-align: center;">View All Markets</a>
               </div>
               
               <div class="vitals-card">
@@ -163,14 +204,13 @@
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
     import { firebaseConfig } from "./assets/js/config.js"; 
 
-    // 2. REPLACE WITH YOUR OPENWEATHERMAP API KEY
-    const WEATHER_API_KEY = "71ca48bb8af57498e0efdabac5f86f4d"; // <-- YOUR WEATHER KEY
+    const WEATHER_API_KEY = "71ca48bb8af57498e0efdabac5f86f4d"; 
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // --- DATA SOURCES (Simulated Database) ---
+    // --- DATA SOURCES ---
     const cropDatabase = {
         "Rajasthan": [
             { name: "Bajra", type: "Kharif", desc: "Drought tolerant, key crop." },
@@ -184,7 +224,6 @@
              { name: "Cotton", type: "Kharif", desc: "Black soil cash crop." },
              { name: "Sugarcane", type: "Annual", desc: "High water requirement." }
         ],
-        // Default fallback
         "Other": [
              { name: "Tomato", type: "Zaid", desc: "Short duration vegetable." },
              { name: "Wheat", type: "Rabi", desc: "Standard winter crop." }
@@ -196,7 +235,7 @@
       if (user) {
         console.log("User logged in:", user.uid);
 
-        // A. Fetch User Profile from Firestore
+        // Fetch User Profile
         const docRef = doc(db, "farmers", user.uid);
         const docSnap = await getDoc(docRef);
 
@@ -214,19 +253,15 @@
         });
 
       } else {
-        // If not logged in, kick them out
         window.location.href = 'login.html';
       }
     });
 
-    // --- FUNCTIONS TO UPDATE DASHBOARD ---
-
+    // --- UI UPDATERS ---
     function updateUI(data) {
-        // 1. Personal Greeting
         document.getElementById('user-welcome').textContent = `Namaste, ${data.fullName}!`;
         document.getElementById('user-location-sub').textContent = `Farm Dashboard for ${data.district}, ${data.state}`;
 
-        // 2. Fill Profile Card
         document.getElementById('profile-name').textContent = data.fullName;
         document.getElementById('profile-district').textContent = data.district;
         document.getElementById('profile-state').textContent = data.state;
@@ -234,7 +269,6 @@
         document.getElementById('mandi-location').textContent = data.district;
         document.getElementById('crop-state-name').textContent = data.state;
 
-        // 3. Trigger Widgets
         fetchRealWeather(data.district);
         generateCropSuggestions(data.state);
         generateMandiPrices(data.state);
@@ -265,15 +299,14 @@
 
     function generateCropSuggestions(state) {
         const container = document.getElementById('crop-container');
-        // Get crops for state, or fallback to "Other"
         const crops = cropDatabase[state] || cropDatabase["Other"];
         
-        container.innerHTML = ""; // Clear loading
+        container.innerHTML = ""; 
         
         crops.forEach(crop => {
             const html = `
-              <div class="course-card" style="padding: 20px; border: 1px solid #eee;">
-                  <h3 class="h3" style="color: var(--black-chocolate);">${crop.name}</h3>
+              <div class="course-card" style="padding: 20px; border: 1px solid #eee; background: white; border-radius: 12px;">
+                  <h3 class="h3" style="color: var(--black-chocolate); font-size: 1.2rem;">${crop.name}</h3>
                   <span style="background: #e6f4ea; color: #1e7e34; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">${crop.type}</span>
                   <p style="margin-top: 10px; font-size: 0.9rem; color: #555;">${crop.desc}</p>
                   <a href="crop-guide.html" class="btn btn-secondary" style="margin-top: 15px; padding: 5px 15px; font-size: 0.8rem;">View Guide</a>
@@ -285,7 +318,6 @@
 
     function generateMandiPrices(state) {
         const tbody = document.getElementById('mandi-table-body');
-        // Simulated Data based on state (Randomized slightly to look "Live")
         const basePrices = [
             { name: "Wheat", price: 2125 },
             { name: "Mustard", price: 5450 },
@@ -296,7 +328,6 @@
         tbody.innerHTML = "";
 
         basePrices.forEach(crop => {
-            // Randomize price slightly to simulate live fluctuation
             const livePrice = crop.price + Math.floor(Math.random() * 50) - 25;
             const trend = Math.random() > 0.5 ? "up" : "down";
             const arrow = trend === "up" ? "▲" : "▼";

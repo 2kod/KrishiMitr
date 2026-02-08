@@ -15,49 +15,45 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    /* --- HEADER LAYOUT FIXES (Matches Homepage) --- */
-    .header .container {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: space-between !important;
-      padding-block: 15px;
+    /* --- HEADER STYLES --- */
+    .header .container { display: flex !important; align-items: center !important; justify-content: space-between !important; padding-block: 15px; }
+    .header-right-group { display: flex !important; align-items: center !important; gap: 20px; margin-left: auto; }
+    
+    .navbar-list { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; list-style: none; }
+    .navbar-link { font-weight: 600; color: var(--davys-gray); padding: 10px 0; text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
+    
+    /* DROPDOWN MENU */
+    .dropdown-wrapper { position: relative; }
+    .dropdown-menu {
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: white; min-width: 220px; border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15); padding: 10px;
+      opacity: 0; visibility: hidden; transition: all 0.3s ease;
+      z-index: 1100; border: 1px solid #f0f0f0;
     }
-    .header-right-group {
-      display: flex !important;
-      align-items: center !important;
-      gap: 20px;
-      margin-left: auto;
+    .dropdown-wrapper:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown-menu::before {
+      content: ''; position: absolute; top: -6px; left: 50%;
+      transform: translateX(-50%) rotate(45deg); width: 12px; height: 12px;
+      background: white; border-top: 1px solid #f0f0f0; border-left: 1px solid #f0f0f0;
     }
-    .lang-box {
-      display: flex;
-      align-items: center;
-      background-color: #ffffff;
-      border: 1px solid #e0e0e0;
-      border-radius: 50px;
-      padding: 0 15px;
-      min-width: 110px;
-      height: 45px;
-      overflow: hidden;
+    .dropdown-item {
+      display: flex; align-items: center; gap: 12px; padding: 12px 15px;
+      color: #444; font-weight: 600; text-decoration: none;
+      border-radius: 8px; transition: 0.2s; font-size: 0.95rem;
     }
+    .dropdown-item:hover { background: #e8f5e9; color: #1e7e34; }
+
+    /* Lang Box & Buttons */
+    .lang-box { display: flex; align-items: center; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 50px; padding: 0 15px; min-width: 110px; height: 45px; overflow: hidden; }
     .lang-box ion-icon { font-size: 1.5rem; color: #333; margin-right: 8px; }
     #language-select { border: none; outline: none; background: transparent; font-family: 'Montserrat'; font-weight: 600; color: #333; font-size: 1rem; cursor: pointer; width: 100%; }
     
-    .header .btn {
-      margin-inline-start: 0 !important; 
-      padding: 0 40px !important;
-      height: 45px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      font-size: 1rem !important;
-      font-weight: 700 !important;
-      min-width: 140px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    /* Google Translate Cleanup */
+    .header .btn { margin-inline-start: 0 !important; padding: 0 40px !important; height: 45px !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 1rem !important; font-weight: 700 !important; min-width: 140px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    
     .goog-te-banner-frame.skiptranslate { display: none !important; } body { top: 0px !important; } .goog-te-gadget { font-size: 0 !important; }
 
-    /* --- SIGNUP PAGE STYLES --- */
+    /* SIGNUP SPECIFIC */
     .login-section { padding-top: 150px; padding-bottom: 100px; background-color: var(--cultured); min-height: 100vh; }
     .login-card { max-width: 500px; margin: 0 auto; background-color: var(--white); border-radius: var(--radius-10); box-shadow: var(--shadow-1); padding: 40px; }
     .login-card .h2 { text-align: center; font-family: var(--ff-playfair); font-size: var(--fs-2); color: var(--black-chocolate); margin-bottom: 10px; }
@@ -66,17 +62,20 @@
     .form-group label { display: block; font-weight: var(--fw-600); font-size: var(--fs-6); color: var(--black-chocolate); margin-bottom: 8px; }
     .form-group input, .form-group select { width: 100%; padding: 12px 15px; font-size: var(--fs-5); border: 1px solid var(--light-gray); border-radius: var(--radius-10); transition: var(--transition-1); color: var(--davys-gray); font-family: var(--ff-montserrat); }
     .form-group input:focus, .form-group select:focus { border-color: var(--blue-green-color-wheel); box-shadow: 0 0 0 3px var(--blue-green-color-wheel_10); }
-    .form-group select { appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20128c3.6%203.6%207.8%205.4%2013%205.4s9.4-1.8%2013-5.4l128-128c3.6-3.6%205.4-7.8%205.4-13%200-4.8-1.8-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px center; background-size: 10px; }
     .form-divider { margin-top: 30px; margin-bottom: 25px; border: 0; border-top: 1px solid var(--light-gray); }
     .login-link { text-align: center; margin-top: 30px; font-size: var(--fs-5); }
     .login-link a { display: inline; color: var(--blue-green-color-wheel); font-weight: var(--fw-600); }
     .login-link a:hover { text-decoration: underline; }
 
+    /* Mobile Fix */
     @media (max-width: 992px) {
       .navbar { display: none; } 
       .header-right-group { margin-right: 60px; gap: 10px; }
       .lang-box { padding: 0 8px; min-width: auto; }
       .header .btn { padding: 0 15px !important; font-size: 0.9rem !important; }
+      
+      .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; padding-left: 20px; background: #f9f9f9; display: none; opacity: 1; visibility: visible; }
+      .dropdown-wrapper:hover .dropdown-menu { display: block; }
     }
   </style>
 </head>
@@ -91,7 +90,17 @@
         <ul class="navbar-list">
           <li class="navbar-item"><a href="index.html" class="navbar-link" data-nav-link>Home</a></li>
           <li class="navbar-item"><a href="news.html" class="navbar-link" data-nav-link>News</a></li>
-          <li class="navbar-item"><a href="fertilizer-store.html" class="navbar-link" data-nav-link>Marketplace</a></li>
+          
+          <li class="navbar-item dropdown-wrapper">
+            <a href="#" class="navbar-link">
+               Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1rem;"></ion-icon>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="fertilizer-store.html" class="dropdown-item"><ion-icon name="storefront-outline"></ion-icon> Find Stores</a></li>
+                <li><a href="mandi-prices.html" class="dropdown-item"><ion-icon name="bar-chart-outline"></ion-icon> Mandi Prices</a></li>
+            </ul>
+          </li>
+
           <li class="navbar-item"><a href="crop-guide.html" class="navbar-link" data-nav-link>Crop Guide</a></li>
           <li class="navbar-item"><a href="weather.html" class="navbar-link" data-nav-link>Weather</a></li>
           <li class="navbar-item"><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
@@ -224,7 +233,6 @@
       }
     });
 
-    // Translation
     const translations = {
       en: { nav_home: "Home", nav_news: "News", nav_store: "Store", nav_guide: "Crop Guide", nav_weather: "Weather", nav_contact: "Contact", btn_signup: "Sign Up", btn_logout: "Logout", btn_login: "Login" },
       hi: { nav_home: "होम", nav_news: "समाचार", nav_store: "दुकान", nav_guide: "फसल गाइड", nav_weather: "मौसम", nav_contact: "संपर्क", btn_signup: "साइन अप", btn_logout: "लॉग आउट", btn_login: "लॉग इन" }
@@ -238,7 +246,6 @@
     }
   </script>
 
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -249,7 +256,6 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Handle Signup
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
       signupForm.addEventListener('submit', async (event) => {
@@ -272,7 +278,7 @@
           await setDoc(doc(db, "farmers", user.uid), farmData);
 
           alert('Account created successfully! Redirecting to Dashboard...');
-          window.location.href = 'dashboard.html'; // REDIRECT TO DASHBOARD
+          window.location.href = 'dashboard.html'; 
 
         } catch (error) {
           console.error('Signup Error:', error.code, error.message);
@@ -283,7 +289,6 @@
       });
     }
 
-    // Header Logic
     const authButton = document.getElementById('auth-button');
     if (authButton) {
       onAuthStateChanged(auth, (user) => {
