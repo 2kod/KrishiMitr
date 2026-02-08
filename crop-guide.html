@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    /* --- 1. MASTER HEADER STYLES (Identical to Homepage) --- */
+    /* --- 1. MASTER HEADER STYLES --- */
     .header .container { display: flex !important; align-items: center !important; justify-content: space-between !important; padding-block: 15px; }
     .navbar-list { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; }
     .navbar-link { font-weight: 600; color: var(--davys-gray); padding: 10px 0; }
@@ -97,12 +97,10 @@
       </nav>
 
       <div class="header-right-group">
-        
         <a href="fertilizer-store.html" class="nav-cart-box" title="Your Cart">
             <ion-icon name="cart-outline"></ion-icon>
             <span class="cart-badge" id="global-cart-count">0</span>
         </a>
-
         <div class="lang-box">
           <ion-icon name="language-outline"></ion-icon>
           <select id="language-select" onchange="changeLanguage(this.value)">
@@ -110,11 +108,9 @@
             <option value="hi">हिंदी</option>
           </select>
         </div>
-
         <div id="auth-container">
             <a href="signup.html" class="btn btn-primary" id="auth-button" data-i18n="btn_signup">Sign Up</a>
         </div>
-
       </div>
 
       <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler><ion-icon name="menu-outline"></ion-icon></button>
@@ -124,7 +120,6 @@
 
   <main>
     <article>
-
       <section class="section page-banner">
         <div class="container">
           <h1 class="h1">Crop Encyclopedia</h1>
@@ -151,12 +146,11 @@
         <div class="container">
           <ul class="grid-list" id="crop-grid">
              <p style="text-align: center; width: 100%; font-size: 1.2rem; color: #666;">
-                <ion-icon name="sync-outline" class="spin"></ion-icon> Loading smart crop data...
+                <ion-icon name="sync-outline" class="spin"></ion-icon> Loading from Live API...
              </p>
           </ul>
         </div>
       </section>
-
     </article>
   </main>
 
@@ -164,9 +158,9 @@
     <div class="modal-box">
       <span class="modal-close" onclick="closeModal()">&times;</span>
       <div style="padding-bottom:15px; border-bottom:1px solid #eee; margin-bottom:20px;">
-        <span class="season-badge badge-rabi" id="m-season">Rabi</span>
-        <h2 class="h2" id="m-name" style="margin-bottom:5px;">Wheat</h2>
-        <p style="color: #777; font-size: 1.2rem;" id="m-hindi">Gehoon</p>
+        <span class="season-badge badge-rabi" id="m-season">--</span>
+        <h2 class="h2" id="m-name" style="margin-bottom:5px;">--</h2>
+        <p style="color: #777; font-size: 1.2rem;" id="m-hindi">--</p>
       </div>
       <p style="font-size: 1.1rem; line-height: 1.6; color: #444;" id="m-desc">...</p>
       <div class="modal-grid">
@@ -198,40 +192,21 @@
   <footer class="footer" id="footer">
     <div class="footer-top section">
       <div class="container">
+        <ul class="footer-list">
+            <li><p class="footer-list-title">Quick Links</p></li>
+            <li><a href="index.html" class="footer-link">Home</a></li>
+            <li><a href="news.html" class="footer-link">News</a></li>
+            <li><a href="fertilizer-store.html" class="footer-link">Marketplace</a></li>
+            <li><a href="crop-guide.html" class="footer-link">Crop Guide</a></li>
+        </ul>
         <div class="footer-list">
-          <p class="footer-list-title">Subscribe Newsletter</p>
-          <p class="footer-list-text">Get the latest agri-news.</p>
-          <form action="" class="footer-form">
-            <input type="email" name="email_address" placeholder="Enter email" required class="email-field">
-            <button type="submit" class="btn btn-secondary">Subscribe</button>
-          </form>
+          <p class="footer-list-title">Subscribe</p>
+          <p class="footer-list-text">Get agri-updates.</p>
+          <form class="footer-form"><input type="email" placeholder="Email" class="email-field"><button class="btn btn-secondary">Join</button></form>
         </div>
-        <ul class="footer-list">
-          <li><p class="footer-list-title">Quick Links</p></li>
-          <li><a href="index.html" class="footer-link">Home</a></li>
-          <li><a href="news.html" class="footer-link">News</a></li>
-          <li><a href="fertilizer-store.html" class="footer-link">Marketplace</a></li>
-          <li><a href="crop-guide.html" class="footer-link">Crop Guide</a></li>
-          <li><a href="weather.html" class="footer-link">Weather</a></li>
-          <li><a href="contact.html" class="footer-link">Contact</a></li>
-        </ul>
-        <ul class="footer-list">
-          <li><p class="footer-list-title">Help Links</p></li>
-          <li><a href="#" class="footer-link">Privacy Policy</a></li>
-          <li><a href="#" class="footer-link">Terms & Conditions</a></li>
-          <li><a href="#" class="footer-link">Customer Support</a></li>
-          <li><a href="#" class="footer-link">About Us</a></li>
-          <li><a href="login.html" class="footer-link">Login / Register</a></li>
-        </ul>
-        <ul class="footer-list">
-          <li><p class="footer-list-title">Location</p></li>
-          <li><address class="address">Jaipur, Rajasthan</address></li>
-        </ul>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="container"><p class="copyright">&copy; 2025 Krishimitr.</p></div>
-    </div>
+    <div class="footer-bottom"><div class="container"><p class="copyright">&copy; 2025 Krishimitr.</p></div></div>
   </footer>
 
   <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up"></ion-icon></a>
@@ -242,79 +217,56 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { firebaseConfig } from "./assets/js/config.js"; 
 
     const WEATHER_API_KEY = "71ca48bb8af57498e0efdabac5f86f4d";
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    let db;
-    try { db = getFirestore(app, "crops"); } catch(e) { db = getFirestore(app); }
-
-    // 2. IMAGE DICTIONARY (Backup for missing database images)
-    const CROP_IMAGES = {
-        "Wheat": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80",
-        "Rice": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80",
-        "Cotton": "https://images.unsplash.com/photo-1594220309564-9464e0302b41?w=500&q=80",
-        "Sugarcane": "https://images.unsplash.com/photo-1629814596185-3b94a504112e?w=500&q=80",
-        "Mustard": "https://images.unsplash.com/photo-1509653087866-91f6c2ab59f2?w=500&q=80",
-        "Potato": "https://images.unsplash.com/photo-1518977676601-b53f82a6b69d?w=500&q=80",
-        "Onion": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&q=80",
-        "Tomato": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&q=80",
-        "Corn": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&q=80",
-        "Maize": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&q=80",
-        "Soybean": "https://images.unsplash.com/photo-1615485925694-a039779d71de?w=500&q=80",
-        "Groundnut": "https://images.unsplash.com/photo-1567609026462-7933fa7604d7?w=500&q=80",
-        "Chickpea": "https://images.unsplash.com/photo-1515543904379-3d757afe72e3?w=500&q=80",
-        "Turmeric": "https://images.unsplash.com/photo-1615485500704-8e99099928b3?w=500&q=80",
-        "Chili": "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=500&q=80",
-        "Bajra": "https://plus.unsplash.com/premium_photo-1661962447230-22c653926674?w=500&q=80",
-        "Jowar": "https://images.unsplash.com/photo-1530272638864-7729dc779607?w=500&q=80",
-        "Pearl Millet": "https://plus.unsplash.com/premium_photo-1661962447230-22c653926674?w=500&q=80",
-        "Sorghum": "https://images.unsplash.com/photo-1530272638864-7729dc779607?w=500&q=80",
-        "Pigeon Pea": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Pigeon_peas.jpg/640px-Pigeon_peas.jpg"
-    };
     const GENERIC_FARM_IMG = "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80";
 
-    // 3. STATE
+    // --- 1. API CONFIGURATION (REPLACE THIS URL!) ---
+    const API_URL = "YOUR_VERCEL_API_URL_HERE"; // e.g. https://krishimitra-api.vercel.app/api/crops
+
+    // Initialize Firebase (Auth Only)
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // State
     let cropData = []; 
 
-    // 4. FETCH CROPS
+    // --- 2. FETCH CROPS FROM API ---
     async function loadCrops() {
         const grid = document.getElementById('crop-grid');
+        grid.innerHTML = '<p style="text-align:center; margin-top:20px;"><ion-icon name="sync" class="spin"></ion-icon> Fetching latest data...</p>';
+        
         try {
-            const querySnapshot = await getDocs(collection(db, "crops"));
-            cropData = [];
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error('Network response was not ok');
             
-            if(querySnapshot.empty) {
-                grid.innerHTML = '<p style="text-align:center;">Database is empty.</p>';
+            const json = await response.json();
+            
+            // Handle different API response structures (e.g. { data: [...] } or [...])
+            cropData = json.data ? json.data : json;
+            
+            if(!cropData || cropData.length === 0) {
+                grid.innerHTML = '<p style="text-align:center;">No crops found in API.</p>';
                 return;
             }
 
-            querySnapshot.forEach((doc) => {
-                cropData.push(doc.data());
-            });
-            
             renderCrops(cropData);
 
         } catch (error) {
-            console.error("Error:", error);
-            // Fallback: If "crops" database failed, try default
-            if(error.code === 'not-found') {
-               grid.innerHTML = '<p style="text-align:center; color:red;">Database not found. Check Console.</p>';
-            }
+            console.error("API Error:", error);
+            grid.innerHTML = '<p style="text-align:center; color:red;">Failed to load data. <br> <small>Check if API URL is correct & online.</small></p>';
         }
     }
 
-    // 5. RENDER FUNCTION (With Smart Image Logic)
+    // --- 3. RENDER FUNCTION ---
     window.renderCrops = function(data) {
         const grid = document.getElementById('crop-grid');
         grid.innerHTML = '';
 
         if (data.length === 0) {
-            grid.innerHTML = '<p style="text-align:center; width:100%; font-size:1.5rem; color:#777;">No crops found.</p>';
+            grid.innerHTML = '<p style="text-align:center; width:100%; font-size:1.5rem; color:#777;">No matching crops.</p>';
             return;
         }
 
@@ -323,12 +275,8 @@
             if(crop.season === 'Kharif') badgeClass = 'badge-kharif';
             if(crop.season === 'Zaid') badgeClass = 'badge-zaid';
 
-            // --- SMART IMAGE LOGIC ---
-            // 1. Try DB image. 2. Try Dictionary. 3. Use Generic.
-            let imageUrl = crop.image;
-            if (!imageUrl || imageUrl.includes('placeholder')) {
-                imageUrl = CROP_IMAGES[crop.name] || GENERIC_FARM_IMG;
-            }
+            // Use image from API or fallback
+            const imageUrl = crop.image || GENERIC_FARM_IMG;
 
             const html = `
               <li>
@@ -353,7 +301,7 @@
         });
     }
 
-    // 6. SMART LOCATION LOGIC
+    // --- 4. WEATHER & LOCATION LOGIC ---
     const controlsContainer = document.querySelector('.controls-container');
     const locationBtn = document.createElement('button');
     locationBtn.innerHTML = '<ion-icon name="location-outline"></ion-icon> Suggest Crops for My Location';
@@ -405,12 +353,13 @@
         
         renderCrops(recommended);
         
+        // Update Filters UI
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         const activeBtn = document.querySelector(`button[data-filter="${currentSeason}"]`);
         if(activeBtn) activeBtn.classList.add('active');
     }
 
-    // 7. SEARCH & FILTER
+    // --- 5. SEARCH & FILTER ---
     const searchInput = document.getElementById('search-input');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
@@ -437,7 +386,7 @@
         renderCrops(filtered);
     }
 
-    // 8. MODAL LOGIC
+    // --- 6. MODAL LOGIC ---
     const modal = document.getElementById('crop-modal');
     window.openModal = function(cropName) {
       const crop = cropData.find(c => c.name === cropName);
@@ -485,7 +434,7 @@
     }
     window.onclick = function(event) { if (event.target == modal) closeModal(); }
 
-    // 9. AUTH & CART
+    // --- 7. AUTH CHECK ---
     const authContainer = document.getElementById('auth-container');
     if (authContainer) {
       onAuthStateChanged(auth, (user) => {
@@ -499,7 +448,7 @@
       });
     }
     
-    // 10. LANGUAGE
+    // --- 8. UTILITIES (Lang & Cart) ---
     const translations = {
       en: { nav_home: "Home", nav_news: "News", nav_store: "Store", nav_guide: "Crop Guide", nav_weather: "Weather", nav_contact: "Contact", btn_signup: "Sign Up", btn_logout: "Logout", nav_dashboard: "Dashboard" },
       hi: { nav_home: "होम", nav_news: "समाचार", nav_store: "दुकान", nav_guide: "फसल गाइड", nav_weather: "मौसम", nav_contact: "संपर्क", btn_signup: "साइन अप", btn_logout: "लॉग आउट", nav_dashboard: "डैशबोर्ड" }
@@ -517,8 +466,9 @@
         document.getElementById('global-cart-count').textContent = count;
     }
 
+    // --- 9. INIT ---
     document.addEventListener('DOMContentLoaded', () => {
-        loadCrops();
+        loadCrops(); // Starts the API fetch
         updateCartDisplay();
     });
   </script>
