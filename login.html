@@ -22,15 +22,29 @@
     .login-card { max-width: 500px; margin: 0 auto; background-color: var(--white); border-radius: var(--radius-10); box-shadow: var(--shadow-1); padding: 40px; }
     .login-card .h2 { text-align: center; font-family: var(--ff-playfair); font-size: var(--fs-2); color: var(--black-chocolate); margin-bottom: 10px; }
     .login-card .form-subtitle { text-align: center; font-size: var(--fs-5); color: var(--davys-gray); margin-bottom: 30px; }
+    
+    /* Authentication Tabs */
+    .auth-tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 25px; }
+    .auth-tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; font-weight: 600; color: #777; transition: 0.3s; }
+    .auth-tab:hover { color: #1e7e34; background: #f9f9f9; }
+    .auth-tab.active { color: #1e7e34; border-bottom: 3px solid #1e7e34; background: transparent; }
+
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-weight: var(--fw-600); font-size: var(--fs-6); color: var(--black-chocolate); margin-bottom: 8px; }
-    .form-group input { width: 100%; padding: 12px 15px; font-size: var(--fs-5); border: 1px solid var(--light-gray); border-radius: var(--radius-10); transition: var(--transition-1); }
+    .form-group input { width: 100%; padding: 12px 15px; font-size: var(--fs-5); border: 1px solid var(--light-gray); border-radius: var(--radius-10); transition: var(--transition-1); font-family: 'Montserrat', sans-serif; }
     .form-group input:focus { border-color: var(--blue-green-color-wheel); box-shadow: 0 0 0 3px var(--blue-green-color-wheel_10); }
+    
     .forgot-link { display: block; text-align: right; font-size: var(--fs-6); color: var(--blue-green-color-wheel); font-weight: var(--fw-500); margin-top: -10px; margin-bottom: 25px; }
     .forgot-link:hover { text-decoration: underline; }
+    
     .signup-link { text-align: center; margin-top: 30px; font-size: var(--fs-5); }
     .signup-link a { display: inline; color: var(--blue-green-color-wheel); font-weight: var(--fw-600); }
     .signup-link a:hover { text-decoration: underline; }
+
+    /* OTP Specifics */
+    #otp-group { display: none; animation: fadeIn 0.5s; }
+    #recaptcha-container { margin-bottom: 15px; display: flex; justify-content: center; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* --- HEADER & DROPDOWN MENU STYLES --- */
     .header .container { display: flex !important; align-items: center !important; justify-content: space-between !important; padding-block: 15px; }
@@ -139,7 +153,12 @@
             <h2 class="h2">Farmer Login</h2>
             <p class="form-subtitle">Welcome back! Sign in to your dashboard.</p>
             
-            <form action="#" class="login-form" id="login-form">
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchTab('email')">Email Login</div>
+                <div class="auth-tab" onclick="switchTab('phone')">Phone Login</div>
+            </div>
+
+            <form action="#" class="login-form" id="email-login-form">
               <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" name="email" id="email" placeholder="Enter your email" required>
@@ -149,11 +168,27 @@
                 <input type="password" name="password" id="password" placeholder="Enter your password" required>
               </div>
               <a href="#" class="forgot-link">Forgot Password?</a>
-              <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
-              <p class="signup-link">
-                Don't have an account? <a href="signup.html">Sign up here</a>
-              </p>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Login with Email</button>
             </form>
+
+            <form action="#" class="login-form" id="phone-login-form" style="display: none;">
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" name="phone" id="phone" value="+91 " placeholder="98765 43210" required>
+              </div>
+              
+              <div id="recaptcha-container"></div> <button type="button" id="send-otp-btn" class="btn btn-secondary" style="width: 100%; margin-bottom: 15px;">Send OTP</button>
+
+              <div class="form-group" id="otp-group">
+                <label for="otp">Enter OTP</label>
+                <input type="number" name="otp" id="otp" placeholder="123456">
+                <button type="submit" id="verify-otp-btn" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Verify OTP & Login</button>
+              </div>
+            </form>
+
+            <p class="signup-link">
+              Don't have an account? <a href="signup.html">Sign up here</a>
+            </p>
           </div>
         </div>
       </section>
@@ -171,65 +206,179 @@
 
   <script>
     function changeLanguage(lang) {
-        // Simple stub for consistency across pages
         console.log("Language changed to: " + lang);
+    }
+
+    // Tab Switching Logic
+    window.switchTab = function(type) {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.auth-tab[onclick="switchTab('${type}')"]`).classList.add('active');
+        
+        if (type === 'email') {
+            document.getElementById('email-login-form').style.display = 'block';
+            document.getElementById('phone-login-form').style.display = 'none';
+        } else {
+            document.getElementById('email-login-form').style.display = 'none';
+            document.getElementById('phone-login-form').style.display = 'block';
+            
+            // Trigger Recaptcha setup if switching to phone
+            if (!window.recaptchaVerifier) {
+                document.dispatchEvent(new Event('initRecaptcha'));
+            }
+        }
     }
   </script>
 
   <script type="module">
+    // 1. Import Functions from Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { 
+        getAuth, 
+        signInWithEmailAndPassword, 
+        onAuthStateChanged, 
+        signOut, 
+        RecaptchaVerifier, 
+        signInWithPhoneNumber 
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    
+    // 2. Import Config
     import { firebaseConfig } from "./assets/js/config.js"; 
     
+    // 3. Initialize Apps
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const analytics = getAnalytics(app); // Analytics Init
 
-    // Login Form Logic
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) { 
-        loginForm.addEventListener('submit', async (event) => {
+    // --- GLOBAL VARS ---
+    window.confirmationResult = null; // Store OTP result
+
+    // --- RECAPTCHA SETUP ---
+    document.addEventListener('initRecaptcha', () => {
+        if (!window.recaptchaVerifier) {
+            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                'size': 'invisible', // Invisible is seamless
+                'callback': (response) => {
+                    console.log("Recaptcha Verified");
+                }
+            });
+        }
+    });
+
+    // --- EMAIL LOGIN ---
+    const emailForm = document.getElementById('email-login-form');
+    if (emailForm) { 
+        emailForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log('Login successful:', userCredential.user.uid);
+            console.log('Email Login successful:', userCredential.user.uid);
             window.location.href = 'dashboard.html'; 
         } catch (error) {
             console.error('Login Error:', error.code, error.message);
-            if (error.code === 'auth/invalid-credential') {
-            alert('Login Failed: Incorrect email or password.');
-            } else {
             alert('Login Failed: ' + error.message);
-            }
         }
         });
     }
 
-    // Header Auth Button Logic
+    // --- PHONE LOGIN: SEND OTP ---
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    if (sendOtpBtn) {
+        sendOtpBtn.addEventListener('click', () => {
+            let phoneNumber = document.getElementById('phone').value.trim();
+            
+            // Auto-append +91 if user removed it but typed 10 digits
+            if (!phoneNumber.startsWith('+') && phoneNumber.length === 10) {
+                phoneNumber = "+91" + phoneNumber;
+            }
+
+            if (!phoneNumber || phoneNumber.length < 13) { // +91 + 10 digits = 13
+                alert("Please enter a valid phone number (e.g. +91...)"); 
+                return; 
+            }
+
+            // Init Recaptcha if not already
+            if (!window.recaptchaVerifier) {
+                 window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                    'size': 'invisible',
+                    'callback': (response) => { console.log("Recaptcha Verified"); }
+                });
+            }
+
+            sendOtpBtn.innerText = "Sending...";
+            sendOtpBtn.disabled = true;
+
+            const appVerifier = window.recaptchaVerifier;
+
+            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    alert("OTP Sent to " + phoneNumber);
+                    document.getElementById('otp-group').style.display = 'block';
+                    sendOtpBtn.style.display = 'none';
+                }).catch((error) => {
+                    console.error("SMS Error:", error);
+                    alert("SMS Failed: " + error.message);
+                    sendOtpBtn.innerText = "Send OTP";
+                    sendOtpBtn.disabled = false;
+                    
+                    // Reset Recaptcha
+                    if(window.recaptchaVerifier) {
+                        window.recaptchaVerifier.clear();
+                        window.recaptchaVerifier = null;
+                    }
+                });
+        });
+    }
+
+    // --- PHONE LOGIN: VERIFY OTP ---
+    const phoneForm = document.getElementById('phone-login-form');
+    if (phoneForm) {
+        phoneForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const code = document.getElementById('otp').value;
+            const verifyBtn = document.getElementById('verify-otp-btn');
+
+            if(!code) return;
+            
+            verifyBtn.innerText = "Verifying...";
+
+            try {
+                const result = await window.confirmationResult.confirm(code);
+                const user = result.user;
+                console.log("Phone Login Successful:", user.uid);
+                alert("Login Successful!");
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error("OTP Error:", error);
+                alert("Invalid OTP. Please try again.");
+                verifyBtn.innerText = "Verify OTP & Login";
+            }
+        });
+    }
+
+    // --- HEADER AUTH STATE ---
     const authButton = document.getElementById('auth-button');
     if (authButton) {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 authButton.textContent = 'Logout';
                 authButton.href = '#'; 
-                authButton.classList.remove('btn-primary');
-                authButton.classList.add('btn-secondary');
+                authButton.classList.replace('btn-primary', 'btn-secondary');
                 
                 authButton.onclick = (e) => {
                     e.preventDefault();
                     signOut(auth).then(() => {
                         window.location.href = 'index.html'; 
-                    }).catch((error) => {
-                        console.error('Sign out error:', error);
                     });
                 };
             } else {
                 authButton.textContent = 'Sign Up';
                 authButton.href = 'signup.html';
-                authButton.classList.remove('btn-secondary');
-                authButton.classList.add('btn-primary');
+                authButton.classList.replace('btn-secondary', 'btn-primary');
                 authButton.onclick = null; 
             }
         });
