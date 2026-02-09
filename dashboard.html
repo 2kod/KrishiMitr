@@ -132,8 +132,8 @@
     <article>
       <section class="section dashboard-header">
         <div class="container">
-          <h1 class="h1" id="user-welcome">Welcome Back!</h1>
-          <p class="p" id="user-location-sub">Loading your farm data...</p>
+          <h2 class="h2 section-title" id= "user-welcome" style="text-align: left; margin-bottom: 20px;">Namaste</h2>
+          <h1 class="h1" id="user-location-sub">Loading your farm data...</h1>
         </div>
       </section>
 
@@ -214,12 +214,42 @@
                   <label>State</label>
                   <select id="setup-state" required>
                       <option value="">Select State</option>
-                      <option value="Rajasthan">Rajasthan</option>
-                      <option value="Punjab">Punjab</option>
+                      <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                      <option value="Andhra Pradesh">Andhra Pradesh</option>
+                      <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                      <option value="Assam">Assam</option>
+                      <option value="Bihar">Bihar</option>
+                      <option value="Chandigarh">Chandigarh</option>
+                      <option value="Chhattisgarh">Chhattisgarh</option>
+                      <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                      <option value="Delhi">Delhi</option>
+                      <option value="Goa">Goa</option>
+                      <option value="Gujarat">Gujarat</option>
                       <option value="Haryana">Haryana</option>
-                      <option value="Maharashtra">Maharashtra</option>
-                      <option value="Uttar Pradesh">Uttar Pradesh</option>
+                      <option value="Himachal Pradesh">Himachal Pradesh</option>
+                      <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                      <option value="Jharkhand">Jharkhand</option>
+                      <option value="Karnataka">Karnataka</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Ladakh">Ladakh</option>
+                      <option value="Lakshadweep">Lakshadweep</option>
                       <option value="Madhya Pradesh">Madhya Pradesh</option>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Manipur">Manipur</option>
+                      <option value="Meghalaya">Meghalaya</option>
+                      <option value="Mizoram">Mizoram</option>
+                      <option value="Nagaland">Nagaland</option>
+                      <option value="Odisha">Odisha</option>
+                      <option value="Puducherry">Puducherry</option>
+                      <option value="Punjab">Punjab</option>
+                      <option value="Rajasthan">Rajasthan</option>
+                      <option value="Sikkim">Sikkim</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Telangana">Telangana</option>
+                      <option value="Tripura">Tripura</option>
+                      <option value="Uttar Pradesh">Uttar Pradesh</option>
+                      <option value="Uttarakhand">Uttarakhand</option>
+                      <option value="West Bengal">West Bengal</option>
                   </select>
               </div>
               <div class="form-group">
@@ -267,17 +297,18 @@
         const docRef = doc(db, "farmers", user.uid);
         const docSnap = await getDoc(docRef);
 
-        if (docSnap.exists()) {
+        // --- CHECK IF PROFILE IS COMPLETE ---
+        if (docSnap.exists() && docSnap.data().district && docSnap.data().state) {
             updateUI(docSnap.data());
         } else {
-            // SHOW MODAL - AUTO FILL PHONE IF AVAILABLE
+            // Profile missing details -> Show Modal
             const phoneInput = document.getElementById('setup-phone');
             if (user.phoneNumber) {
                 phoneInput.value = user.phoneNumber;
                 phoneInput.setAttribute("readonly", true); // Lock it
-                phoneInput.style.backgroundColor = "#e8f5e9"; // Visual cue
+                phoneInput.style.backgroundColor = "#e8f5e9"; 
             } else {
-                phoneInput.value = ""; // Let email users type
+                phoneInput.value = ""; 
             }
             document.getElementById('profile-modal').style.display = 'flex';
         }
@@ -299,15 +330,15 @@
 
         const newData = {
             fullName: document.getElementById('setup-name').value,
-            phone: document.getElementById('setup-phone').value, // Saves the linked number!
+            phone: document.getElementById('setup-phone').value, 
             state: document.getElementById('setup-state').value,
             district: document.getElementById('setup-district').value,
             farmSize: document.getElementById('setup-size').value,
-            email: currentUser.email || "" // Save email if present
+            email: currentUser.email || "" 
         };
 
         try {
-            await setDoc(doc(db, "farmers", currentUser.uid), newData);
+            await setDoc(doc(db, "farmers", currentUser.uid), newData, { merge: true });
             document.getElementById('profile-modal').style.display = 'none';
             updateUI(newData);
             alert("Profile Linked & Saved Successfully!");
@@ -320,6 +351,7 @@
     // --- UI UPDATERS ---
     function updateUI(data) {
         if (!data) return;
+        // PERSONALIZED GREETING (THE FIX)
         document.getElementById('user-welcome').textContent = `Namaste, ${data.fullName || 'Farmer'}!`;
         document.getElementById('user-location-sub').textContent = `Farm Dashboard for ${data.district}, ${data.state}`;
         document.getElementById('profile-name').textContent = data.fullName || '--';

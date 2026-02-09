@@ -230,7 +230,7 @@
   </script>
 
   <script type="module">
-    // 1. Import Auth Functions
+    // 1. Import Functions from Firebase
     import { 
         signInWithEmailAndPassword, 
         onAuthStateChanged, 
@@ -239,8 +239,8 @@
         signInWithPhoneNumber 
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     
-    // 2. Import Firestore Functions (To save phone number)
-    import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    // 2. Import Firestore Functions (CRITICAL: To save phone number)
+    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     // 3. Import PRE-INITIALIZED App, Auth, & DB from config
     import { app, auth, db, analytics } from "./assets/js/config.js"; 
@@ -248,34 +248,21 @@
     // --- GLOBAL VARIABLES ---
     window.confirmationResult = null; 
 
-    // --- RECAPTCHA SETUP ---
+    // --- RECAPTCHA SETUP (Force Reset on Init) ---
     document.addEventListener('initRecaptcha', () => {
-        if (!window.recaptchaVerifier) {
-            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                'size': 'invisible', 
-                'callback': (response) => {
-                    console.log("Recaptcha Verified");
-                }
-            });
+        // Clear existing to avoid "reCAPTCHA has already been rendered" error
+        if (window.recaptchaVerifier) {
+            try { window.recaptchaVerifier.clear(); } catch(e) {}
+            window.recaptchaVerifier = null;
         }
-    });
-
-    // --- TAB SWITCHING LOGIC ---
-    window.switchTab = function(type) {
-        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-        document.querySelector(`.auth-tab[onclick="switchTab('${type}')"]`).classList.add('active');
         
-        if (type === 'email') {
-            document.getElementById('email-login-form').style.display = 'block';
-            document.getElementById('phone-login-form').style.display = 'none';
-        } else {
-            document.getElementById('email-login-form').style.display = 'none';
-            document.getElementById('phone-login-form').style.display = 'block';
-            if (!window.recaptchaVerifier) {
-                document.dispatchEvent(new Event('initRecaptcha'));
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+            'size': 'invisible', 
+            'callback': (response) => {
+                console.log("Recaptcha Verified");
             }
-        }
-    }
+        });
+    });
 
     // --- EMAIL LOGIN ---
     const emailForm = document.getElementById('email-login-form');
@@ -286,8 +273,8 @@
         const password = document.getElementById('password').value;
 
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log('Email Login successful:', userCredential.user.uid);
+            await signInWithEmailAndPassword(auth, email, password);
+            console.log('Email Login successful');
             window.location.href = 'dashboard.html'; 
         } catch (error) {
             console.error('Login Error:', error.code, error.message);
@@ -299,10 +286,10 @@
     // --- PHONE LOGIN: SEND OTP ---
     const sendOtpBtn = document.getElementById('send-otp-btn');
     if (sendOtpBtn) {
-        sendOtpBtn.addEventListener('click', () => {
+        sendOtpBtn.addEventListener('click', async () => {
             let phoneNumber = document.getElementById('phone').value.trim();
             
-            // Auto-append +91 if user removed it but typed 10 digits
+            // Auto-append +91 logic
             if (!phoneNumber.startsWith('+') && phoneNumber.length === 10) {
                 phoneNumber = "+91" + phoneNumber;
             }
@@ -312,34 +299,34 @@
                 return; 
             }
 
-            if (!window.recaptchaVerifier) {
-                 window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                    'size': 'invisible',
-                    'callback': (response) => { console.log("Recaptcha Verified"); }
-                });
+            // FORCE ReCAPTCHA Reset before sending
+            const container = document.getElementById('recaptcha-container');
+            container.innerHTML = ""; // Clear visual element
+            if (window.recaptchaVerifier) {
+                window.recaptchaVerifier.clear();
+                window.recaptchaVerifier = null;
             }
+            
+            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                'size': 'invisible',
+                'callback': (response) => { console.log("Recaptcha Verified"); }
+            });
 
             sendOtpBtn.innerText = "Sending...";
             sendOtpBtn.disabled = true;
 
-            const appVerifier = window.recaptchaVerifier;
-
-            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-                .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
-                    alert("OTP Sent to " + phoneNumber);
-                    document.getElementById('otp-group').style.display = 'block';
-                    sendOtpBtn.style.display = 'none';
-                }).catch((error) => {
-                    console.error("SMS Error:", error);
-                    alert("SMS Failed: " + error.message);
-                    sendOtpBtn.innerText = "Send OTP";
-                    sendOtpBtn.disabled = false;
-                    if(window.recaptchaVerifier) {
-                        window.recaptchaVerifier.clear();
-                        window.recaptchaVerifier = null;
-                    }
-                });
+            try {
+                const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+                window.confirmationResult = confirmationResult;
+                alert("OTP Sent to " + phoneNumber);
+                document.getElementById('otp-group').style.display = 'block';
+                sendOtpBtn.style.display = 'none';
+            } catch (error) {
+                console.error("SMS Error:", error);
+                alert("SMS Failed: " + error.message);
+                sendOtpBtn.innerText = "Send OTP";
+                sendOtpBtn.disabled = false;
+            }
         });
     }
 
@@ -362,10 +349,8 @@
                 console.log("Phone Login Successful:", user.uid);
 
                 // 2. SAVE PHONE TO DATABASE (The Fix!)
-                const userDocRef = doc(db, "farmers", user.uid);
-                
                 // Use setDoc with merge: true to save the phone without overwriting existing data
-                await setDoc(userDocRef, {
+                await setDoc(doc(db, "farmers", user.uid), {
                     phone: user.phoneNumber,
                     lastLogin: new Date()
                 }, { merge: true });
