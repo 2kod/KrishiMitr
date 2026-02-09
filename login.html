@@ -230,40 +230,52 @@
   </script>
 
   <script type="module">
-    // 1. Import Functions from Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    // 1. Import Auth Functions
     import { 
-        getAuth, 
         signInWithEmailAndPassword, 
         onAuthStateChanged, 
         signOut, 
         RecaptchaVerifier, 
         signInWithPhoneNumber 
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
     
-    // 2. Import Config
-    import { firebaseConfig } from "./assets/js/config.js"; 
-    
-    // 3. Initialize Apps
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const analytics = getAnalytics(app); // Analytics Init
+    // 2. Import Firestore Functions (To save phone number)
+    import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // --- GLOBAL VARS ---
-    window.confirmationResult = null; // Store OTP result
+    // 3. Import PRE-INITIALIZED App, Auth, & DB from config
+    import { app, auth, db, analytics } from "./assets/js/config.js"; 
+
+    // --- GLOBAL VARIABLES ---
+    window.confirmationResult = null; 
 
     // --- RECAPTCHA SETUP ---
     document.addEventListener('initRecaptcha', () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                'size': 'invisible', // Invisible is seamless
+                'size': 'invisible', 
                 'callback': (response) => {
                     console.log("Recaptcha Verified");
                 }
             });
         }
     });
+
+    // --- TAB SWITCHING LOGIC ---
+    window.switchTab = function(type) {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.auth-tab[onclick="switchTab('${type}')"]`).classList.add('active');
+        
+        if (type === 'email') {
+            document.getElementById('email-login-form').style.display = 'block';
+            document.getElementById('phone-login-form').style.display = 'none';
+        } else {
+            document.getElementById('email-login-form').style.display = 'none';
+            document.getElementById('phone-login-form').style.display = 'block';
+            if (!window.recaptchaVerifier) {
+                document.dispatchEvent(new Event('initRecaptcha'));
+            }
+        }
+    }
 
     // --- EMAIL LOGIN ---
     const emailForm = document.getElementById('email-login-form');
@@ -295,12 +307,11 @@
                 phoneNumber = "+91" + phoneNumber;
             }
 
-            if (!phoneNumber || phoneNumber.length < 13) { // +91 + 10 digits = 13
+            if (!phoneNumber || phoneNumber.length < 13) { 
                 alert("Please enter a valid phone number (e.g. +91...)"); 
                 return; 
             }
 
-            // Init Recaptcha if not already
             if (!window.recaptchaVerifier) {
                  window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
                     'size': 'invisible',
@@ -324,8 +335,6 @@
                     alert("SMS Failed: " + error.message);
                     sendOtpBtn.innerText = "Send OTP";
                     sendOtpBtn.disabled = false;
-                    
-                    // Reset Recaptcha
                     if(window.recaptchaVerifier) {
                         window.recaptchaVerifier.clear();
                         window.recaptchaVerifier = null;
@@ -334,7 +343,7 @@
         });
     }
 
-    // --- PHONE LOGIN: VERIFY OTP ---
+    // --- PHONE LOGIN: VERIFY OTP & SAVE TO DB ---
     const phoneForm = document.getElementById('phone-login-form');
     if (phoneForm) {
         phoneForm.addEventListener('submit', async (e) => {
@@ -347,14 +356,26 @@
             verifyBtn.innerText = "Verifying...";
 
             try {
+                // 1. Verify OTP
                 const result = await window.confirmationResult.confirm(code);
                 const user = result.user;
                 console.log("Phone Login Successful:", user.uid);
+
+                // 2. SAVE PHONE TO DATABASE (The Fix!)
+                const userDocRef = doc(db, "farmers", user.uid);
+                
+                // Use setDoc with merge: true to save the phone without overwriting existing data
+                await setDoc(userDocRef, {
+                    phone: user.phoneNumber,
+                    lastLogin: new Date()
+                }, { merge: true });
+
                 alert("Login Successful!");
                 window.location.href = 'dashboard.html';
+
             } catch (error) {
-                console.error("OTP Error:", error);
-                alert("Invalid OTP. Please try again.");
+                console.error("OTP/DB Error:", error);
+                alert("Login Failed: " + error.message);
                 verifyBtn.innerText = "Verify OTP & Login";
             }
         });
@@ -384,6 +405,6 @@
         });
     }
   </script>
-
+  
 </body>
 </html>

@@ -60,7 +60,7 @@
     .login-card .form-subtitle { text-align: center; font-size: var(--fs-5); color: var(--davys-gray); margin-bottom: 30px; }
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-weight: var(--fw-600); font-size: var(--fs-6); color: var(--black-chocolate); margin-bottom: 8px; }
-    .form-group input, .form-group select { width: 100%; padding: 12px 15px; font-size: var(--fs-5); border: 1px solid var(--light-gray); border-radius: var(--radius-10); transition: var(--transition-1); color: var(--davys-gray); font-family: var(--ff-montserrat); }
+    .form-group input, .form-group select { width: 100%; padding: 12px 15px; font-size: var(--fs-5); border: 1px solid var(--light-gray); border-radius: var(--radius-10); transition: var(--transition-1); color: var(--davys-gray); font-family: 'Montserrat', sans-serif; }
     .form-group input:focus, .form-group select:focus { border-color: var(--blue-green-color-wheel); box-shadow: 0 0 0 3px var(--blue-green-color-wheel_10); }
     .form-divider { margin-top: 30px; margin-bottom: 25px; border: 0; border-top: 1px solid var(--light-gray); }
     .login-link { text-align: center; margin-top: 30px; font-size: var(--fs-5); }
@@ -199,7 +199,7 @@
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
   <script>
-    // COMPLETE LIST OF INDIAN STATES & DISTRICTS
+    // LIST OF INDIAN STATES & DISTRICTS
     const locationData = {
       "Andaman and Nicobar Islands": ["Nicobar", "North and Middle Andaman", "South Andaman"],
       "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Prakasam", "Srikakulam", "Sri Potti Sriramulu Nellore", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"],
@@ -282,19 +282,24 @@
   </script>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import { firebaseConfig } from "./assets/js/config.js"; 
+    // 1. Import Auth & DB PRE-INITIALIZED from config
+    import { auth, db } from "./assets/js/config.js"; 
     
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+    // 2. Import Functions Needed
+    import { createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+    // --- SIGN UP LOGIC ---
     const signupForm = document.getElementById('signup-form');
     if (signupForm) {
       signupForm.addEventListener('submit', async (event) => {
         event.preventDefault();
+        
+        // Disable button to prevent double-click
+        const btn = signupForm.querySelector('button');
+        btn.innerText = "Creating Account...";
+        btn.disabled = true;
+
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         
@@ -304,26 +309,35 @@
           state: document.getElementById('state').value,
           district: document.getElementById('district').value,
           pincode: document.getElementById('pincode').value,
-          farmSize: document.getElementById('farmsize').value
+          farmSize: document.getElementById('farmsize').value,
+          email: email
         };
 
         try {
+          // 1. Create User in Auth
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
+
+          // 2. Save Profile in Firestore
           await setDoc(doc(db, "farmers", user.uid), farmData);
 
           alert('Account created successfully! Redirecting to Dashboard...');
           window.location.href = 'dashboard.html'; 
 
         } catch (error) {
-          console.error('Signup Error:', error.code, error.message);
+          console.error('Signup Error:', error);
           let errorMessage = "Error: " + error.message;
-          if (error.code === 'auth/email-already-in-use') errorMessage = 'Email already exists.';
+          if (error.code === 'auth/email-already-in-use') errorMessage = 'Email already exists. Please login.';
+          else if (error.code === 'auth/weak-password') errorMessage = 'Password should be at least 6 characters.';
+          
           alert(errorMessage);
+          btn.innerText = "Create Account";
+          btn.disabled = false;
         }
       });
     }
 
+    // --- HEADER BUTTON STATE ---
     const authButton = document.getElementById('auth-button');
     if (authButton) {
       onAuthStateChanged(auth, (user) => {
