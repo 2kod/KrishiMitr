@@ -4,203 +4,193 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>कृषिMitr - Home</title>
+  <title>Welcome - कृषिMitra</title>
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    .section { padding-block: 60px; } 
-    .hero { padding-top: 120px; padding-bottom: 80px; min-height: auto; } 
-    .goog-te-banner-frame.skiptranslate { display: none !important; } 
-    body { top: 0px !important; } 
-    .goog-te-gadget { font-size: 0 !important; }
-    .course-card { height: 100%; display: flex; flex-direction: column; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; }
-    .course-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-    .card-banner { height: 200px; overflow: hidden; }
-    .img-cover { width: 100%; height: 100%; object-fit: cover; }
-    .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-    .card-title { font-size: 1.2rem; font-weight: 700; color: #333; margin-bottom: 15px; line-height: 1.4; display: -webkit-box; -webkit-lineclamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .btn-read { margin-top: auto; align-self: flex-start; background: #e8f5e9; color: #1e7e34; padding: 8px 18px; border-radius: 30px; font-weight: 600; font-size: 0.85rem; transition: 0.3s; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; width: fit-content; }
-    .btn-read ion-icon { font-size: 1.1rem !important; }
-    .btn-read:hover { background: #1e7e34; color: white; }
+    /* --- SOOTHING INDIAN FARM BACKGROUND --- */
+    body {
+        background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(240, 253, 244, 0.95)), url('./assets/images/image.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+    }
+
+    /* Header aligned to left */
+    .auth-header { padding: 20px 40px; display: flex; justify-content: flex-start; align-items: center; }
+    .auth-header .logo { font-size: 3.5rem; font-weight: 700; color: var(--primary-dark); font-family: 'Playfair Display', serif; text-decoration: none; }
+    .auth-header .logo span { color: #f39c12; }
+
+    /* Frosted Glass Login Card */
+    .login-section { padding-top: 40px; padding-bottom: 100px; min-height: calc(100vh - 100px); display: flex; align-items: center; justify-content: center; }
+    .login-card { 
+        width: 100%; max-width: 450px; margin: 0 auto; 
+        background: rgba(255, 255, 255, 0.85); 
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); padding: 40px; 
+    }
+    
+    .login-card .h2 { text-align: center; font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary-dark); margin-bottom: 10px; }
+    .login-card .form-subtitle { text-align: center; font-size: 1.4rem; color: #555; margin-bottom: 30px; font-weight: 500; }
+    
+    .auth-tabs { display: flex; border-bottom: 2px solid rgba(30, 126, 52, 0.2); margin-bottom: 25px; }
+    .auth-tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; font-weight: 600; color: #777; transition: 0.3s; font-size: 1.4rem;}
+    .auth-tab:hover { color: var(--primary); }
+    .auth-tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-weight: 700; font-size: 1.3rem; color: #333; margin-bottom: 8px; }
+    .form-group input { width: 100%; padding: 14px 15px; font-size: 1.5rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; transition: 0.3s; font-family: 'Montserrat', sans-serif; background: rgba(255,255,255,0.9); }
+    .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(30, 126, 52, 0.1); outline: none; }
+    
+    /* FORCE GREEN BUTTON VISIBILITY */
+    .btn-auth { 
+        background-color: #1e7e34 !important; 
+        color: #ffffff !important; 
+        border: none !important; 
+        padding: 15px !important; 
+        font-size: 1.6rem !important; 
+        font-weight: 700 !important; 
+        border-radius: 12px !important; 
+        width: 100% !important; 
+        cursor: pointer !important; 
+        transition: 0.3s !important; 
+        box-shadow: 0 4px 15px rgba(30, 126, 52, 0.3) !important;
+        display: block !important;
+    }
+    .btn-auth:hover { background-color: #155724 !important; transform: translateY(-2px) !important; }
+
+    .signup-link { text-align: center; margin-top: 30px; font-size: 1.4rem; color: #555; font-weight: 500; }
+    .signup-link a { color: var(--primary); font-weight: 700; text-decoration: none; transition: 0.2s; }
+    .signup-link a:hover { color: var(--primary-dark); text-decoration: underline; }
+
+    #otp-group { display: none; }
+    #recaptcha-container { margin-bottom: 15px; display: flex; justify-content: center; }
+
+    #header-placeholder, #footer-placeholder { display: none !important; }
   </style>
 </head>
-<body id="top">
-  <div id="header-placeholder"></div>
+<body>
+
+  <header class="auth-header">
+    <a href="index.html" class="logo">कृषिMitra<span>.</span></a>
+  </header>
+
   <main>
-    <article>
-      <section class="section hero" aria-label="hero" id="home" data-section style="background-image: url('./assets/images/photo-1520052203542-d3095f1b6cf0.jpeg')">
-        <div class="container">
-          <p class="hero-subtitle" data-i18n="hero_sub">Smart Farming, Simplified.</p>
-          <h1 class="h1 hero-title" style="color: white;" data-i18n="hero_title">कृषिMitra: Your Farm's Best Friend.</h1>
-          <p class="hero-text" data-i18n="hero_text">Get seasonal crop advice, check live mandi prices, and stay updated with the latest agri-news—all in one place.</p>
-          <a href="#about" class="btn btn-secondary" data-i18n="btn_learn">Learn More</a>
-          <div class="social-wrapper">
-            <p class="social-title" data-i18n="connect_us">Connect with us:</p>
-            <ul class="social-list">
-              <li><a href="#" class="social-link"><ion-icon name="logo-facebook"></ion-icon></a></li>
-              <li><a href="#" class="social-link"><ion-icon name="logo-twitter"></ion-icon></a></li>
-              <li><a href="#" class="social-link"><ion-icon name="logo-linkedin"></ion-icon></a></li>
-            </ul>
+    <section class="login-section">
+      <div class="container">
+        <div class="login-card">
+          <h2 class="h2">Farmer Login</h2>
+          <p class="form-subtitle">Welcome back! Access your smart farm.</p>
+          
+          <div class="auth-tabs">
+              <div class="auth-tab active" onclick="switchTab('email')">Email</div>
+              <div class="auth-tab" onclick="switchTab('phone')">Phone OTP</div>
           </div>
+
+          <form action="#" id="email-login-form">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="farmer@village.com" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn-auth">Login</button>
+          </form>
+
+          <form action="#" id="phone-login-form" style="display: none;">
+            <div class="form-group">
+              <label for="phone">Mobile Number</label>
+              <input type="tel" id="phone" value="+91 " placeholder="98765 43210" required>
+            </div>
+            <div id="recaptcha-container"></div> 
+            <button type="button" id="send-otp-btn" class="btn-auth" style="background: #2d3436 !important; margin-bottom: 15px;">Send OTP</button>
+
+            <div class="form-group" id="otp-group">
+              <label for="otp">Enter 6-digit OTP</label>
+              <input type="number" id="otp" placeholder="123456">
+              <button type="submit" id="verify-otp-btn" class="btn-auth" style="margin-top: 10px;">Verify & Login</button>
+            </div>
+          </form>
+
+          <p class="signup-link">New to Krishimitr? <a href="signup.html">Create free account</a></p>
         </div>
-      </section>
-      <section class="section service" aria-label="service" id="service" data-section>
-        <div class="container">
-          <ul class="grid-list">
-            <li>
-              <div class="service-card">
-                <div class="card-icon"><img src="./assets/images/globeeee-removebg-preview.png" width="10px" height="10px" loading="lazy" alt="Globe"></div>
-                <h3 class="h3"><a href="news.html" class="card-title" data-i18n="feat_news">News</a></h3>
-                <p class="card-text" data-i18n="feat_news_desc">Stay updated with the latest developments, research, and trends in modern agriculture</p>
-                <a href="news.html" class="btn btn-secondary"><ion-icon name="arrow-forward"></ion-icon></a>
-              </div>
-            </li>
-            <li>
-              <div class="service-card active">
-                <div class="card-icon"><img src="./assets/images/service-2.svg" width="60" height="60" loading="lazy" alt="Basic Course"></div>
-                <h3 class="h3"><a href="mandi-prices.html" class="card-title" data-i18n="feat_store">Mandi Prices</a></h3>
-                <p class="card-text" data-i18n="feat_store_desc">Check real-time market rates and find authorized fertilizer stores near you.</p>
-                <a href="mandi-prices.html" class="btn btn-secondary"><ion-icon name="arrow-forward"></ion-icon></a>
-              </div>
-            </li>
-            <li>
-              <div class="service-card">
-                <div class="card-icon"><img src="./assets/images/leaf-sticker-tropical-rainforest-wall-decal-clip-art-tropical-leaf-removebg-preview.png" width="60" height="60" loading="lazy" alt="Men’s Course"></div>
-                <h3 class="h3"><a href="crop-guide.html" class="card-title" data-i18n="feat_crop">Crop Guide</a></h3>
-                <p class="card-text" data-i18n="feat_crop_desc">Data-driven recommendations for optimal crop selection based on season, climate, and market conditions</p>
-                <a href="crop-guide.html" class="btn btn-secondary"><ion-icon name="arrow-forward"></ion-icon></a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <section class="section about" aria-label="about" id="about" data-section>
-        <div class="container">
-          <div class="about-banner img-holder" style="--width: 470; --height: 580;">
-            <img src="./assets/images/shutterstock_1116673256 (1).jpg" width="470" height="580" loading="lazy" alt="about banner" class="img-cover">
-            <a href="#about" class="btn btn-secondary" data-i18n="btn_about">About Us</a>
-          </div>
-          <div class="about-content">
-            <p class="section-subtitle" data-i18n="about_sub">About Krishimitr: Your Partner in Growth</p>
-            <h2 class="h2 section-title" data-i18n="about_title">Empowering farmers with the knowledge and tools.</h2>
-            <p class="section-text" data-i18n="about_text">At Krishimitr, our name is our mission: to be the farmer's best friend (Krishi + Mitr). We are a dedicated agri-tech platform built to bring the power of technology right to your fingertips.</p>
-          </div>
-        </div>
-      </section>
-      <section class="section course" aria-label="course" id="course" data-section>
-        <div class="container">
-          <div class="title-wrapper">
-            <p class="section-subtitle" data-i18n="news_sub">Latest News</p>
-            <h2 class="h2 section-title" data-i18n="news_title">Agricultural News & Insights</h2>
-          </div>
-          <ul class="grid-list" id="home-news-grid">
-             <p style="text-align: center; width: 100%; color: #666;"><ion-icon name="sync-outline" class="spin"></ion-icon> Loading latest headlines...</p>
-          </ul>
-          <div style="text-align: center; margin-top: 40px;">
-            <a href="news.html" class="btn btn-secondary" data-i18n="btn_view_news">View All News</a>
-          </div>
-        </div>
-      </section>
-    </article>
+      </div>
+    </section>
   </main>
-  <div id="footer-placeholder"></div>
-  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up"></ion-icon></a>
-  <script src="./assets/js/components.js"></script>
-  <script src="./assets/js/script.js" defer></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
   <script>
-    const API_KEY = "pub_aa53d72288e74dcf9b2d3e7183148e1b"; 
-    const mockNews = [
-        { title: "Government hikes MSP for Rabi crops to boost farmer income", image_url: "./assets/images/courses-4.jpg", link: "#", source_id: "Times of India", pubDate: "2025-10-15" },
-        { title: "New AI tool detects crop diseases in real-time", image_url: "./assets/images/courses-4.jpg", link: "#", source_id: "Tech Crunch", pubDate: "2025-10-14" },
-        { title: "Organic farming spreads across 50,000 new acres", image_url: "./assets/images/courses-4.jpg", link: "#", source_id: "The Hindu", pubDate: "2025-10-12" }
-    ];
-    async function fetchHomeNews() {
-        const container = document.getElementById('home-news-grid');
-        const url = `https://newsdata.io/api/1/news?apikey=${API_KEY}&q=agriculture&country=in&language=en`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error("API Error");
-            const data = await response.json();
-            if (!data.results || data.results.length === 0) throw new Error("No articles");
-            renderHomeNews(data.results.slice(0, 3));
-        } catch (error) {
-            renderHomeNews(mockNews);
+    window.switchTab = function(type) {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.auth-tab[onclick="switchTab('${type}')"]`).classList.add('active');
+        if (type === 'email') {
+            document.getElementById('email-login-form').style.display = 'block';
+            document.getElementById('phone-login-form').style.display = 'none';
+        } else {
+            document.getElementById('email-login-form').style.display = 'none';
+            document.getElementById('phone-login-form').style.display = 'block';
         }
     }
-    function renderHomeNews(articles) {
-        const container = document.getElementById('home-news-grid');
-        container.innerHTML = ""; 
-        articles.forEach(article => {
-            const image = article.image_url || './assets/images/courses-4.jpg';
-            const url = article.link;
-            const source = article.source_id;
-            const date = article.pubDate ? article.pubDate.split(" ")[0] : "Today";
-            const cardHTML = `
-            <li>
-              <div class="course-card">
-                <figure class="card-banner"><img src="${image}" loading="lazy" alt="News" class="img-cover" onerror="this.src='./assets/images/courses-4.jpg'"></figure>
-                <div class="card-content">
-                  <p class="card-author" style="margin-bottom:10px; font-size:0.9rem; color:#666;">
-                    <span class="span" style="color:#1e7e34; font-weight:bold; text-transform:capitalize;">${source}</span>
-                    <span style="float:right;">${date}</span>
-                  </p>
-                  <h3 class="h3"><a href="${url}" target="_blank" class="card-title">${article.title}</a></h3>
-                  <a href="${url}" target="_blank" class="btn-read">Read Article <ion-icon name="arrow-forward-outline"></ion-icon></a>
-                </div>
-              </div>
-            </li>`;
-            container.innerHTML += cardHTML;
+  </script>
+
+  <script type="module">
+    import { signInWithEmailAndPassword, onAuthStateChanged, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { auth, db } from "./assets/js/config.js"; 
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) window.location.href = 'dashboard.html';
+    });
+
+    const emailForm = document.getElementById('email-login-form');
+    if (emailForm) { 
+        emailForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const btn = emailForm.querySelector('button');
+            btn.innerText = "Logging in...";
+            btn.disabled = true;
+            try {
+                await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value);
+                window.location.href = 'dashboard.html'; 
+            } catch (error) { 
+                alert('Login Failed: ' + error.message); 
+                btn.innerText = "Login";
+                btn.disabled = false;
+            }
         });
     }
-    document.addEventListener('DOMContentLoaded', fetchHomeNews);
-  </script>
-  <script>
-    const translations = {
-      en: {
-        nav_home: "Home", nav_news: "News", nav_store: "Marketplace", nav_guide: "Crop Guide", nav_weather: "Weather", nav_schemes: "Govt Schemes", nav_contact: "Contact", btn_signup: "Sign Up", btn_login: "Login", btn_logout: "Logout",
-        hero_sub: "Smart Farming, Simplified.", hero_title: "कृषिMitra: Your Farm's Best Friend.", hero_text: "Get seasonal crop advice, check live mandi prices, and stay updated with the latest agri-news—all in one place.", btn_learn: "Learn More", connect_us: "Connect with us:",
-        feat_news: "News", feat_news_desc: "Stay updated with the latest developments, research, and trends in modern agriculture", feat_store: "Mandi Prices", feat_store_desc: "Check real-time market rates and find authorized fertilizer stores near you.", feat_crop: "Crop Guide", feat_crop_desc: "Data-driven recommendations for optimal crop selection based on season, climate, and market conditions",
-        btn_about: "About Us", about_sub: "About Krishimitr: Your Partner in Growth", about_title: "Empowering farmers with the knowledge and tools.", about_text: "At Krishimitr, our name is our mission: to be the farmer's best friend (Krishi + Mitr). We are a dedicated agri-tech platform built to bring the power of technology right to your fingertips.",
-        news_sub: "Latest News", news_title: "Agricultural News & Insights", btn_view_news: "View All News", footer_sub: "Subscribe Newsletter", footer_text: "Get the latest agri-news and product offers from Krishimitr.", btn_sub: "Subscribe", footer_links: "Quick Links", footer_help: "Help Links", footer_loc: "Location"
-      },
-      hi: {
-        nav_home: "होम", nav_news: "समाचार", nav_store: "बाजार", nav_guide: "फसल गाइड", nav_weather: "मौसम", nav_schemes: "सरकारी योजनाएं", nav_contact: "संपर्क", btn_signup: "साइन अप", btn_login: "लॉग इन", btn_logout: "लॉग आउट",
-        hero_sub: "स्मार्ट खेती, सरल बनाई गई।", hero_title: "कृषिMitra: आपके खेत का सबसे अच्छा दोस्त।", hero_text: "मौसमी फसल सलाह प्राप्त करें, मंडी के भाव देखें और नवीनतम कृषि समाचारों से अपडेट रहें - सब एक ही स्थान पर।", btn_learn: "और जानें", connect_us: "हमसे जुड़ें:",
-        feat_news: "समाचार", feat_news_desc: "आधुनिक कृषि में नवीनतम विकास, अनुसंधान और रुझानों के साथ अपडेट रहें।", feat_store: "मंडी भाव", feat_store_desc: "वास्तविक समय के बाजार भाव देखें और अपने निकटतम अधिकृत उर्वरक स्टोर खोजें।", feat_crop: "फसल गाइड", feat_crop_desc: "मौसम, जलवायु और बाजार की स्थितियों के आधार पर इष्टतम फसल चयन के लिए सिफारिशें।",
-        btn_about: "हमारे बारे में", about_sub: "कृषि मित्र के बारे में: विकास में आपका भागीदार", about_title: "किसानों को ज्ञान और उपकरणों के साथ सशक्त बनाना।", about_text: "कृषि मित्र में, हमारा नाम ही हमारा मिशन है: किसान का सबसे अच्छा दोस्त बनना। हम एक समर्पित एग्री-टेक प्लेटफॉर्म हैं जो तकनीक की शक्ति को आपकी उंगलियों तक लाने के लिए बनाया गया है।",
-        news_sub: "ताज़ा खबर", news_title: "कृषि समाचार और अंतर्दृष्टि", btn_view_news: "सभी समाचार देखें", footer_sub: "न्यूज़लेटर सदस्यता लें", footer_text: "कृषि मित्र से नवीनतम कृषि समाचार और उत्पाद ऑफ़र प्राप्त करें।", btn_sub: "सदस्यता लें", footer_links: "त्वरित लिंक", footer_help: "सहायता लिंक", footer_loc: "स्थान"
-      }
-    };
-    function changeLanguage(lang) {
-      const elements = document.querySelectorAll('[data-i18n]');
-      elements.forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[lang] && translations[lang][key]) { el.textContent = translations[lang][key]; }
-      });
+
+    // Phone Auth Logic
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    if (sendOtpBtn) {
+        sendOtpBtn.addEventListener('click', async () => {
+            let phoneNumber = document.getElementById('phone').value.trim();
+            if (!phoneNumber.startsWith('+') && phoneNumber.length === 10) phoneNumber = "+91" + phoneNumber;
+            
+            window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'invisible' });
+            
+            try {
+                const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+                window.confirmationResult = confirmationResult;
+                document.getElementById('otp-group').style.display = 'block';
+                sendOtpBtn.style.display = 'none';
+            } catch (error) { alert("Error: " + error.message); }
+        });
     }
-  </script>
-  <script type="module">
-    import { auth } from "./assets/js/config.js"; 
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    document.addEventListener('headerLoaded', () => {
-        const authContainer = document.getElementById('auth-container');
-        const langSelect = document.getElementById('language-select');
-        if (authContainer) {
-          onAuthStateChanged(auth, (user) => {
-            const currentLang = langSelect ? langSelect.value : 'en';
-            const dict = translations[currentLang];
-            if (user) {
-              authContainer.innerHTML = `<a href="dashboard.html" class="nav-profile-btn" title="Go to Dashboard"><ion-icon name="person-circle-outline"></ion-icon></a>`;
-            } else {
-              authContainer.innerHTML = `<a href="signup.html" class="btn btn-primary" id="auth-button">${dict.btn_signup}</a>`;
-            }
-          });
-        }
+
+    document.getElementById('phone-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const code = document.getElementById('otp').value;
+        try {
+            const result = await window.confirmationResult.confirm(code);
+            window.location.href = 'dashboard.html';
+        } catch (error) { alert("Verification Failed"); }
     });
   </script>
 </body>

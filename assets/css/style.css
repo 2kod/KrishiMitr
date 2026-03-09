@@ -14,20 +14,22 @@
   --white_15: hsl(0, 0%, 100%, 0.15);
   --white: hsl(0, 0%, 100%);
 
-  /* Typography */
+ /**
+   * typography
+   */
   --ff-montserrat: 'Montserrat', sans-serif;
   --ff-playfair: 'Playfair Display', serif;
-  --fs-1: 3.6rem;
-  --fs-2: 2.4rem;
-  --fs-3: 2.2rem;
-  --fs-4: 2rem;
-  --fs-5: 1.5rem;
-  --fs-6: 1.4rem;
-  --fs-7: 1.3rem;
+  /* Increased every font size variable globally */
+  --fs-1: 4.5rem; 
+  --fs-2: 3.2rem; 
+  --fs-3: 2.6rem; 
+  --fs-4: 2.2rem; 
+  --fs-5: 1.8rem; /* Was 1.5 - Now 18px */
+  --fs-6: 1.6rem; /* Was 1.4 - Now 16px */
+  --fs-7: 1.5rem; /* Was 1.3 - Now 15px */
   --fw-700: 700;
   --fw-600: 600;
   --fw-500: 500;
-
   /* Spacing & Style */
   --section-padding: 70px;
   --shadow-1: 0 4px 12px hsla(0, 0%, 0%, 0.08);
