@@ -1,150 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Login - कृषिMitr</title>
-
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/css/style.css">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-
   <style>
-    /* --- CSS STYLES --- */
-    
-    /* Login Specifics */
     .login-section { padding-top: 150px; padding-bottom: 100px; background-color: var(--cultured); min-height: 100vh; }
     .login-card { max-width: 500px; margin: 0 auto; background-color: var(--white); border-radius: var(--radius-10); box-shadow: var(--shadow-1); padding: 40px; }
     .login-card .h2 { text-align: center; font-family: var(--ff-playfair); font-size: var(--fs-2); color: var(--black-chocolate); margin-bottom: 10px; }
     .login-card .form-subtitle { text-align: center; font-size: var(--fs-5); color: var(--davys-gray); margin-bottom: 30px; }
-    
-    /* Authentication Tabs */
     .auth-tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 25px; }
     .auth-tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; font-weight: 600; color: #777; transition: 0.3s; }
     .auth-tab:hover { color: #1e7e34; background: #f9f9f9; }
     .auth-tab.active { color: #1e7e34; border-bottom: 3px solid #1e7e34; background: transparent; }
-
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-weight: var(--fw-600); font-size: var(--fs-6); color: var(--black-chocolate); margin-bottom: 8px; }
     .form-group input { width: 100%; padding: 12px 15px; font-size: var(--fs-5); border: 1px solid var(--light-gray); border-radius: var(--radius-10); transition: var(--transition-1); font-family: 'Montserrat', sans-serif; }
     .form-group input:focus { border-color: var(--blue-green-color-wheel); box-shadow: 0 0 0 3px var(--blue-green-color-wheel_10); }
-    
     .forgot-link { display: block; text-align: right; font-size: var(--fs-6); color: var(--blue-green-color-wheel); font-weight: var(--fw-500); margin-top: -10px; margin-bottom: 25px; }
     .forgot-link:hover { text-decoration: underline; }
-    
     .signup-link { text-align: center; margin-top: 30px; font-size: var(--fs-5); }
     .signup-link a { display: inline; color: var(--blue-green-color-wheel); font-weight: var(--fw-600); }
     .signup-link a:hover { text-decoration: underline; }
-
-    /* OTP Specifics */
     #otp-group { display: none; animation: fadeIn 0.5s; }
     #recaptcha-container { margin-bottom: 15px; display: flex; justify-content: center; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* --- HEADER & DROPDOWN MENU STYLES --- */
-    .header .container { display: flex !important; align-items: center !important; justify-content: space-between !important; padding-block: 15px; }
-    .navbar-list { display: flex; align-items: center; gap: 30px; margin: 0; padding: 0; list-style: none; }
-    .navbar-link { font-weight: 600; color: var(--davys-gray); padding: 10px 0; text-decoration: none; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
-    .navbar-link:hover { color: #1e7e34; }
-
-    .dropdown-wrapper { position: relative; }
-    .dropdown-menu {
-      position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(20px);
-      background: white; min-width: 220px; border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.15); padding: 10px;
-      opacity: 0; visibility: hidden; transition: all 0.3s ease;
-      z-index: 1100; border: 1px solid #f0f0f0;
-    }
-    .dropdown-wrapper:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-    .dropdown-menu::before {
-      content: ''; position: absolute; top: -6px; left: 50%;
-      transform: translateX(-50%) rotate(45deg); width: 12px; height: 12px;
-      background: white; border-top: 1px solid #f0f0f0; border-left: 1px solid #f0f0f0;
-    }
-    .dropdown-item {
-      display: flex; align-items: center; gap: 12px; padding: 12px 15px;
-      color: #444; font-weight: 600; text-decoration: none;
-      border-radius: 8px; transition: 0.2s; font-size: 0.95rem;
-    }
-    .dropdown-item:hover { background: #e8f5e9; color: #1e7e34; }
-
-    /* Header Right */
-    .header-right-group { display: flex !important; align-items: center !important; gap: 20px; margin-left: auto; }
-    
-    .lang-box { display: flex; align-items: center; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 50px; padding: 0 15px; min-width: 110px; height: 45px; overflow: hidden; }
-    .lang-box ion-icon { font-size: 1.5rem; color: #333; margin-right: 8px; }
-    #language-select { border: none; outline: none; background: transparent; font-family: 'Montserrat'; font-weight: 600; color: #333; font-size: 1rem; cursor: pointer; width: 100%; }
-
-    .header .btn { padding: 0 40px !important; height: 45px !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 1rem !important; font-weight: 700 !important; min-width: 140px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-inline-start: 0 !important; }
-
-    /* Mobile Responsive Fix */
-    @media (max-width: 992px) {
-        .navbar { display: none; }
-        .header-right-group { margin-right: 60px; gap: 10px; }
-        .lang-box { padding: 0 8px; min-width: auto; height: 40px; }
-        .header .btn { padding: 0 15px !important; font-size: 0.9rem !important; }
-        
-        .dropdown-menu { position: static; transform: none; box-shadow: none; border: none; padding-left: 20px; background: #f9f9f9; display: none; opacity: 1; visibility: visible; }
-        .dropdown-wrapper:hover .dropdown-menu { display: block; }
-    }
   </style>
 </head>
-
 <body id="top">
-
-  <header class="header" data-header>
-    <div class="container">
-      <a href="index.html" class="logo">
-        कृषिMitr<span class="span">.</span>
-      </a>
-      <nav class="navbar" data-navbar>
-        <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler>
-          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-        </button>
-        <ul class="navbar-list">
-          <li class="navbar-item"><a href="index.html" class="navbar-link" data-nav-link>Home</a></li>
-          <li class="navbar-item"><a href="news.html" class="navbar-link" data-nav-link>News</a></li>
-          
-          <li class="navbar-item dropdown-wrapper">
-            <a href="#" class="navbar-link">
-               Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1rem;"></ion-icon>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="fertilizer-store.html" class="dropdown-item"><ion-icon name="storefront-outline"></ion-icon> Find Stores</a></li>
-                <li><a href="mandi-prices.html" class="dropdown-item"><ion-icon name="bar-chart-outline"></ion-icon> Mandi Prices</a></li>
-            </ul>
-          </li>
-
-          <li class="navbar-item"><a href="crop-guide.html" class="navbar-link" data-nav-link>Crop Guide</a></li>
-          <li class="navbar-item"><a href="weather.html" class="navbar-link" data-nav-link>Weather</a></li>
-          <li class="navbar-item"><a href="contact.html" class="navbar-link" data-nav-link>Contact</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-right-group">
-        <div class="lang-box">
-          <ion-icon name="language-outline"></ion-icon>
-          <select id="language-select" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="hi">हिंदी</option>
-          </select>
-        </div>
-
-        <a href="signup.html" class="btn btn-primary" id="auth-button">Sign Up</a> 
-      </div>
-      
-      <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler>
-        <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-      </button>
-      <div class="overlay" data-nav-toggler data-overlay></div>
-    </div>
-  </header>
-
+  <div id="header-placeholder"></div>
   <main>
     <article>
       <section class="section login-section" aria-label="login form" data-section>
@@ -152,12 +42,10 @@
           <div class="login-card">
             <h2 class="h2">Farmer Login</h2>
             <p class="form-subtitle">Welcome back! Sign in to your dashboard.</p>
-            
             <div class="auth-tabs">
                 <div class="auth-tab active" onclick="switchTab('email')">Email Login</div>
                 <div class="auth-tab" onclick="switchTab('phone')">Phone Login</div>
             </div>
-
             <form action="#" class="login-form" id="email-login-form">
               <div class="form-group">
                 <label for="email">Email Address</label>
@@ -170,151 +58,93 @@
               <a href="#" class="forgot-link">Forgot Password?</a>
               <button type="submit" class="btn btn-primary" style="width: 100%;">Login with Email</button>
             </form>
-
             <form action="#" class="login-form" id="phone-login-form" style="display: none;">
               <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="tel" name="phone" id="phone" value="+91 " placeholder="98765 43210" required>
               </div>
-              
-              <div id="recaptcha-container"></div> <button type="button" id="send-otp-btn" class="btn btn-secondary" style="width: 100%; margin-bottom: 15px;">Send OTP</button>
-
+              <div id="recaptcha-container"></div> 
+              <button type="button" id="send-otp-btn" class="btn btn-secondary" style="width: 100%; margin-bottom: 15px;">Send OTP</button>
               <div class="form-group" id="otp-group">
                 <label for="otp">Enter OTP</label>
                 <input type="number" name="otp" id="otp" placeholder="123456">
                 <button type="submit" id="verify-otp-btn" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Verify OTP & Login</button>
               </div>
             </form>
-
-            <p class="signup-link">
-              Don't have an account? <a href="signup.html">Sign up here</a>
-            </p>
+            <p class="signup-link">Don't have an account? <a href="signup.html">Sign up here</a></p>
           </div>
         </div>
       </section>
     </article>
   </main>
-
- <footer class="footer" id="footer">
-    <div class="footer-bottom"><div class="container"><p class="copyright">&copy; 2025 Krishimitr. All Rights Reserved.</p></div></div>
-  </footer>
+  <div id="footer-placeholder"></div>
   <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up" aria-hidden="true"></ion-icon></a>
-
+  <script src="./assets/js/components.js"></script>
   <script src="./assets/js/script.js" defer></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
   <script>
-    function changeLanguage(lang) {
-        console.log("Language changed to: " + lang);
-    }
-
-    // Tab Switching Logic
+    function changeLanguage(lang) { console.log("Language changed to: " + lang); }
     window.switchTab = function(type) {
         document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
         document.querySelector(`.auth-tab[onclick="switchTab('${type}')"]`).classList.add('active');
-        
         if (type === 'email') {
             document.getElementById('email-login-form').style.display = 'block';
             document.getElementById('phone-login-form').style.display = 'none';
         } else {
             document.getElementById('email-login-form').style.display = 'none';
             document.getElementById('phone-login-form').style.display = 'block';
-            
-            // Trigger Recaptcha setup if switching to phone
-            if (!window.recaptchaVerifier) {
-                document.dispatchEvent(new Event('initRecaptcha'));
-            }
+            if (!window.recaptchaVerifier) document.dispatchEvent(new Event('initRecaptcha'));
         }
     }
   </script>
-
   <script type="module">
-    // 1. Import Functions from Firebase
-    import { 
-        signInWithEmailAndPassword, 
-        onAuthStateChanged, 
-        signOut, 
-        RecaptchaVerifier, 
-        signInWithPhoneNumber 
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    
-    // 2. Import Firestore Functions (CRITICAL: To save phone number)
+    import { signInWithEmailAndPassword, onAuthStateChanged, signOut, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    // 3. Import PRE-INITIALIZED App, Auth, & DB from config
     import { app, auth, db, analytics } from "./assets/js/config.js"; 
-
-    // --- GLOBAL VARIABLES ---
     window.confirmationResult = null; 
-
-    // --- RECAPTCHA SETUP (Force Reset on Init) ---
     document.addEventListener('initRecaptcha', () => {
-        // Clear existing to avoid "reCAPTCHA has already been rendered" error
         if (window.recaptchaVerifier) {
             try { window.recaptchaVerifier.clear(); } catch(e) {}
             window.recaptchaVerifier = null;
         }
-        
         window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
             'size': 'invisible', 
-            'callback': (response) => {
-                console.log("Recaptcha Verified");
-            }
+            'callback': (response) => { console.log("Recaptcha Verified"); }
         });
     });
-
-    // --- EMAIL LOGIN ---
     const emailForm = document.getElementById('email-login-form');
     if (emailForm) { 
         emailForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            console.log('Email Login successful');
             window.location.href = 'dashboard.html'; 
         } catch (error) {
-            console.error('Login Error:', error.code, error.message);
             alert('Login Failed: ' + error.message);
         }
         });
     }
-
-    // --- PHONE LOGIN: SEND OTP ---
     const sendOtpBtn = document.getElementById('send-otp-btn');
     if (sendOtpBtn) {
         sendOtpBtn.addEventListener('click', async () => {
             let phoneNumber = document.getElementById('phone').value.trim();
-            
-            // Auto-append +91 logic
-            if (!phoneNumber.startsWith('+') && phoneNumber.length === 10) {
-                phoneNumber = "+91" + phoneNumber;
-            }
-
-            if (!phoneNumber || phoneNumber.length < 13) { 
-                alert("Please enter a valid phone number (e.g. +91...)"); 
-                return; 
-            }
-
-            // FORCE ReCAPTCHA Reset before sending
+            if (!phoneNumber.startsWith('+') && phoneNumber.length === 10) phoneNumber = "+91" + phoneNumber;
+            if (!phoneNumber || phoneNumber.length < 13) { alert("Please enter a valid phone number (e.g. +91...)"); return; }
             const container = document.getElementById('recaptcha-container');
-            container.innerHTML = ""; // Clear visual element
+            container.innerHTML = ""; 
             if (window.recaptchaVerifier) {
                 window.recaptchaVerifier.clear();
                 window.recaptchaVerifier = null;
             }
-            
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
                 'size': 'invisible',
                 'callback': (response) => { console.log("Recaptcha Verified"); }
             });
-
             sendOtpBtn.innerText = "Sending...";
             sendOtpBtn.disabled = true;
-
             try {
                 const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
                 window.confirmationResult = confirmationResult;
@@ -322,74 +152,44 @@
                 document.getElementById('otp-group').style.display = 'block';
                 sendOtpBtn.style.display = 'none';
             } catch (error) {
-                console.error("SMS Error:", error);
                 alert("SMS Failed: " + error.message);
                 sendOtpBtn.innerText = "Send OTP";
                 sendOtpBtn.disabled = false;
             }
         });
     }
-
-    // --- PHONE LOGIN: VERIFY OTP & SAVE TO DB ---
     const phoneForm = document.getElementById('phone-login-form');
     if (phoneForm) {
         phoneForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const code = document.getElementById('otp').value;
             const verifyBtn = document.getElementById('verify-otp-btn');
-
             if(!code) return;
-            
             verifyBtn.innerText = "Verifying...";
-
             try {
-                // 1. Verify OTP
                 const result = await window.confirmationResult.confirm(code);
                 const user = result.user;
-                console.log("Phone Login Successful:", user.uid);
-
-                // 2. SAVE PHONE TO DATABASE (The Fix!)
-                // Use setDoc with merge: true to save the phone without overwriting existing data
-                await setDoc(doc(db, "farmers", user.uid), {
-                    phone: user.phoneNumber,
-                    lastLogin: new Date()
-                }, { merge: true });
-
+                await setDoc(doc(db, "farmers", user.uid), { phone: user.phoneNumber, lastLogin: new Date() }, { merge: true });
                 alert("Login Successful!");
                 window.location.href = 'dashboard.html';
-
             } catch (error) {
-                console.error("OTP/DB Error:", error);
                 alert("Login Failed: " + error.message);
                 verifyBtn.innerText = "Verify OTP & Login";
             }
         });
     }
-
-    // --- HEADER AUTH STATE ---
-    const authButton = document.getElementById('auth-button');
-    if (authButton) {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                authButton.textContent = 'Logout';
-                authButton.href = '#'; 
-                authButton.classList.replace('btn-primary', 'btn-secondary');
-                
-                authButton.onclick = (e) => {
-                    e.preventDefault();
-                    signOut(auth).then(() => {
-                        window.location.href = 'index.html'; 
-                    });
-                };
-            } else {
-                authButton.textContent = 'Sign Up';
-                authButton.href = 'signup.html';
-                authButton.classList.replace('btn-secondary', 'btn-primary');
-                authButton.onclick = null; 
-            }
-        });
-    }
+    document.addEventListener('headerLoaded', () => {
+        const authContainer = document.getElementById('auth-container');
+        if (authContainer) {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    authContainer.innerHTML = `<a href="dashboard.html" class="nav-profile-btn" title="Go to Dashboard"><ion-icon name="person-circle-outline"></ion-icon></a>`;
+                } else {
+                    authContainer.innerHTML = `<a href="signup.html" class="btn btn-primary" id="auth-button">Sign Up</a>`;
+                }
+            });
+        }
+    });
   </script>
-  
 </body>
 </html>
