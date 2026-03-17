@@ -348,4 +348,33 @@ html, body:not(.menu-open) { height: auto !important; overflow-y: visible !impor
   .h2 { font-size: 1.8rem !important; }
   input, select, textarea, button { min-height: 44px; font-size: 16px !important; }
   table { display: block; overflow-x: auto; white-space: nowrap; }
+
+  /* --- UNIVERSAL MOBILE OVERLAP FIX --- */
+@media (max-width: 992px) {
+    /* The Navbar must be the highest element on the page */
+    .navbar {
+        z-index: 10000 !important;
+        visibility: visible !important;
+    }
+
+    /* The dark overlay behind the menu */
+    .overlay {
+        z-index: 9999 !important;
+    }
+
+    /* Force ALL filter boxes, search bars, and cards to stay BEHIND the menu */
+    .filter-wrapper, 
+    .search-wrapper, 
+    .controls-section, 
+    .dash-widget, 
+    .login-card {
+        z-index: 1 !important;
+        position: relative !important;
+    }
+
+    /* Fix for the header overlap - giving more breathing room */
+    main {
+        padding-top: 80px !important;
+    }
+}
 }

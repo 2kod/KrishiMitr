@@ -7,28 +7,63 @@
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      // Initialize with your Public Key
+      emailjs.init("2p_lxPpBqMJOg9d0R"); 
+    })();
+  </script>
+
   <style>
-    .page-banner { padding: 60px 0 80px; text-align: center; background: linear-gradient(to bottom, #f0fdf4, #ffffff); }
-    .page-banner .h1 { font-family: 'Playfair Display', serif; color: var(--primary-dark); font-size: 3rem; margin-bottom: 10px; }
-    .page-banner .p { font-size: 1.1rem; max-width: 600px; margin: 0 auto; color: #666; line-height: 1.6; }
-    .contact-section { background-color: #ffffff; padding-bottom: 100px; }
-    .contact-wrapper { display: grid; grid-template-columns: 1.5fr 1fr; gap: 60px; align-items: start; margin-top: -30px; position: relative; z-index: 5; }
-    .contact-form-wrapper { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
-    .form-group { margin-bottom: 25px; }
-    .form-group label { display: block; font-weight: 600; font-size: 1rem; color: #2d3436; margin-bottom: 10px; }
-    .form-group input, .form-group textarea { width: 100%; padding: 15px; font-size: 1rem; border: 1px solid #ddd; border-radius: 10px; transition: 0.3s; color: #555; font-family: 'Montserrat', sans-serif; background: #fdfdfd; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); outline: none; background: white; box-shadow: 0 0 0 4px rgba(30, 126, 52, 0.1); }
-    .form-group textarea { resize: vertical; min-height: 160px; }
-    .contact-details-wrapper { background-color: #f9fbfd; padding: 40px; border-radius: 20px; border: 1px solid #eee; height: 100%; }
-    .contact-details-wrapper .h3 { font-size: 1.8rem; font-family: 'Playfair Display', serif; color: #2d3436; margin-bottom: 25px; margin-top: 0; }
-    .contact-info-list { list-style: none; margin-bottom: 40px; padding: 0; }
-    .contact-info-list li { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 25px; font-size: 1.1rem; color: #555; line-height: 1.5; }
-    .contact-info-list ion-icon { font-size: 1.8rem; color: var(--primary); flex-shrink: 0; margin-top: 2px; }
-    .map-wrapper { border-radius: 15px; overflow: hidden; height: 300px; background: #e0e0e0; border: 1px solid #ddd; }
-    .map-wrapper iframe { display: block; width: 100%; height: 100%; border: 0; }
-    @media (max-width: 992px) { 
-        .contact-wrapper { grid-template-columns: 1fr; gap: 40px; margin-top: 0; }
-        .contact-form-wrapper, .contact-details-wrapper { padding: 25px; }
+    /* SOFT TONE OVERRIDES */
+    html { font-size: 12px !important; scroll-behavior: smooth; }
+    body { background-color: #f9fbfd; font-size: 1.6rem; margin: 0; color: #444; }
+
+    .page-banner { padding: 130px 0 80px; text-align: center; background: linear-gradient(to bottom, #f0fdf4, #ffffff); }
+    .page-banner .h1 { font-family: 'Playfair Display', serif; color: var(--primary-dark); font-size: 4.5rem; margin-bottom: 15px; }
+    .page-banner .p { font-size: 1.8rem; max-width: 650px; margin: 0 auto; color: #666; line-height: 1.6; }
+
+    .contact-wrapper { display: grid; grid-template-columns: 1.5fr 1fr; gap: 40px; margin-top: -40px; position: relative; z-index: 5; }
+    
+    .contact-form-wrapper { background: white; padding: 40px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; }
+    
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-weight: 700; font-size: 1.3rem; color: #333; margin-bottom: 10px; }
+    .form-group input, .form-group textarea { 
+        width: 100%; padding: 15px; font-size: 1.4rem; border: 1px solid #eee; 
+        border-radius: 12px; transition: 0.3s; background: #fafafa; font-family: 'Montserrat', sans-serif;
+    }
+    .form-group input:focus, .form-group textarea:focus { 
+        border-color: var(--primary); background: white; box-shadow: 0 0 0 4px rgba(30, 126, 52, 0.1); outline: none; 
+    }
+
+    .contact-details-wrapper { background-color: #f0fdf4; padding: 40px; border-radius: 24px; border: 1px solid #e2e8f0; height: 100%; }
+    .contact-details-wrapper .h3 { font-size: 2.2rem; font-family: 'Playfair Display', serif; color: var(--primary-dark); margin-bottom: 30px; margin-top: 0; }
+    
+    .contact-info-list { list-style: none; padding: 0; }
+    .contact-info-list li { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; font-size: 1.4rem; color: #444; }
+    .contact-info-list ion-icon { font-size: 2.2rem; color: var(--primary); flex-shrink: 0; }
+
+    /* SUCCESS MODAL */
+    #success-modal {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;
+        backdrop-filter: blur(4px);
+    }
+    .modal-content {
+        background: white; padding: 40px; border-radius: 20px; text-align: center;
+        max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .modal-icon { font-size: 6rem; color: var(--primary); margin-bottom: 20px; }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--primary-dark); margin-bottom: 10px; }
+    .modal-text { font-size: 1.5rem; color: #666; margin-bottom: 25px; }
+
+    @media (max-width: 992px) {
+        .contact-wrapper { grid-template-columns: 1fr; margin-top: 20px; }
+        .page-banner .h1 { font-size: 3.5rem; }
+        .contact-details-wrapper { margin-top: 20px; }
     }
   </style>
 </head>
@@ -37,62 +72,64 @@
   <div id="header-placeholder"></div>
 
   <main>
-    <article>
-      <section class="section page-banner">
-        <div class="container">
-          <h1 class="h1">Contact Us</h1>
-          <p class="p">We'd love to hear from you. Reach out with any questions, feedback, or inquiries.</p>
-        </div>
-      </section>
+    <section class="page-banner">
+      <div class="container">
+        <h1 class="h1">Get in Touch</h1>
+        <p class="p">Have questions about your crops or our platform? Our team is here to support you.</p>
+      </div>
+    </section>
 
-      <section class="section contact-section">
-        <div class="container">
-          <div class="contact-wrapper">
-            <div class="contact-form-wrapper">
-              <h2 class="h2" style="font-family: 'Playfair Display', serif; text-align: left; margin-bottom: 30px; color: var(--primary-dark);">Get in Touch</h2>
-              <form id="contact-form" class="contact-form">
-                <input type="hidden" name="access_key" value="41bd4f94-f6ff-4ffa-bb0d-6e3da792fb2a"> 
-                <div class="form-group">
-                  <label for="c-name">Full Name</label>
-                  <input type="text" id="c-name" name="name" placeholder="Enter your full name" required>
-                </div>
-                <div class="form-group">
-                  <label for="c-email">Email Address</label>
-                  <input type="email" id="c-email" name="email" placeholder="Enter your email" required>
-                </div>
-                <div class="form-group">
-                  <label for="c-phone">Phone Number (Optional)</label>
-                  <input type="tel" id="c-phone" name="phone" placeholder="Enter your phone number">
-                </div>
-                <div class="form-group">
-                  <label for="c-subject">Subject</label>
-                  <input type="text" id="c-subject" name="subject" placeholder="What is this regarding?" required>
-                </div>
-                <div class="form-group">
-                  <label for="c-message">Your Message</label>
-                  <textarea id="c-message" name="message" placeholder="Write your message here..." required></textarea>
-                </div>
-                <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem; border-radius: 10px;">Send Message</button>
-              </form>
-            </div>
-
-            <div class="contact-details-wrapper">
-              <h3 class="h3">Contact Details</h3>
-              <ul class="contact-info-list">
-                <li><ion-icon name="location-outline"></ion-icon><span>Krishimitr HQ, Jaipur, Rajasthan</span></li>
-                <li><ion-icon name="call-outline"></ion-icon><span>+91-98765 43210</span></li>
-                <li><ion-icon name="mail-outline"></ion-icon><span>contact@krishimitr.in</span></li>
-              </ul>
-              <h3 class="h3" style="margin-top: 40px;">Our Location</h3>
-              <div class="map-wrapper">
-                <iframe src="https://maps.google.com/maps?q=Jaipur%20Rajasthan&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <section class="section contact-section" style="padding-bottom: 100px;">
+      <div class="container">
+        <div class="contact-wrapper">
+          
+          <div class="contact-form-wrapper">
+            <form id="contact-form">
+              <div class="form-group">
+                <label for="c-name">Full Name</label>
+                <input type="text" id="c-name" name="user_name" placeholder="Enter your name" required>
               </div>
+              <div class="form-group">
+                <label for="c-email">Email Address</label>
+                <input type="email" id="c-email" name="user_email" placeholder="Enter your email" required>
+              </div>
+              <div class="form-group">
+                <label for="c-subject">Subject</label>
+                <input type="text" id="c-subject" name="subject" placeholder="What is this regarding?" required>
+              </div>
+              <div class="form-group">
+                <label for="c-message">Message</label>
+                <textarea id="c-message" name="message" placeholder="How can we help you?" required></textarea>
+              </div>
+              <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; border-radius: 12px; height: 55px; font-size: 1.6rem; font-weight: 700;">Send Message</button>
+            </form>
+          </div>
+
+          <div class="contact-details-wrapper">
+            <h3 class="h3">Our Office</h3>
+            <ul class="contact-info-list">
+              <li><ion-icon name="location-sharp"></ion-icon><span>Krishimitr HQ, Jaipur, Rajasthan</span></li>
+              <li><ion-icon name="call-sharp"></ion-icon><span>+91-98765 43210</span></li>
+              <li><ion-icon name="mail-sharp"></ion-icon><span>support@krishimitr.in</span></li>
+            </ul>
+            <div style="margin-top: 40px; border-radius: 15px; overflow: hidden; height: 250px; border: 1px solid #ddd;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113911.23354316347!2d75.71120281640626!3d26.912433600000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db61232b11f07%3A0x2afd3906a25b967a!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
           </div>
+
         </div>
-      </section>
-    </article>
+      </div>
+    </section>
   </main>
+
+  <div id="success-modal">
+      <div class="modal-content">
+          <ion-icon name="checkmark-circle" class="modal-icon"></ion-icon>
+          <h2 class="modal-title">Message Sent!</h2>
+          <p class="modal-text">Namaste! We've received your inquiry. Our team will get back to you within 24 hours.</p>
+          <button onclick="closeModal()" class="btn btn-primary" style="width: 100%; border-radius: 10px;">Close</button>
+      </div>
+  </div>
 
   <div id="footer-placeholder"></div>
 
@@ -106,63 +143,74 @@
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+    // 1. Header & Authentication UI Logic
     document.addEventListener('headerLoaded', () => {
         const authContainer = document.getElementById('auth-container');
         if (authContainer) {
             onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    authContainer.innerHTML = `<a href="dashboard.html" class="nav-profile-btn" title="Dashboard"><ion-icon name="person-circle-outline"></ion-icon></a>`;
-                } else {
-                    authContainer.innerHTML = `<a href="signup.html" class="btn btn-primary" id="auth-button">Sign Up</a>`;
-                }
+                authContainer.innerHTML = user 
+                    ? `<a href="dashboard.html" class="nav-profile-btn"><ion-icon name="person-circle-outline"></ion-icon></a>`
+                    : `<a href="login.html" class="btn btn-primary">Login</a>`;
             });
         }
     });
 
+    // 2. Form Submission Logic
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
+    const modal = document.getElementById('success-modal');
 
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); 
-        const originalBtnText = submitBtn.innerText;
-        submitBtn.innerText = "Sending...";
-        submitBtn.disabled = true;
+    window.closeModal = function() {
+        modal.style.display = 'none';
+    };
 
-        const formData = {
-            name: document.getElementById('c-name').value,
-            email: document.getElementById('c-email').value,
-            phone: document.getElementById('c-phone').value,
-            subject: document.getElementById('c-subject').value,
-            message: document.getElementById('c-message').value
-        };
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+          e.preventDefault(); 
+          
+          const originalBtnText = submitBtn.innerText;
+          submitBtn.innerText = "Processing...";
+          submitBtn.disabled = true;
 
-        try {
-            await addDoc(collection(db, "contactus"), { ...formData, timestamp: serverTimestamp() });
-        } catch (dbError) { 
-            console.warn("Firebase save skipped or failed."); 
-        }
+          // These keys MUST match the {{variable_names}} in your EmailJS Template Dashboard
+          const templateParams = {
+              user_name: document.getElementById('c-name').value,
+              user_email: document.getElementById('c-email').value,
+              subject: document.getElementById('c-subject').value,
+              message: document.getElementById('c-message').value
+          };
 
-        try {
-            const response = await fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                headers: { "Content-Type": "application/json", Accept: "application/json" },
-                body: JSON.stringify({ access_key: document.querySelector('input[name="access_key"]').value, ...formData }),
-            });
-            const result = await response.json();
+          try {
+              // A. Save to Firestore (Safety-wrapped to ignore 403 blocks)
+              try {
+                await addDoc(collection(db, "inquiries"), { 
+                  ...templateParams, 
+                  timestamp: serverTimestamp() 
+                });
+              } catch (dbError) {
+                console.warn("Firestore blocked (Enable Firebase Installations API):", dbError);
+              }
 
-            if (result.success) {
-                alert("Message Sent! We will contact you shortly.");
+              // B. Send via EmailJS (The actual notification)
+              // NOTE: Ensure these IDs match your EmailJS Dashboard exactly
+              const response = await emailjs.send("service_am4p6j8", "template_7jpn7p2", templateParams);
+              
+              if (response.status === 200) {
+                modal.style.display = 'flex';
                 contactForm.reset();
-            } else {
-                alert("Email Service Error: " + result.message);
-            }
-        } catch (emailError) {
-            alert("Connection error. Please check your internet.");
-        } finally {
-            submitBtn.innerText = originalBtnText;
-            submitBtn.disabled = false;
-        }
-    });
+              } else {
+                throw new Error("EmailJS Response Error");
+              }
+
+          } catch (error) {
+              console.error("Submission Failed:", error);
+              alert("Oops! We couldn't send your message. Please check the console for details or try again.");
+          } finally {
+              submitBtn.innerText = originalBtnText;
+              submitBtn.disabled = false;
+          }
+      });
+    }
   </script>
 </body>
 </html>
