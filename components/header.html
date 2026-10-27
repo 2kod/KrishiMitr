@@ -1,45 +1,89 @@
-<header class="header floating-header" data-header>
-  <div class="container nav-pill-container">
+<header class="header edge-header" data-header>
+  <div class="header-inner">
+    <!-- Brand Logo -->
     <a href="../index.html" class="logo">
-      <span class="logo-leaf">🌱</span>
+      <div class="logo-badge">🌱</div>
       <span class="logo-text">कृषिMitra<span class="span">.</span></span>
     </a>
     
+    <!-- Central Desktop Navigation -->
     <nav class="navbar" data-navbar>
       <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline"></ion-icon></button>
       <ul class="navbar-list">
         <li class="navbar-item"><a href="dashboard.html" class="navbar-link">Home</a></li>
         <li class="navbar-item"><a href="scan.html" class="navbar-link">AI Doctor</a></li>
         
+        <!-- Marketplace Dropdown -->
         <li class="navbar-item dropdown-wrapper">
-          <a href="#" class="navbar-link dropdown-toggle">
-            Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1.1rem;"></ion-icon>
+          <a href="javascript:void(0)" class="navbar-link dropdown-toggle" role="button">
+            <span>Marketplace</span>
+            <ion-icon name="chevron-down-outline" class="nav-chevron"></ion-icon>
           </a>
-          <ul class="dropdown-menu glass-dropdown">
-            <li><a href="mandi-prices.html" class="dropdown-item"><ion-icon name="trending-up-outline"></ion-icon> Mandi Rates</a></li>
-            <li><a href="fertilizer-store.html" class="dropdown-item"><ion-icon name="storefront-outline"></ion-icon> Find Stores</a></li>
-          </ul>
+          <div class="dropdown-menu modern-dropdown">
+            <a href="mandi-prices.html" class="dropdown-card">
+              <div class="card-icon-box green"><ion-icon name="trending-up-outline"></ion-icon></div>
+              <div class="card-meta">
+                <span class="card-title">Mandi Rates</span>
+                <span class="card-desc">Live APMC wholesale market rates</span>
+              </div>
+            </a>
+            <a href="fertilizer-store.html" class="dropdown-card">
+              <div class="card-icon-box amber"><ion-icon name="storefront-outline"></ion-icon></div>
+              <div class="card-meta">
+                <span class="card-title">Find Stores</span>
+                <span class="card-desc">Certified fertilizer & seed retailers</span>
+              </div>
+            </a>
+          </div>
         </li>
 
         <li class="navbar-item"><a href="schemes.html" class="navbar-link">Govt Schemes</a></li>
 
+        <!-- More Dropdown -->
         <li class="navbar-item dropdown-wrapper">
-          <a href="#" class="navbar-link dropdown-toggle">
-            More <ion-icon name="chevron-down-outline" style="font-size: 1.1rem;"></ion-icon>
+          <a href="javascript:void(0)" class="navbar-link dropdown-toggle" role="button">
+            <span>More</span>
+            <ion-icon name="chevron-down-outline" class="nav-chevron"></ion-icon>
           </a>
-          <ul class="dropdown-menu glass-dropdown">
-            <li><a href="crop-guide.html" class="dropdown-item"><ion-icon name="book-outline"></ion-icon> Crop Guide</a></li>
-            <li><a href="weather.html" class="dropdown-item"><ion-icon name="cloudy-night-outline"></ion-icon> Weather</a></li>
-            <li><a href="news.html" class="dropdown-item"><ion-icon name="newspaper-outline"></ion-icon> Agri News</a></li>
-            <li><a href="contact.html" class="dropdown-item"><ion-icon name="chatbubbles-outline"></ion-icon> Contact</a></li>
-          </ul>
+          <div class="dropdown-menu modern-dropdown">
+            <a href="crop-guide.html" class="dropdown-card">
+              <div class="card-icon-box blue"><ion-icon name="book-outline"></ion-icon></div>
+              <div class="card-meta">
+                <span class="card-title">Crop Guide</span>
+                <span class="card-desc">Agronomy advice & best practices</span>
+              </div>
+            </a>
+            <a href="weather.html" class="dropdown-card">
+              <div class="card-icon-box sky"><ion-icon name="cloudy-night-outline"></ion-icon></div>
+              <div class="card-meta">
+                <span class="card-title">Weather</span>
+                <span class="card-desc">7-day agricultural rain & humidity forecast</span>
+              </div>
+            </a>
+            <a href="news.html" class="dropdown-card">
+              <div class="card-icon-box emerald"><ion-icon name="newspaper-outline"></ion-icon></div>
+              <div class="card-meta">
+                <span class="card-title">Agri News</span>
+                <span class="card-desc">National farming policies & agro trends</span>
+              </div>
+            </a>
+            <a href="contact.html" class="dropdown-card">
+              <div class="card-icon-box violet"><ion-icon name="chatbubbles-outline"></ion-icon></div>
+              <div class="card-meta">
+                <span class="card-title">Contact Us</span>
+                <span class="card-desc">Instant Kisan support helpline</span>
+              </div>
+            </a>
+          </div>
         </li>
       </ul>
     </nav>
     
+    <!-- Right Control Bar -->
     <div class="header-right-group">
-      <div class="lang-box glass-pill">
-        <ion-icon name="globe-outline"></ion-icon>
+      <!-- Language Picker with no double arrow -->
+      <div class="lang-box modern-lang-pill">
+        <ion-icon name="globe-outline" class="lang-globe-icon"></ion-icon>
         <select id="language-select" onchange="changeLanguage(this.value)">
           <option value="en">English</option>
           <option value="hi">हिंदी (Hindi)</option>
@@ -52,14 +96,26 @@
         </select>
         <ion-icon name="chevron-down-outline" class="select-chevron"></ion-icon>
       </div>
+
+      <!-- User Profile Badge -->
+      <div class="user-chip" id="nav-user-chip">
+        <div class="user-avatar">👨‍🌾</div>
+        <span class="user-name" id="nav-user-name">Farmer</span>
+      </div>
+
+      <!-- Clean Signout Button -->
       <div id="auth-container">
-        <button class="btn btn-logout-glass" id="logout-button">
-          <ion-icon name="log-out-outline" style="font-size: 1.4rem;"></ion-icon>
+        <button class="btn btn-logout-modern" id="logout-button" title="Sign out of KrishiMitra">
+          <ion-icon name="log-out-outline"></ion-icon>
           <span>Logout</span>
         </button>
       </div>
     </div>
-    <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler><ion-icon name="menu-outline"></ion-icon></button>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler>
+      <ion-icon name="menu-outline"></ion-icon>
+    </button>
     <div class="overlay" data-nav-toggler data-overlay></div>
   </div>
 </header>
