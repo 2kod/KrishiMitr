@@ -18,18 +18,6 @@ async function loadComponents() {
                     .replace(/href="\.\.\/index\.html"/g, 'href="index.html"');
             }
             headerPlaceholder.innerHTML = headerHTML;
-            
-            // Populate user chip from localStorage
-            try {
-                const userRaw = localStorage.getItem('krishimitr_user');
-                if (userRaw) {
-                    const u = JSON.parse(userRaw);
-                    const nameEl = document.getElementById('nav-user-name');
-                    if (nameEl && u && u.name) {
-                        nameEl.textContent = u.name.split(' ')[0] || u.name;
-                    }
-                }
-            } catch(e) {}
 
             // Initialize mobile menu ONLY after header is loaded
             initializeMobileMenu();
