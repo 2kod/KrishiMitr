@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Environment Variables
+.env
+server/.env
+client/.env
+
+# Build outputs
+client/dist/
+build/
+
+# Python & AI Model
+__pycache__/
+_model/__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+.venv/
+env/
+
+# Server Uploads
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs & System
+*.log
+.DS_Store
+.vscode/
+.idea/

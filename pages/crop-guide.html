@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Crop Guide - कृषिMitra</title>
+  <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    .page-banner { padding-top: 150px; padding-bottom: 80px; background-color: var(--cultured); text-align: center; }
+    .page-banner .h1 { color: var(--black-chocolate); }
+    .page-banner .p { font-size: var(--fs-5); max-width: 600px; margin: 15px auto 0; color: var(--davys-gray); }
+
+    .controls-section { padding-block: 40px; background-color: var(--white); border-bottom: 1px solid #eee; }
+    .controls-container { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+    .search-box { position: relative; width: 100%; max-width: 600px; }
+    .search-box input { width: 100%; padding: 15px 20px 15px 50px; border: 1px solid #ddd; border-radius: 50px; font-size: 1rem; outline: none; transition: 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .search-box input:focus { border-color: var(--blue-green-color-wheel); }
+    .search-box ion-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #777; font-size: 1.4rem; }
+    .filter-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .filter-btn { padding: 10px 25px; border: 1px solid #ddd; border-radius: 50px; background: white; color: #555; cursor: pointer; font-weight: 600; transition: 0.3s; }
+    .filter-btn.active, .filter-btn:hover { background: var(--blue-green-color-wheel); color: white; border-color: var(--blue-green-color-wheel); }
+
+    .course-card { border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: 0.3s; height: 100%; display: flex; flex-direction: column; background: white; }
+    .course-card:hover { transform: translateY(-5px); }
+    .card-banner { height: 220px; overflow: hidden; }
+    .img-cover { width: 100%; height: 100%; object-fit: cover; }
+    .card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
+    .season-badge { display: inline-block; padding: 5px 15px; border-radius: 5px; font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; width: max-content; }
+    .badge-rabi { background: #e3f2fd; color: #1565c0; } 
+    .badge-kharif { background: #e8f5e9; color: #2e7d32; } 
+    .badge-zaid { background: #fff3e0; color: #ef6c00; } 
+    .card-title { font-size: 1.8rem; margin-bottom: 10px; color: var(--black-chocolate); }
+    .card-hindi { font-size: 1.2rem; color: #777; font-weight: normal; }
+    .card-desc { color: #555; font-size: 1rem; line-height: 1.6; margin-bottom: 25px; flex-grow: 1; }
+
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+    .modal-box { background: white; width: 90%; max-width: 700px; max-height: 90vh; overflow-y: auto; border-radius: 15px; padding: 30px; position: relative; animation: slideUp 0.3s ease; }
+    .modal-close { position: absolute; top: 20px; right: 20px; font-size: 2.5rem; cursor: pointer; color: #aaa; line-height: 1; }
+    .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .info-box { background: #f9f9f9; padding: 15px; border-radius: 10px; }
+    .info-label { font-weight: bold; color: var(--blue-green-color-wheel); font-size: 0.9rem; display: block; margin-bottom: 5px; text-transform: uppercase; }
+    .info-value { font-size: 1.1rem; color: #333; font-weight: 500; }
+    
+    @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+    
+    @media (max-width: 992px) { 
+        .modal-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <article>
+      <section class="section page-banner">
+        <div class="container">
+          <h1 class="h1">Crop Encyclopedia</h1>
+          <p class="p">Complete farming guides: sowing times, soil requirements, and harvest tips.</p>
+        </div>
+      </section>
+
+      <div class="controls-section">
+        <div class="container controls-container">
+          <div class="search-box">
+            <ion-icon name="search-outline"></ion-icon>
+            <input type="text" id="search-input" placeholder="Search crops (e.g., Wheat, Rice)...">
+          </div>
+          <div class="filter-btns" id="filter-container">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="Rabi">Rabi (Winter)</button>
+            <button class="filter-btn" data-filter="Kharif">Kharif (Monsoon)</button>
+            <button class="filter-btn" data-filter="Zaid">Zaid (Summer)</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="section course" style="background: #fafafa;">
+        <div class="container">
+          <ul class="grid-list" id="crop-grid"></ul>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <div class="modal-overlay" id="crop-modal">
+    <div class="modal-box">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <div style="padding-bottom:15px; border-bottom:1px solid #eee; margin-bottom:20px;">
+        <span class="season-badge badge-rabi" id="m-season">--</span>
+        <h2 class="h2" id="m-name" style="margin-bottom:5px;">--</h2>
+        <p style="color: #777; font-size: 1.2rem;" id="m-hindi">--</p>
+      </div>
+      <p style="font-size: 1.1rem; line-height: 1.6; color: #444;" id="m-desc">...</p>
+      <div class="modal-grid">
+        <div class="info-box">
+          <span class="info-label"><ion-icon name="thermometer-outline"></ion-icon> Temperature</span>
+          <span class="info-value" id="m-temp">--</span>
+        </div>
+        <div class="info-box">
+          <span class="info-label"><ion-icon name="water-outline"></ion-icon> Rainfall</span>
+          <span class="info-value" id="m-water">--</span>
+        </div>
+        <div class="info-box">
+          <span class="info-label"><ion-icon name="layers-outline"></ion-icon> Soil Type</span>
+          <span class="info-value" id="m-soil">--</span>
+        </div>
+        <div class="info-box">
+          <span class="info-label"><ion-icon name="calendar-outline"></ion-icon> Sowing Time</span>
+          <span class="info-value" id="m-sowing">--</span>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top: 20px;">
+        <span class="info-label"><ion-icon name="leaf-outline"></ion-icon> Tips & Disease Control</span>
+        <span class="info-value" id="m-tips">--</span>
+      </div>
+      <div id="m-video-container"></div>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up"></ion-icon></a>
+
+  <script src="../assets/js/components.js?v=2"></script>
+  <script src="../assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    const WEATHER_API_KEY = "71ca48bb8af57498e0efdabac5f86f4d";
+    const GENERIC_FARM_IMG = "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80";
+
+    const LOCAL_CROP_DATA = [
+        { name: "Wheat", hindi: "Gehoon", season: "Rabi", desc: "Staple food crop. Requires cool climate during growth.", image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&q=80", temp: "10°C - 25°C", water: "75 - 100 cm", soil: "Loamy or Clay Soil", sowing: "Nov - Dec", duration: "120-140 Days", disease: "Yellow Rust", cure: "Spray Propiconazole 25 EC", videoId: "Q4sL-s3gP4w" },
+        { name: "Rice", hindi: "Chawal", season: "Kharif", desc: "Major food crop. Needs flooded fields and high humidity.", image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&q=80", temp: "22°C - 32°C", water: "150 - 300 cm", soil: "Clayey Soil", sowing: "June - July", duration: "110-150 Days", disease: "Blast Disease", cure: "Use Tricyclazole 75 WP", videoId: "7t3iJ9r6g4" },
+        { name: "Cotton", hindi: "Kapas", season: "Kharif", desc: "Fiber crop. Needs black soil and frost-free days.", image: "https://images.unsplash.com/photo-1594220309564-9464e0302b41?w=500&q=80", temp: "25°C - 35°C", water: "50 - 80 cm", soil: "Black Soil (Regur)", sowing: "May - June", duration: "150-180 Days", disease: "Pink Bollworm", cure: "Install Pheromone Traps", videoId: "xyz123" },
+        { name: "Mustard", hindi: "Sarson", season: "Rabi", desc: "Oilseed crop. Grows well in dry, cool climates.", image: "https://images.unsplash.com/photo-1509653087866-91f6c2ab59f2?w=500&q=80", temp: "10°C - 25°C", water: "30 - 45 cm", soil: "Sandy Loam", sowing: "Oct - Nov", duration: "100-110 Days", disease: "White Rust", cure: "Spray Mancozeb", videoId: "abc987" },
+        { name: "Sugarcane", hindi: "Ganna", season: "Kharif", desc: "Long duration crop. Main source of sugar.", image: "https://images.unsplash.com/photo-1629814596185-3b94a504112e?w=500&q=80", temp: "20°C - 35°C", water: "150 - 250 cm", soil: "Deep Loam", sowing: "Feb - March", duration: "10-12 Months", disease: "Red Rot", cure: "Use disease-free setts", videoId: "sugar1" }
+    ];
+
+    let cropData = LOCAL_CROP_DATA; 
+
+    window.renderCrops = function(data) {
+        const grid = document.getElementById('crop-grid');
+        grid.innerHTML = '';
+        if (data.length === 0) { grid.innerHTML = '<p style="text-align:center; width:100%; font-size:1.5rem; color:#777;">No matching crops.</p>'; return; }
+
+        data.forEach(crop => {
+            let badgeClass = crop.season === 'Kharif' ? 'badge-kharif' : (crop.season === 'Zaid' ? 'badge-zaid' : 'badge-rabi');
+            const imageUrl = crop.image || GENERIC_FARM_IMG;
+
+            const html = `
+              <li>
+                <div class="course-card">
+                  <figure class="card-banner img-holder" style="--width: 370; --height: 220;">
+                    <img src="${imageUrl}" width="370" height="220" loading="lazy" alt="${crop.name}" class="img-cover" onerror="this.onerror=null;this.src='${GENERIC_FARM_IMG}';">
+                  </figure>
+                  <div class="card-content">
+                    <span class="season-badge ${badgeClass}">${crop.season}</span>
+                    <h3 class="h3 card-title">${crop.name} <span class="card-hindi">(${crop.hindi || ''})</span></h3>
+                    <p class="card-desc" style="margin-bottom:15px;">${crop.desc}</p>
+                    <div style="display:flex; gap:15px; margin-bottom:20px; font-size:0.9rem; color:#555;">
+                        <span><ion-icon name="time-outline" style="vertical-align:middle;"></ion-icon> ${crop.duration}</span>
+                        <span><ion-icon name="water-outline" style="vertical-align:middle;"></ion-icon> ${crop.soil ? crop.soil.split(' ')[0] : 'Loam'}</span>
+                    </div>
+                    <button class="btn btn-secondary" onclick="window.openModal('${crop.name}')" style="width:100%;">View Full Guide</button>
+                  </div>
+                </div>
+              </li>`;
+            grid.innerHTML += html;
+        });
+    }
+
+    const controlsContainer = document.querySelector('.controls-container');
+    const locationBtn = document.createElement('button');
+    locationBtn.innerHTML = '<ion-icon name="location-outline"></ion-icon> Suggest Crops for My Location';
+    locationBtn.className = 'btn btn-primary';
+    locationBtn.style.marginBottom = '20px';
+    locationBtn.onclick = getUserLocation;
+    controlsContainer.insertBefore(locationBtn, controlsContainer.firstChild);
+
+    function getUserLocation() {
+        if (navigator.geolocation) {
+            locationBtn.innerHTML = "Detecting...";
+            navigator.geolocation.getCurrentPosition(fetchLocalWeather, () => alert("Location access denied."));
+        } else { alert("Geolocation not supported."); }
+    }
+
+    async function fetchLocalWeather(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            recommendCrops(data);
+        } catch (error) { locationBtn.innerHTML = 'Try Again'; }
+    }
+
+    function recommendCrops(weatherData) {
+        const month = new Date().getMonth(); 
+        let currentSeason = (month >= 5 && month <= 8) ? "Kharif" : ((month >= 9 && month <= 1) ? "Rabi" : "Zaid");
+
+        locationBtn.innerHTML = `📍 Location: ${weatherData.name} (${currentSeason})`;
+        locationBtn.classList.replace('btn-primary', 'btn-secondary');
+
+        const recommended = cropData.filter(crop => crop.season === currentSeason);
+        document.getElementById('crop-grid').innerHTML = `<h3 style="width:100%; text-align:center; margin-bottom:20px; color:#1e7e34;">Recommended for ${weatherData.name} (${Math.round(weatherData.main.temp)}°C)</h3>`;
+        renderCrops(recommended);
+        
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        const activeBtn = document.querySelector(`button[data-filter="${currentSeason}"]`);
+        if(activeBtn) activeBtn.classList.add('active');
+    }
+
+    const searchInput = document.getElementById('search-input');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    searchInput.addEventListener('input', (e) => {
+      const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+      filterAndRender(activeFilter, e.target.value);
+    });
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterAndRender(btn.dataset.filter, searchInput.value);
+      });
+    });
+
+    function filterAndRender(filter, searchText) {
+        searchText = searchText.toLowerCase();
+        const filtered = cropData.filter(crop => {
+            const matchSeason = filter === 'all' || crop.season === filter;
+            const matchText = crop.name.toLowerCase().includes(searchText) || (crop.hindi && crop.hindi.toLowerCase().includes(searchText));
+            return matchSeason && matchText;
+        });
+        renderCrops(filtered);
+    }
+
+    const modal = document.getElementById('crop-modal');
+    window.openModal = function(cropName) {
+      const crop = cropData.find(c => c.name === cropName);
+      if(!crop) return;
+
+      document.getElementById('m-name').textContent = crop.name;
+      document.getElementById('m-hindi').textContent = crop.hindi || '';
+      document.getElementById('m-season').textContent = crop.season;
+      document.getElementById('m-season').className = `season-badge badge-${crop.season.toLowerCase()}`; 
+      document.getElementById('m-desc').textContent = crop.desc;
+      document.getElementById('m-temp').textContent = crop.temp;
+      document.getElementById('m-water').textContent = crop.water;
+      document.getElementById('m-soil').textContent = crop.soil;
+      document.getElementById('m-sowing').textContent = crop.sowing;
+      document.getElementById('m-tips').innerHTML = `<strong>Duration:</strong> ${crop.duration}<br><strong style="color:#d32f2f;">Common Disease:</strong> ${crop.disease}<br><strong style="color:#1e7e34;">Recommended Cure:</strong> ${crop.cure}`;
+
+      let videoContainer = document.getElementById('m-video-container');
+      if (!videoContainer) {
+          videoContainer = document.createElement('div');
+          videoContainer.id = 'm-video-container';
+          document.querySelector('.modal-box').appendChild(videoContainer);
+      }
+      
+      const vId = crop.videoId || 'Q4sL-s3gP4w'; 
+      videoContainer.innerHTML = `<div style="margin-top:20px; border-radius:10px; overflow:hidden;"><h3 class="h3" style="margin-bottom:10px; font-size:1.4rem;">Video Tutorial</h3><iframe width="100%" height="315" src="https://www.youtube.com/embed/${vId}" title="YouTube video player" frameborder="0" allowfullscreen></iframe></div>`;
+
+      modal.style.display = 'flex';
+    }
+
+    window.closeModal = function() {
+      modal.style.display = 'none';
+      const videoContainer = document.getElementById('m-video-container');
+      if(videoContainer) videoContainer.innerHTML = '';
+    }
+    window.onclick = function(event) { if (event.target == modal) closeModal(); }
+
+    document.addEventListener('DOMContentLoaded', () => { renderCrops(cropData); });
+  </script>
+
+  <script>
+    document.addEventListener('headerLoaded', () => {
+        const authContainer = document.getElementById('auth-container');
+        if (authContainer) {
+            authContainer.innerHTML = `<button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>`;
+        }
+    });
+  </script>
+</body>
+</html>

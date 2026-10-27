@@ -1,0 +1,56 @@
+services:
+  # 1. Express.js REST API Gateway (PostgreSQL Powered)
+  - type: web
+    name: krishimitra-api
+    env: node
+    plan: free
+    region: oregon
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node src/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: krishimitra-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: AI_SERVICE_URL
+        fromService:
+          type: web
+          name: krishimitra-ai
+          property: host
+
+  # 2. Python FastAPI YOLO Model Microservice
+  - type: web
+    name: krishimitra-ai
+    env: python
+    plan: free
+    region: oregon
+    rootDir: _model
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+
+  # 3. Static Web Frontend (HTML / CSS / JS)
+  - type: web
+    name: krishimitra-web
+    env: static
+    plan: free
+    region: oregon
+    buildCommand: ""
+    staticPublishPath: .
+
+databases:
+  # Managed PostgreSQL Database
+  - name: krishimitra-db
+    databaseName: krishimitra
+    user: krishimitra
+    plan: free
+    region: oregon

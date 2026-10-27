@@ -1,0 +1,173 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Marketplace - कृषिMitra</title>
+  <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e7e34;
+      --primary-dark: #155724;
+      --primary-light: #e8f5e9;
+      --text-dark: #2d3436;
+      --text-light: #636e72;
+      --white: #ffffff;
+      --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+      --shadow-md: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    body { font-family: 'Montserrat', sans-serif; background-color: #f9fbfd; }
+    .page-banner { padding: 100px 0 120px; background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%); text-align: center; position: relative; }
+    .page-banner .h1 { font-family: 'Playfair Display', serif; color: var(--primary-dark); font-size: 3.5rem; margin-bottom: 15px; }
+    .page-banner .p { font-size: 1.2rem; color: var(--text-light); max-width: 700px; margin: 0 auto; line-height: 1.6; }
+    .search-wrapper { margin-top: -50px; position: relative; z-index: 10; }
+    .search-container { max-width: 850px; margin: 0 auto; padding: 0 20px; }
+    .search-box { background: var(--white); padding: 10px; border-radius: 100px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); display: flex; align-items: center; border: 1px solid rgba(0,0,0,0.05); height: 70px; }
+    .search-icon { font-size: 1.8rem; color: #bbb; margin-left: 25px; }
+    .search-input { flex-grow: 1; border: none; padding: 0 20px; font-size: 1.2rem; outline: none; font-family: 'Montserrat', sans-serif; color: #333; }
+    .locate-btn { background: var(--primary); color: white; border: none; padding: 0 35px; height: 54px; border-radius: 50px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; transition: 0.3s; white-space: nowrap; }
+    .locate-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(30, 126, 52, 0.3); }
+    .grid-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 30px; padding-top: 40px; }
+    .store-card { background: var(--white); border-radius: 20px; overflow: hidden; border: 1px solid #edf2f7; box-shadow: var(--shadow-sm); transition: all 0.3s ease; display: flex; flex-direction: column; height: 100%; }
+    .store-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); border-color: var(--primary-light); }
+    .store-header { padding: 25px; border-bottom: 1px solid #f1f3f5; display: flex; justify-content: space-between; align-items: center; background: #ffffff; }
+    .store-name { font-size: 1.4rem; font-weight: 700; color: var(--text-dark); margin: 0; line-height: 1.3; }
+    .status-badge { font-size: 0.8rem; font-weight: 700; padding: 8px 15px; border-radius: 30px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .status-open { background: #dcfce7; color: #166534; }
+    .status-closed { background: #fee2e2; color: #991b1b; }
+    .store-body { padding: 30px 25px; flex-grow: 1; }
+    .info-row { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; color: #555; font-size: 1.05rem; }
+    .info-row ion-icon { color: var(--primary); font-size: 1.5rem; margin-top: 2px; }
+    .card-actions { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f3f5; display: flex; gap: 15px; }
+    .action-btn { flex: 1; padding: 14px; border-radius: 12px; font-weight: 600; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem; transition: 0.2s; }
+    .btn-call { background: var(--primary); color: white; border: none; }
+    .btn-call:hover { background: var(--primary-dark); }
+    .btn-map { background: white; color: var(--text-dark); border: 1px solid #e2e8f0; }
+    .btn-map:hover { background: #f1f5f9; border-color: #cbd5e1; }
+    @media (max-width: 992px) { 
+        .page-banner .h1 { font-size: 2.5rem; }
+        .search-box { flex-direction: column; padding: 15px; border-radius: 25px; height: auto; }
+        .locate-btn { width: 100%; justify-content: center; margin-top: 10px; height: 50px; }
+        .search-icon { display: none; }
+        .search-input { padding: 10px; text-align: center; width: 100%; }
+    }
+  </style>
+</head>
+<body id="top">
+  <div id="header-placeholder"></div>
+  <main>
+    <article>
+      <section class="section page-banner">
+        <div class="container">
+          <h1 class="h1">Fertilizer Store Locator</h1>
+          <p class="p">Find authorized fertilizer dealers, Krishi Kendras, and agri-shops near you instantly.</p>
+        </div>
+      </section>
+      <section class="search-wrapper">
+        <div class="container search-container">
+          <div class="search-box">
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+            <input type="text" id="city-input" placeholder="Enter City or District (e.g., Jaipur, Kota)..." class="search-input">
+            <button class="locate-btn" onclick="useMyLocation()">
+                <ion-icon name="navigate-circle-outline"></ion-icon> Locate Me
+            </button>
+          </div>
+        </div>
+      </section>
+      <section class="section blog" style="background-color: #f9fbfd; min-height: 600px;">
+        <div class="container">
+          <ul class="grid-list" id="store-grid">
+             <div style="text-align: center; width: 100%; padding: 60px; color: #888;">
+                <ion-icon name="storefront-outline" style="font-size: 4rem; color: #ddd; margin-bottom: 20px;"></ion-icon>
+                <p style="font-size: 1.4rem; font-weight: 500;">Start by entering your city name above.</p>
+             </div>
+          </ul>
+        </div>
+      </section>
+    </article>
+  </main>
+  <div id="footer-placeholder"></div>
+  <script src="../assets/js/components.js?v=2"></script>
+  <script src="../assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script>
+    const searchInput = document.getElementById('city-input');
+    const storeGrid = document.getElementById('store-grid');
+    let timeout = null;
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(timeout);
+        const city = e.target.value.trim();
+        if (city.length < 3) return;
+        timeout = setTimeout(() => { simulateApiSearch(city); }, 800);
+    });
+    function simulateApiSearch(city) {
+        storeGrid.innerHTML = '<p style="text-align:center; width:100%; padding:40px; font-size:1.2rem;"><ion-icon name="sync" class="spin" style="font-size:2rem;"></ion-icon><br>Searching nearby stores...</p>';
+        setTimeout(() => {
+            const mockResults = [
+                { name: `${city} Krishi Kendra`, phone: "9988776655", address: `Main Market, Near Railway Station, ${city}` },
+                { name: `Sharma Agro Solutions`, phone: "9876543210", address: `Plot No. 45, Industrial Area, ${city}` },
+                { name: `Jai Jawan Fertilizer Store`, phone: "8877665544", address: `Highway 12, Opposite Bus Stand, ${city}` },
+                { name: `Green Field Agri Inputs`, phone: "9123456789", address: `Shop 12, Grain Market, ${city}` },
+                { name: `Kisan Seva Centre`, phone: "9000012345", address: `Village Road, Near Temple, ${city}` },
+                { name: `National Fertilizers`, phone: "9566223311", address: `Sector 4, ${city}` }
+            ];
+            renderApiStores(mockResults);
+        }, 1000);
+    }
+    function renderApiStores(results) {
+        storeGrid.innerHTML = '';
+        results.forEach(place => {
+            const isOpen = Math.random() > 0.2; 
+            const statusClass = isOpen ? "status-open" : "status-closed";
+            const statusText = isOpen ? "OPEN NOW" : "CLOSED";
+            const html = `
+                <li>
+                    <div class="store-card">
+                        <div class="store-header">
+                            <h3 class="store-name">${place.name}</h3>
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="store-body">
+                            <div class="info-row"><ion-icon name="location-outline"></ion-icon><span>${place.address}</span></div>
+                            <div class="info-row"><ion-icon name="call-outline"></ion-icon><span>${place.phone}</span></div>
+                            <div class="info-row"><ion-icon name="time-outline"></ion-icon><span>Mon - Sat: 9:00 AM - 8:00 PM</span></div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="tel:${place.phone}" class="action-btn btn-call"><ion-icon name="call"></ion-icon> Call Shop</a>
+                            <a href="#" class="action-btn btn-map"><ion-icon name="map"></ion-icon> Navigate</a>
+                        </div>
+                    </div>
+                </li>
+            `;
+            storeGrid.innerHTML += html;
+        });
+    }
+    function useMyLocation() {
+        if(navigator.geolocation) {
+            document.querySelector('.locate-btn').innerHTML = '<ion-icon name="sync" class="spin"></ion-icon> Locating...';
+            navigator.geolocation.getCurrentPosition(() => {
+                searchInput.value = "Jaipur"; 
+                simulateApiSearch("Jaipur");
+                document.querySelector('.locate-btn').innerHTML = '<ion-icon name="navigate-circle-outline"></ion-icon> Locate Me';
+            }, () => {
+                alert("Location access denied.");
+                document.querySelector('.locate-btn').innerHTML = '<ion-icon name="navigate-circle-outline"></ion-icon> Locate Me';
+            });
+        } else {
+            alert("Geolocation not supported.");
+        }
+    }
+  </script>
+  <script>
+    document.addEventListener('headerLoaded', () => {
+        const authContainer = document.getElementById('auth-container');
+        if (authContainer) {
+            authContainer.innerHTML = `<button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>`;
+        }
+    });
+  </script>
+</body>
+</html>

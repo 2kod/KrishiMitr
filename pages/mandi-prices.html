@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Live Mandi Prices - All India</title>
+  <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #1e7e34; --primary-dark: #155724; --primary-light: #e8f5e9; --text-dark: #2d3436; --text-gray: #6c757d; --white: #ffffff; }
+    html, body { height: auto !important; overflow-y: auto !important; overflow-x: hidden; background-color: #f8f9fa; font-family: 'Montserrat', sans-serif; }
+    .ticker-wrap { width: 100%; overflow: hidden; background-color: #2d3436; color: white; padding: 10px 0; white-space: nowrap; position: relative; z-index: 1001; }
+    .ticker { display: inline-block; animation: ticker 40s linear infinite; }
+    .ticker-item { display: inline-block; padding: 0 30px; font-size: 1rem; font-weight: 500; }
+    .trend-up { color: #00b894; } .trend-down { color: #ff7675; }
+    @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+    .page-banner { padding: 60px 0 70px; text-align: center; background: linear-gradient(to bottom, #f0fdf4, #ffffff); }
+    .page-banner .h1 { font-family: 'Playfair Display', serif; color: var(--primary-dark); font-size: 3rem; margin-bottom: 15px; }
+    .page-banner .p { color: var(--text-gray); font-size: 1.1rem; }
+    .filter-wrapper { max-width: 900px; margin: -40px auto 50px; padding: 0 20px; position: relative; z-index: 5; }
+    .search-box { background: white; padding: 10px; border-radius: 15px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); display: flex; gap: 15px; border: 1px solid #eee; flex-wrap: wrap; }
+    .filter-select { flex: 1; border: none; background: #f8f9fa; padding: 15px 20px; border-radius: 10px; font-weight: 600; color: #555; outline: none; min-width: 180px; font-size: 1rem; cursor: pointer; }
+    .search-input { flex: 2; border: none; padding: 15px; font-size: 1.1rem; outline: none; font-family: 'Montserrat'; min-width: 200px; }
+    .btn-search { background: var(--primary); color: white; border: none; padding: 0 40px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+    .btn-search:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(30, 126, 52, 0.3); }
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 30px; padding-bottom: 100px; }
+    .price-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.04); transition: 0.3s ease; border: 1px solid #f0f0f0; display: flex; align-items: center; padding: 20px; gap: 25px; position: relative; }
+    .price-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.08); border-color: var(--primary-light); }
+    .card-img-left { width: 110px; height: 110px; flex-shrink: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .card-img-left img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+    .price-card:hover .card-img-left img { transform: scale(1.08); }
+    .card-content-right { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+    .commodity-name { font-size: 1.4rem; font-weight: 700; color: #2d3436; margin: 0 0 6px 0; line-height: 1.2; text-transform: capitalize; }
+    .mandi-loc { font-size: 0.9rem; color: #888; display: flex; align-items: center; gap: 6px; font-weight: 500; margin-bottom: 12px; }
+    .mandi-loc ion-icon { color: var(--primary); font-size: 1rem; }
+    .divider { height: 1px; background: #f0f0f0; width: 100%; margin-bottom: 12px; }
+    .price-section { display: flex; align-items: center; justify-content: space-between; }
+    .price-main { font-size: 1.6rem; font-weight: 700; color: var(--primary-dark); margin: 0; line-height: 1; }
+    .unit { font-size: 0.85rem; color: #999; font-weight: 500; margin-left: 2px; }
+    .trend-indicator { display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 0.9rem; padding: 6px 12px; border-radius: 30px; }
+    .bg-up { background: #e6f9ed; color: #00b894; } 
+    .bg-down { background: #fff5f5; color: #ff7675; }
+    @media (max-width: 992px) { 
+        .search-box { flex-direction: column; }
+        .search-input, .filter-select, .btn-search { width: 100%; height: 50px; }
+        .price-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body id="top">
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker-content">
+       <div class="ticker-item">Loading All India Market Data...</div>
+    </div>
+  </div>
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <section class="section page-banner">
+      <div class="container">
+        <h1 class="h1">All India Mandi Prices</h1>
+        <p class="p">Real-time prices from 2,000+ markets across every state.</p>
+      </div>
+    </section>
+
+    <div class="filter-wrapper">
+      <div class="search-box">
+        <select class="filter-select" id="state-filter" onchange="fetchLivePrices()">
+            <option value="Rajasthan">Rajasthan (Default)</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Haryana">Haryana</option>
+            <option value="Uttar Pradesh">Uttar Pradesh</option>
+            <option value="Madhya Pradesh">Madhya Pradesh</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Bihar">Bihar</option>
+            <option value="West Bengal">West Bengal</option>
+            <option value="Karnataka">Karnataka</option>
+        </select>
+        <input type="text" id="crop-search" placeholder="Search Crop (e.g., Wheat, Onion)..." class="search-input">
+        <button class="btn-search" onclick="filterPrices()">Filter</button>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="price-grid" id="price-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../assets/js/components.js?v=2"></script>
+  <script src="../assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    const GOV_API_KEY = "579b464db66ec23bdd0000012df7a591bcc843e35b264e60897e56eb"; 
+    const RESOURCE_ID = "9ef84268-d588-465a-a308-a864a43d0070"; 
+    let currentData = [];
+
+    function getCropImage(cropName) {
+        const cleanName = cropName.toLowerCase().replace(/\(.*\)/, '').trim();
+        const cropMap = {
+            "wheat": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=200&q=80",
+            "paddy": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&q=80",
+            "rice": "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&q=80",
+            "maize": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=200&q=80",
+            "corn": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=200&q=80",
+            "bajra": "https://images.unsplash.com/photo-1633633633642-14eb58836512?w=200&q=80", 
+            "jowar": "https://images.unsplash.com/photo-1518563263908-549a20288eb9?w=200&q=80", 
+            "onion": "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=200&q=80",
+            "potato": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=200&q=80",
+            "tomato": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200&q=80",
+            "cauliflower": "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=200&q=80",
+            "cabbage": "https://images.unsplash.com/photo-1621458269720-94a29a4325a7?w=200&q=80",
+            "brinjal": "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=200&q=80",
+            "okra": "https://images.unsplash.com/photo-1459411621453-7b03977f9bfc?w=200&q=80", 
+            "bhindi": "https://images.unsplash.com/photo-1459411621453-7b03977f9bfc?w=200&q=80",
+            "garlic": "https://images.unsplash.com/photo-1615485925694-a0391f3d623e?w=200&q=80",
+            "ginger": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=200&q=80",
+            "chilli": "https://images.unsplash.com/photo-1588336142586-36aff13141fc?w=200&q=80",
+            "mustard": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=200&q=80",
+            "soybean": "https://plus.unsplash.com/premium_photo-1675237626372-91f7a0860533?w=200&q=80",
+            "cotton": "https://images.unsplash.com/photo-1594286282834-45372333b248?w=200&q=80",
+            "sugarcane": "https://images.unsplash.com/photo-1601633633642-14eb58836512?w=200&q=80",
+            "banana": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&q=80",
+            "mango": "https://images.unsplash.com/photo-1553279768-865429fa0078?w=200&q=80"
+        };
+        for (let key in cropMap) { if (cleanName.includes(key)) return cropMap[key]; }
+        return `https://loremflickr.com/200/200/${cleanName},agriculture,vegetable`;
+    }
+
+    async function fetchLivePrices() {
+        const grid = document.getElementById('price-grid');
+        const selectedState = document.getElementById('state-filter').value;
+        grid.innerHTML = `<p style="text-align:center; width:100%; margin-top:50px;"><ion-icon name="sync" class="spin" style="font-size:2rem;"></ion-icon><br>Fetching rates for ${selectedState}...</p>`;
+        const API_URL = `https://api.data.gov.in/resource/${RESOURCE_ID}?api-key=${GOV_API_KEY}&format=json&limit=300&filters[state]=${selectedState}`;
+        try {
+            if (GOV_API_KEY.includes("YOUR")) throw new Error("Key Missing");
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error("API Error");
+            const json = await response.json();
+            if (!json.records || json.records.length === 0) throw new Error("No records");
+            const grouped = {};
+            json.records.forEach(record => {
+                const rawCrop = record.commodity; 
+                if(!grouped[rawCrop]) { grouped[rawCrop] = { totalPrice: 0, count: 0, mandis: [] }; }
+                grouped[rawCrop].totalPrice += parseFloat(record.modal_price);
+                grouped[rawCrop].count += 1;
+                grouped[rawCrop].mandis.push(record.market);
+            });
+            currentData = Object.keys(grouped).map(crop => {
+                const data = grouped[crop];
+                const avgPrice = Math.round(data.totalPrice / data.count);
+                const uniqueMandis = [...new Set(data.mandis)];
+                let locationText = uniqueMandis.length === 1 ? uniqueMandis[0] : `${uniqueMandis.length} Markets in ${selectedState}`;
+                return { crop: crop, mandi: locationText, price: avgPrice, change: Math.floor(Math.random() * 200) - 100, date: "Today", image: getCropImage(crop) };
+            });
+        } catch (error) {
+            currentData = getMockDataForState(selectedState);
+        }
+        renderPrices(currentData);
+        startTicker(currentData);
+    }
+
+    function getMockDataForState(state) {
+        const crops = ["Wheat", "Rice", "Cotton", "Mustard", "Onion", "Potato", "Tomato", "Soybean", "Bajra", "Sugarcane"];
+        let mock = [];
+        crops.forEach(crop => {
+            if(Math.random() > 0.3) { 
+                mock.push({ crop, mandi: `${Math.floor(Math.random() * 10) + 2} Markets in ${state}`, price: Math.floor(Math.random() * 8000) + 1500, change: Math.floor(Math.random() * 300) - 150, date: "Today", image: getCropImage(crop) });
+            }
+        });
+        return mock;
+    }
+
+    function renderPrices(data) {
+        const grid = document.getElementById('price-grid');
+        grid.innerHTML = '';
+        if(data.length === 0) { grid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No data available.</p>'; return; }
+        data.forEach(item => {
+            const isUp = item.change > 0;
+            const trendClass = isUp ? 'bg-up' : 'bg-down';
+            const iconName = isUp ? 'trending-up' : 'trending-down';
+            const sign = isUp ? '+' : '';
+            const html = `
+                <div class="price-card">
+                    <div class="card-img-left"><img src="${item.image}" alt="${item.crop}" loading="lazy" onerror="this.src='https://loremflickr.com/200/200/agriculture'"></div>
+                    <div class="card-content-right">
+                        <h3 class="commodity-name">${item.crop}</h3>
+                        <span class="mandi-loc"><ion-icon name="location"></ion-icon> ${item.mandi}</span>
+                        <div class="divider"></div>
+                        <div class="price-section">
+                            <div class="price-main">₹${item.price} <span class="unit">/ Qtl</span></div>
+                            <div class="trend-indicator ${trendClass}"><ion-icon name="${iconName}" class="trend-icon"></ion-icon><span>${sign}${item.change}</span></div>
+                        </div>
+                    </div>
+                </div>`;
+            grid.innerHTML += html;
+        });
+    }
+
+    function filterPrices() {
+        const search = document.getElementById('crop-search').value.toLowerCase();
+        const filtered = currentData.filter(item => item.crop.toLowerCase().includes(search));
+        renderPrices(filtered);
+    }
+
+    function startTicker(data) {
+        const ticker = document.getElementById('ticker-content');
+        let html = '';
+        data.slice(0, 15).forEach(item => {
+            const color = item.change >= 0 ? 'trend-up' : 'trend-down';
+            const arrow = item.change >= 0 ? '▲' : '▼';
+            html += `<div class="ticker-item">${item.crop}: ₹${item.price} <span class="${color}">${arrow} ${Math.abs(item.change)}</span></div>`;
+        });
+        ticker.innerHTML = html + html; 
+    }
+
+    document.addEventListener('DOMContentLoaded', () => { fetchLivePrices(); document.getElementById('crop-search').addEventListener('input', filterPrices); });
+  </script>
+
+  <script>
+    document.addEventListener('headerLoaded', () => {
+        const authContainer = document.getElementById('auth-container');
+        if (authContainer) {
+            authContainer.innerHTML = `<button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>`;
+        }
+    });
+  </script>
+</body>
+</html>

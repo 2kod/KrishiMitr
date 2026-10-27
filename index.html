@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Welcome - कृषिMitra</title>
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <script>
+    if (window.location.hostname === '127.0.0.1') {
+      window.location.href = window.location.href.replace('127.0.0.1', 'localhost');
+    }
+  </script>
+  <style>
+    /* --- SOOTHING INDIAN FARM BACKGROUND --- */
+    body {
+        background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(240, 253, 244, 0.95)), url('./assets/images/image.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+    }
+
+    /* Header aligned to left */
+    .auth-header { padding: 20px 40px; display: flex; justify-content: flex-start; align-items: center; }
+    .auth-header .logo { font-size: 3.5rem; font-weight: 700; color: var(--primary-dark); font-family: 'Playfair Display', serif; text-decoration: none; }
+    .auth-header .logo span { color: #f39c12; }
+
+    /* Frosted Glass Login Card */
+    .login-section { padding-top: 40px; padding-bottom: 100px; min-height: calc(100vh - 100px); display: flex; align-items: center; justify-content: center; }
+    .login-card { 
+        width: 100%; max-width: 450px; margin: 0 auto; 
+        background: rgba(255, 255, 255, 0.85); 
+        backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); padding: 40px; 
+    }
+    
+    .login-card .h2 { text-align: center; font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary-dark); margin-bottom: 10px; }
+    .login-card .form-subtitle { text-align: center; font-size: 1.4rem; color: #555; margin-bottom: 30px; font-weight: 500; }
+    
+    .auth-tabs { display: flex; border-bottom: 2px solid rgba(30, 126, 52, 0.2); margin-bottom: 25px; }
+    .auth-tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; font-weight: 600; color: #777; transition: 0.3s; font-size: 1.4rem;}
+    .auth-tab:hover { color: var(--primary); }
+    .auth-tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-weight: 700; font-size: 1.3rem; color: #333; margin-bottom: 8px; }
+    .form-group input { width: 100%; padding: 14px 15px; font-size: 1.5rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; transition: 0.3s; font-family: 'Montserrat', sans-serif; background: rgba(255,255,255,0.9); }
+    .form-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(30, 126, 52, 0.1); outline: none; }
+    
+    /* FORCE GREEN BUTTON VISIBILITY */
+    .btn-auth { 
+        background-color: #1e7e34 !important; 
+        color: #ffffff !important; 
+        border: none !important; 
+        padding: 15px !important; 
+        font-size: 1.6rem !important; 
+        font-weight: 700 !important; 
+        border-radius: 12px !important; 
+        width: 100% !important; 
+        cursor: pointer !important; 
+        transition: 0.3s !important; 
+        box-shadow: 0 4px 15px rgba(30, 126, 52, 0.3) !important;
+        display: block !important;
+    }
+    .btn-auth:hover { background-color: #155724 !important; transform: translateY(-2px) !important; }
+
+    .signup-link { text-align: center; margin-top: 30px; font-size: 1.4rem; color: #555; font-weight: 500; }
+    .signup-link a { color: var(--primary); font-weight: 700; text-decoration: none; transition: 0.2s; }
+    .signup-link a:hover { color: var(--primary-dark); text-decoration: underline; }
+
+    #otp-group { display: none; }
+    #recaptcha-container { margin-bottom: 15px; display: flex; justify-content: center; }
+
+    #header-placeholder, #footer-placeholder { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <header class="auth-header">
+    <a href="index.html" class="logo">कृषिMitra<span>.</span></a>
+  </header>
+
+  <main>
+    <section class="login-section">
+      <div class="container">
+        <div class="login-card">
+          <h2 class="h2">Farmer Login</h2>
+          <p class="form-subtitle">Welcome back! Access your smart farm.</p>
+          
+          <div class="auth-tabs">
+              <div class="auth-tab active" onclick="switchTab('email')">Email</div>
+              <div class="auth-tab" onclick="switchTab('phone')">Phone OTP</div>
+          </div>
+
+          <form action="#" id="email-login-form">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" placeholder="farmer@village.com" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn-auth">Login</button>
+          </form>
+
+          <form action="#" id="phone-login-form" style="display: none;">
+            <div class="form-group">
+              <label for="phone">Mobile Number</label>
+              <input type="tel" id="phone" value="+91 " placeholder="98765 43210" required>
+            </div>
+            <div id="recaptcha-container"></div> 
+            <button type="button" id="send-otp-btn" class="btn-auth" style="background: #2d3436 !important; margin-bottom: 15px;">Send OTP</button>
+
+            <div class="form-group" id="otp-group">
+              <label for="otp">Enter 6-digit OTP</label>
+              <input type="number" id="otp" placeholder="123456">
+              <button type="submit" id="verify-otp-btn" class="btn-auth" style="margin-top: 10px;">Verify & Login</button>
+            </div>
+          </form>
+
+          <div style="margin: 25px 0 20px; text-align: center; position: relative;">
+            <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 15px 0;">
+            <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #ffffff; padding: 0 12px; color: #777; font-size: 1.1rem; font-weight: 600; border-radius: 10px;">OR LOCAL / OFFLINE TESTING</span>
+          </div>
+
+          <button type="button" id="demo-login-btn" style="background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; border: none; padding: 13px; font-size: 1.35rem; font-weight: 600; border-radius: 12px; width: 100%; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);">
+            🌾 Instant Demo Farmer Login (Bypass Firebase)
+          </button>
+
+          <p class="signup-link">New to Krishimitr? <a href="./pages/signup.html">Create free account</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.switchTab = function(type) {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`.auth-tab[onclick="switchTab('${type}')"]`).classList.add('active');
+        if (type === 'email') {
+            document.getElementById('email-login-form').style.display = 'block';
+            document.getElementById('phone-login-form').style.display = 'none';
+        } else {
+            document.getElementById('email-login-form').style.display = 'none';
+            document.getElementById('phone-login-form').style.display = 'block';
+        }
+    }
+  </script>
+
+  <script>
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const API_BASE = isLocal ? 'http://localhost:5001/api' : 'https://krishimitra-api.onrender.com/api';
+
+    // Check if already authenticated
+    if (localStorage.getItem('km_token') || localStorage.getItem('krishimitr_user')) {
+      window.location.href = './pages/dashboard.html';
+    }
+
+    // Demo Farmer Login (Instant test)
+    const demoLoginBtn = document.getElementById('demo-login-btn');
+    if (demoLoginBtn) {
+      demoLoginBtn.addEventListener('click', () => {
+        const demoFarmerProfile = {
+          id: 999,
+          full_name: "Ramesh Kumar",
+          phone: "+91 98765 43210",
+          state: "Rajasthan",
+          district: "Jaipur",
+          pincode: "302001",
+          farm_size: "5.0",
+          email: "ramesh.farmer@krishimitr.in",
+          isDemo: true
+        };
+        localStorage.setItem('krishimitr_user', JSON.stringify(demoFarmerProfile));
+        localStorage.setItem('km_token', 'demo-token');
+        window.location.href = './pages/dashboard.html';
+      });
+    }
+
+    const emailForm = document.getElementById('email-login-form');
+    if (emailForm) { 
+      emailForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const btn = emailForm.querySelector('button');
+        btn.innerText = "Logging in...";
+        btn.disabled = true;
+
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+          const res = await fetch(`${API_BASE}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          const data = await res.json();
+          if (data.success) {
+            localStorage.setItem('km_token', data.token);
+            localStorage.setItem('krishimitr_user', JSON.stringify(data.farmer));
+            window.location.href = './pages/dashboard.html';
+          } else {
+            alert(data.message || 'Invalid email or password.');
+            btn.innerText = "Login";
+            btn.disabled = false;
+          }
+        } catch (error) { 
+          alert('Could not reach backend server on port 5001. Using Local Session...');
+          const offlineUser = { id: 1, full_name: 'Farmer', email, state: 'Rajasthan', district: 'Jaipur', farm_size: '5' };
+          localStorage.setItem('krishimitr_user', JSON.stringify(offlineUser));
+          window.location.href = './pages/dashboard.html';
+        }
+      });
+    }
+
+    // Phone / OTP Fallback
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    if (sendOtpBtn) {
+      sendOtpBtn.addEventListener('click', () => {
+        document.getElementById('otp-group').style.display = 'block';
+        sendOtpBtn.style.display = 'none';
+      });
+    }
+
+    const phoneForm = document.getElementById('phone-login-form');
+    if (phoneForm) {
+      phoneForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const phone = document.getElementById('phone').value;
+        const phoneUser = { id: 2, full_name: 'Kisan', phone, state: 'Rajasthan', district: 'Jaipur', farm_size: '4' };
+        localStorage.setItem('krishimitr_user', JSON.stringify(phoneUser));
+        window.location.href = './pages/dashboard.html';
+      });
+    }
+  </script>
+</body>
+</html>

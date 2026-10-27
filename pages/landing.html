@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>कृषिMitra - Home</title>
+  <link rel="shortcut icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ROOT FONT SCALE & SOFT COLOR THEME */
+    :root {
+      --soft-green: #f0fdf4;
+      --muted-text: #5c635e;
+      --accent-orange: #f39c12;
+    }
+
+    html { font-size: 12px !important; scroll-behavior: smooth; }
+    body { font-size: 1.6rem; line-height: 1.6; color: var(--muted-text); margin: 0; background: #fff; }
+
+    /* --- MINIMAL GLASS HEADER --- */
+    #header-placeholder .navbar-list, 
+    #header-placeholder .nav-open-btn,
+    #header-placeholder .navbar-top { 
+      display: none !important; 
+    }
+    .landing-custom-nav { display: flex !important; list-style: none; margin-right: 30px; }
+    #header-placeholder .header { background: rgba(255, 255, 255, 0.8) !important; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    #header-placeholder .container { justify-content: space-between; display: flex; align-items: center; }
+
+    /* --- HERO SECTION (Softer Overlay) --- */
+    .hero { 
+        padding-top: 160px; 
+        padding-bottom: 100px; 
+        background-size: cover; 
+        background-position: center; 
+        position: relative;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+    }
+    .hero::before {
+        content: '';
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.2)); z-index: 1;
+    }
+    .hero .container { position: relative; z-index: 2; }
+    .hero-title { color: white !important; font-size: 5rem !important; text-shadow: 0 2px 15px rgba(0,0,0,0.2); margin-block: 20px; font-family: 'Playfair Display', serif; }
+    .hero-text { color: rgba(255,255,255,0.95) !important; font-size: 2rem !important; max-width: 650px; margin-bottom: 35px; font-weight: 400; }
+
+    /* Softer Buttons */
+    .btn-primary { box-shadow: 0 4px 14px 0 rgba(30, 126, 52, 0.2) !important; }
+    .btn-secondary { background: rgba(255,255,255,0.2) !important; border: 1px solid #fff !important; color: #fff !important; backdrop-filter: blur(5px); }
+    .btn-secondary:hover { background: #fff !important; color: var(--primary-dark) !important; }
+
+    /* --- ABOUT SECTION (Softened Tone) --- */
+    .section.about { padding-block: 120px; background: var(--soft-green); }
+    .about-banner { border-radius: 30px; overflow: hidden; box-shadow: 0 15px 50px rgba(0,0,0,0.05); }
+    .about-content { padding-left: 40px; }
+    .section-subtitle { color: var(--primary); font-weight: 700; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+    .section-title { font-size: 3.8rem !important; line-height: 1.2; margin-bottom: 25px; color: var(--primary-dark); font-family: 'Playfair Display', serif; }
+    .section-text { font-size: 1.8rem; color: #6b7280; margin-bottom: 35px; }
+
+    /* Remove Footer strictly */
+    #footer-placeholder { display: none !important; visibility: hidden !important; height: 0; padding: 0; margin: 0; }
+
+    @media (max-width: 992px) {
+        .hero-title { font-size: 3.5rem !important; }
+        .about-content { padding-left: 0; margin-top: 50px; text-align: center; }
+        .section.about { padding-block: 80px; }
+    }
+  </style>
+</head>
+<body id="top">
+
+  <div id="header-placeholder"></div>
+
+  <main>
+    <article>
+
+      <section class="section hero" id="home" style="background-image: url('../assets/images/photo-1520052203542-d3095f1b6cf0.jpeg')">
+        <div class="container">
+          <p class="hero-subtitle" style="color: var(--accent-orange); font-weight: 700; font-size: 1.8rem; letter-spacing: 1px;">Smart Farming, Simplified.</p>
+          <h1 class="h1 hero-title">कृषिMitra: Your Farm's Best Friend.</h1>
+          <p class="hero-text">Access real-time crop intelligence, mandi analytics, and secure farmer resources in one intuitive space.</p>
+          <div style="display: flex; gap: 20px;">
+            <a href="../index.html" class="btn btn-primary" style="padding: 18px 45px; font-size: 1.8rem; border-radius: 15px;">Get Started</a>
+            <a href="#about" class="btn btn-secondary" style="padding: 18px 45px; font-size: 1.8rem; border-radius: 15px;">Learn More</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="container">
+          <div class="about-banner img-holder" style="--width: 470; --height: 580;">
+            <img src="../assets/images/shutterstock_1116673256 (1).jpg" width="470" height="580" loading="lazy" alt="About Farmer" class="img-cover">
+          </div>
+          <div class="about-content">
+            <p class="section-subtitle">Our Purpose</p>
+            <h2 class="h2 section-title">Connecting traditional roots with modern innovation.</h2>
+            <p class="section-text">Krishimitr (Krishi + Mitr) is designed to be the digital pulse of your farm. We offer a dedicated agri-tech ecosystem to put actionable insights directly into your hands.</p>
+            <a href="signup.html" class="btn btn-primary" style="border-radius: 12px; padding: 15px 35px;">Create Your Account</a>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </main>
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn><ion-icon name="chevron-up"></ion-icon></a>
+
+  <script src="../assets/js/components.js?v=2"></script>
+  <script src="../assets/js/script.js" defer></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    const interval = setInterval(() => {
+      const authContainer = document.getElementById('auth-container');
+      const headerContainer = document.querySelector('#header-placeholder .container');
+      if (authContainer && headerContainer) {
+        clearInterval(interval);
+        const customNav = document.createElement('ul');
+        customNav.className = 'landing-custom-nav';
+        customNav.innerHTML = `<li><a href="#about" class="navbar-link" style="font-weight: 700; color: var(--primary-dark); font-size: 1.6rem; opacity: 0.8;">About Us</a></li>`;
+        authContainer.parentNode.insertBefore(customNav, authContainer);
+      }
+    }, 100);
+  </script>
+
+  <script>
+    document.addEventListener('headerLoaded', () => {
+        const authContainer = document.getElementById('auth-container');
+        if (authContainer) {
+          authContainer.innerHTML = `<button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>`;
+        }
+    });
+  </script>
+
+</body>
+</html>
