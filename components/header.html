@@ -1,34 +1,45 @@
-<header class="header" data-header>
-  <div class="container">
-    <a href="../index.html" class="logo">कृषिMitra<span class="span">.</span></a>
+<header class="header floating-header" data-header>
+  <div class="container nav-pill-container">
+    <a href="../index.html" class="logo">
+      <span class="logo-leaf">🌱</span>
+      <span class="logo-text">कृषिMitra<span class="span">.</span></span>
+    </a>
     
     <nav class="navbar" data-navbar>
       <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler><ion-icon name="close-outline"></ion-icon></button>
       <ul class="navbar-list">
         <li class="navbar-item"><a href="dashboard.html" class="navbar-link">Home</a></li>
         <li class="navbar-item"><a href="scan.html" class="navbar-link">AI Doctor</a></li>
-        <li class="navbar-item"><a href="news.html" class="navbar-link">News</a></li>
         
         <li class="navbar-item dropdown-wrapper">
-          <a href="#" class="navbar-link">
-             Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1rem;"></ion-icon>
+          <a href="#" class="navbar-link dropdown-toggle">
+            Marketplace <ion-icon name="chevron-down-outline" style="font-size: 1.1rem;"></ion-icon>
           </a>
-          <ul class="dropdown-menu">
-              <li><a href="fertilizer-store.html" class="dropdown-item"><ion-icon name="storefront-outline"></ion-icon> Find Stores</a></li>
-              <li><a href="mandi-prices.html" class="dropdown-item"><ion-icon name="bar-chart-outline"></ion-icon> Mandi Prices</a></li>
+          <ul class="dropdown-menu glass-dropdown">
+            <li><a href="mandi-prices.html" class="dropdown-item"><ion-icon name="trending-up-outline"></ion-icon> Mandi Rates</a></li>
+            <li><a href="fertilizer-store.html" class="dropdown-item"><ion-icon name="storefront-outline"></ion-icon> Find Stores</a></li>
           </ul>
         </li>
 
-        <li class="navbar-item"><a href="crop-guide.html" class="navbar-link">Crop Guide</a></li>
-        <li class="navbar-item"><a href="weather.html" class="navbar-link">Weather</a></li>
         <li class="navbar-item"><a href="schemes.html" class="navbar-link">Govt Schemes</a></li>
-        <li class="navbar-item"><a href="contact.html" class="navbar-link">Contact</a></li>
+
+        <li class="navbar-item dropdown-wrapper">
+          <a href="#" class="navbar-link dropdown-toggle">
+            More <ion-icon name="chevron-down-outline" style="font-size: 1.1rem;"></ion-icon>
+          </a>
+          <ul class="dropdown-menu glass-dropdown">
+            <li><a href="crop-guide.html" class="dropdown-item"><ion-icon name="book-outline"></ion-icon> Crop Guide</a></li>
+            <li><a href="weather.html" class="dropdown-item"><ion-icon name="cloudy-night-outline"></ion-icon> Weather</a></li>
+            <li><a href="news.html" class="dropdown-item"><ion-icon name="newspaper-outline"></ion-icon> Agri News</a></li>
+            <li><a href="contact.html" class="dropdown-item"><ion-icon name="chatbubbles-outline"></ion-icon> Contact</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
     
     <div class="header-right-group">
-      <div class="lang-box">
-        <ion-icon name="language-outline"></ion-icon>
+      <div class="lang-box glass-pill">
+        <ion-icon name="globe-outline"></ion-icon>
         <select id="language-select" onchange="changeLanguage(this.value)">
           <option value="en">English</option>
           <option value="hi">हिंदी (Hindi)</option>
@@ -39,9 +50,13 @@
           <option value="te">తెలుగు (Telugu)</option>
           <option value="ta">தமிழ் (Tamil)</option>
         </select>
+        <ion-icon name="chevron-down-outline" class="select-chevron"></ion-icon>
       </div>
       <div id="auth-container">
-          <button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>
+        <button class="btn btn-logout-glass" id="logout-button">
+          <ion-icon name="log-out-outline" style="font-size: 1.4rem;"></ion-icon>
+          <span>Logout</span>
+        </button>
       </div>
     </div>
     <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler><ion-icon name="menu-outline"></ion-icon></button>
