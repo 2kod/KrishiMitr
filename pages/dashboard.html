@@ -240,14 +240,9 @@
 
     // Header Logic
     document.addEventListener('headerLoaded', () => {
-        const authContainer = document.getElementById('auth-container');
-        if (authContainer) {
-            const localUser = getLocalUser();
-            if (localUser || localStorage.getItem('km_token')) {
-                authContainer.innerHTML = `<button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>`;
-            } else {
-                window.location.href = '../index.html';
-            }
+        const localUser = getLocalUser();
+        if (!localUser && !localStorage.getItem('km_token')) {
+            window.location.href = '../index.html';
         }
     });
 

@@ -225,13 +225,6 @@
     document.addEventListener('DOMContentLoaded', () => { fetchLivePrices(); document.getElementById('crop-search').addEventListener('input', filterPrices); });
   </script>
 
-  <script>
-    document.addEventListener('headerLoaded', () => {
-        const authContainer = document.getElementById('auth-container');
-        if (authContainer) {
-            authContainer.innerHTML = `<button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>`;
-        }
-    });
-  </script>
+
 </body>
 </html>

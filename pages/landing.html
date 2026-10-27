@@ -21,15 +21,7 @@
     html { font-size: 12px !important; scroll-behavior: smooth; }
     body { font-size: 1.6rem; line-height: 1.6; color: var(--muted-text); margin: 0; background: #fff; }
 
-    /* --- MINIMAL GLASS HEADER --- */
-    #header-placeholder .navbar-list, 
-    #header-placeholder .nav-open-btn,
-    #header-placeholder .navbar-top { 
-      display: none !important; 
-    }
-    .landing-custom-nav { display: flex !important; list-style: none; margin-right: 30px; }
-    #header-placeholder .header { background: rgba(255, 255, 255, 0.8) !important; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); }
-    #header-placeholder .container { justify-content: space-between; display: flex; align-items: center; }
+
 
     /* --- HERO SECTION (Softer Overlay) --- */
     .hero { 
@@ -117,28 +109,7 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-  <script>
-    const interval = setInterval(() => {
-      const authContainer = document.getElementById('auth-container');
-      const headerContainer = document.querySelector('#header-placeholder .container');
-      if (authContainer && headerContainer) {
-        clearInterval(interval);
-        const customNav = document.createElement('ul');
-        customNav.className = 'landing-custom-nav';
-        customNav.innerHTML = `<li><a href="#about" class="navbar-link" style="font-weight: 700; color: var(--primary-dark); font-size: 1.6rem; opacity: 0.8;">About Us</a></li>`;
-        authContainer.parentNode.insertBefore(customNav, authContainer);
-      }
-    }, 100);
-  </script>
 
-  <script>
-    document.addEventListener('headerLoaded', () => {
-        const authContainer = document.getElementById('auth-container');
-        if (authContainer) {
-          authContainer.innerHTML = `<button class="btn btn-secondary" id="logout-button" style="background-color: #e74c3c; border: none; color: white; cursor: pointer; padding: 0 25px;">Logout</button>`;
-        }
-    });
-  </script>
 
 </body>
 </html>
